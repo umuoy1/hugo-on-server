@@ -2,6 +2,7 @@
 title: "搭建Hugo博客，通过Netlify自动部署"
 date: 2020-03-06T22:02:46+08:00
 draft: false
+comments: true
 ---
 
 > 本文章基于Windows10，Hugo0.66.0，博客发布的流程是Hugo将Markdown文本翻译为静态网页文件存在public文件夹中，由用户手动上传到Github，并经由Netlify自动发布。
