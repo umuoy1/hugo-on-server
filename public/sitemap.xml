@@ -3,17 +3,27 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://1aomn.com/solutions/solution-1/</loc>
+    <lastmod>2020-03-09T15:41:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://1aomn.com/solutions/</loc>
+    <lastmod>2020-03-09T15:41:22+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://1aomn.com/</loc>
+    <lastmod>2020-03-09T15:41:22+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://1aomn.com/skills/golang%E5%88%9D%E5%B0%9D/</loc>
     <lastmod>2020-03-08T01:37:23+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://1aomn.com/skills/</loc>
-    <lastmod>2020-03-09T13:41:34+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://1aomn.com/</loc>
     <lastmod>2020-03-09T13:41:34+08:00</lastmod>
   </url>
   

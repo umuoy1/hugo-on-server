@@ -200,6 +200,12 @@ uglyURLs = false
     #    pre = "internal"
     #    post = "tags"
     [[menu.main]]
+        url = "/solutions/"
+        name = "题解"
+        weight = 4
+        pre = "internal"
+        post = "code"
+    [[menu.main]]
         url = "/about/"
         name = "关于"
         weight = 5
