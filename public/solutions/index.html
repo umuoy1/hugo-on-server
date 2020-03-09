@@ -236,6 +236,10 @@
                                 
                             
                                 
+                                    
+                                
+                            
+                                
                             
                                 
                             
@@ -301,6 +305,11 @@
                                     <h3 class="list-month">三月</h3>
                                     
     <li class="list-item">
+        <a href="/solutions/123/" class="list-item-title">Uva6531 - Go up the Ultras</a>
+        <time datetime="2020-03-09T20:45:13+08:00" class="list-item-time">3 月 9 日</time>
+    </li>
+
+    <li class="list-item">
         <a href="/solutions/uva-6531/" class="list-item-title">Uva6531 - Go up the Ultras</a>
         <time datetime="2020-03-09T20:45:13+08:00" class="list-item-time">3 月 9 日</time>
     </li>
@@ -355,6 +364,59 @@
 
 
 
+
+    
+
+        
+
+        
+            <script>
+    function loadComments() {
+        if (typeof Valine === 'undefined') {
+            var getScript = (options) => {
+                var script = document.createElement('script');
+                script.defer = true;
+                script.crossOrigin = 'anonymous';
+                Object.keys(options).forEach((key) => {
+                    script[key] = options[key];
+                });
+                document.body.appendChild(script);
+            };
+            getScript({
+                src: 'https://unpkg.com/valine/dist/Valine.min.js',
+                onload: () => {
+                    newValine();
+                }
+            });
+        } else {
+            newValine();
+        }
+    }
+    function newValine() {
+        new Valine({
+            el: '#vcomments',
+            appId: '4eUjJFY4Y4wKW4TFpKb7izK5-gzGzoHsz',
+            appKey: 'hmmEiXiIRfyiLUKhI0ksxCyi',
+            placeholder: 'Leave your comment',
+            notify:  false ,
+            verify:  false ,
+            path: location.pathname,
+            avatar: 'mm',
+            meta: ["nick","mail","link"],
+            pageSize:  10 ,
+            lang: 'zh-cn',
+            visitor:  false ,
+            highlight:  true ,
+            avatarForce:  false ,
+            recordIP:  false ,
+            serverURLs: ''
+        });
+    }
+</script>
+
+        
+
+        
 
     
 

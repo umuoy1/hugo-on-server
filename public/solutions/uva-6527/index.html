@@ -79,13 +79,24 @@
 <script type="application/ld+json">
     {
         "@context": "https://schema.org",
-        "@type": "WebPage",
+        "@type": "BlogPosting",
         "datePublished": "2020-03-09T17:13:27+08:00",
         "dateModified": "2020-03-09T21:11:02+08:00",
         "url": "https://1aomn.com/solutions/uva-6527/",
-        "name": "Uva6527 - Counting ones",
+        "headline": "Uva6527 - Counting ones",
         "description": "题目链接，系 Regionals 2013 - Latin America C题 题目大意 给出 a 和 b (1 ≤ a ≤ b ≤ 1016) ，求两数之间所有数字的二进……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "solutions",
+        "wordCount":  569 ,
         "image": "https://1aomn.com/icons/apple-touch-icon.png",
+        "author": {
+            "@type": "Person",
+            "description": "Glory",
+            "email": "burningdian@gmail.com",
+            "image": "https://1aomn.com/icons/apple-touch-icon.png",
+            "url": "https://1aomn.com",
+            "name": "秋屿"
+        },
         "license": "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)",
         "publisher": {
             "@type": "Organization",
@@ -123,7 +134,12 @@
 <meta property="og:url" content="https://1aomn.com/solutions/uva-6527/" />
 <meta property="og:site_name" content="秋屿" />
 <meta property="og:locale" content="zh-CN" /><meta property="og:image" content="https://1aomn.com/icons/apple-touch-icon.png" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2020-03-09T17:13:27+08:00" />
+    <meta property="article:modified_time" content="2020-03-09T21:11:02+08:00" />
+    
+    <meta property="article:section" content="solutions" />
+
 
 
     
@@ -459,8 +475,39 @@
         
 
         
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+                <li class="post-nav-prev">
+                    <a href="/solutions/uva-6531/" rel="prev">< Uva6531 - Go up the Ultras</a>
+                </li>
+            
+            
+        </ul>
+    
+
 
         
+    
+
+        <div class="load-comments">
+            <div id="load-comments">加载评论</div>
+        </div>
+
+        
+
+        
+            <div id="vcomments"></div>
+        
+
+        
+
     
 
 
@@ -505,6 +552,59 @@
 
 
 
+
+    
+
+        
+
+        
+            <script>
+    function loadComments() {
+        if (typeof Valine === 'undefined') {
+            var getScript = (options) => {
+                var script = document.createElement('script');
+                script.defer = true;
+                script.crossOrigin = 'anonymous';
+                Object.keys(options).forEach((key) => {
+                    script[key] = options[key];
+                });
+                document.body.appendChild(script);
+            };
+            getScript({
+                src: 'https://unpkg.com/valine/dist/Valine.min.js',
+                onload: () => {
+                    newValine();
+                }
+            });
+        } else {
+            newValine();
+        }
+    }
+    function newValine() {
+        new Valine({
+            el: '#vcomments',
+            appId: '4eUjJFY4Y4wKW4TFpKb7izK5-gzGzoHsz',
+            appKey: 'hmmEiXiIRfyiLUKhI0ksxCyi',
+            placeholder: 'Leave your comment',
+            notify:  false ,
+            verify:  false ,
+            path: location.pathname,
+            avatar: 'mm',
+            meta: ["nick","mail","link"],
+            pageSize:  10 ,
+            lang: 'zh-cn',
+            visitor:  false ,
+            highlight:  true ,
+            avatarForce:  false ,
+            recordIP:  false ,
+            serverURLs: ''
+        });
+    }
+</script>
+
+        
+
+        
 
     
 
