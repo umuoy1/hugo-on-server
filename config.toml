@@ -1012,7 +1012,7 @@ uglyURLs = false
     #      的优先级高于此处
 
     # 仓库地址
-    repoURL = "https://github.com/umuoy1/hugo-on-netlify"
+    repoURL = "https://github.com/umuoy1/hugo-on-server"
     # 编辑地址
     repoEditURL = ""
 
