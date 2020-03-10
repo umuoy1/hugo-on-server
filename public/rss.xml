@@ -23,10 +23,34 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Tue, 10 Mar 2020 21:53:17 +0800</lastBuildDate>
+        <lastBuildDate>Tue, 10 Mar 2020 21:56:19 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
+        
+            <item>
+                <title>将Hugo博客搭建在服务器上，使用webhook实时构建</title>
+                <link>https://1aomn.com/skills/builg-a-blog-on-server/</link>
+                <guid isPermaLink="true">https://1aomn.com/skills/builg-a-blog-on-server/</guid>
+                <pubDate>Tue, 10 Mar 2020 21:55:09 +0800</pubDate>
+                
+                    <author>burningdian@gmail.com (秋屿)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
+                    <description><![CDATA[]]></description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>Golang初尝</title>
