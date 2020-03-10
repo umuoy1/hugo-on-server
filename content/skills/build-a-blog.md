@@ -5,7 +5,7 @@ draft: false
 comments: true
 ---
 
-> 本文章基于Windows10，Hugo0.66.0，博客发布的流程是Hugo将Markdown文本翻译为静态网页文件存在public文件夹中，由用户手动上传到Github，并经由Netlify自动发布。
+> 本文章基于Windows10，Hugo0.66.0，博客发布的流程是本地修改同步到github，netlify检测到push动作后自动发布 
 
 ## 一、下载并安装Hugo
 
