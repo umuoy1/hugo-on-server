@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Tue, 10 Mar 2020 14:46:20 +0800</lastBuildDate>
+        <lastBuildDate>Tue, 10 Mar 2020 14:52:18 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -64,7 +64,7 @@
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
                     <description><![CDATA[<blockquote>
-<p>本文章基于Windows10，Hugo0.66.0，博客发布的流程是本地修改同步到github，netlify检测到push动作后自动发布</p>
+<p>本文章基于Windows10，Hugo_extended_0.66.0，博客发布的流程是本地修改同步到github，netlify检测到push动作后自动发布</p>
 </blockquote>
 <h2 id="一下载并安装hugo">一、下载并安装Hugo</h2>
 <ul>

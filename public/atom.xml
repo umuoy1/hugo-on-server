@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-03-10T14:46:20+08:00</updated>
+    <updated>2020-03-10T14:52:18+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -48,7 +48,7 @@
             <title type="text">搭建Hugo博客，通过Netlify自动部署</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/build-a-blog/" />
             <id>https://1aomn.com/skills/build-a-blog/</id>
-            <updated>2020-03-10T14:46:13+08:00</updated>
+            <updated>2020-03-10T14:52:10+08:00</updated>
             <published>2020-03-06T22:02:46+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -57,10 +57,10 @@
                     </author>
             <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     
-    <summary type="html"><![CDATA[本文章基于Windows10，Hugo0.66.0，博客发布的流程是本地修改同步到g……]]></summary>
+    <summary type="html"><![CDATA[本文章基于Windows10，Hugo_extended_0.66.0，博客发布的流……]]></summary>
             
                 <content type="html"><![CDATA[<blockquote>
-<p>本文章基于Windows10，Hugo0.66.0，博客发布的流程是本地修改同步到github，netlify检测到push动作后自动发布</p>
+<p>本文章基于Windows10，Hugo_extended_0.66.0，博客发布的流程是本地修改同步到github，netlify检测到push动作后自动发布</p>
 </blockquote>
 <h2 id="一下载并安装hugo">一、下载并安装Hugo</h2>
 <ul>
