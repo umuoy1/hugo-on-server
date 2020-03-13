@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-03-14T00:27:05+08:00</updated>
+    <updated>2020-03-14T00:28:10+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Web后端开发路线图</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/back-end-roadmap/" />
             <id>https://1aomn.com/skills/back-end-roadmap/</id>
-            <updated>2020-03-14T00:26:57+08:00</updated>
+            <updated>2020-03-14T00:28:05+08:00</updated>
             <published>2020-03-14T00:22:49+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -29,7 +29,7 @@
                     </author>
             <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html"><![CDATA[]]></summary>
             
-                <content type="html"><![CDATA[<p><img src="https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/img/backend.png" alt=""></p>
+                <content type="html"><![CDATA[<p><img src="https://i.loli.net/2020/03/14/IVQniKDRw9JMBtc.png" alt="image.png"></p>
 ]]></content>
             
             
