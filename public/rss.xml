@@ -23,14 +23,35 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-<<<<<<< HEAD
-        <lastBuildDate>Thu, 12 Mar 2020 23:00:34 +0800</lastBuildDate>
-=======
-        <lastBuildDate>Tue, 10 Mar 2020 22:01:49 +0800</lastBuildDate>
->>>>>>> 740255c2c325a0a982040270b3d0104f88cab47c
+        <lastBuildDate>Sat, 14 Mar 2020 00:25:53 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
+        
+            <item>
+                <title>Back End Roadmap</title>
+                <link>https://1aomn.com/skills/back-end-roadmap/</link>
+                <guid isPermaLink="true">https://1aomn.com/skills/back-end-roadmap/</guid>
+                <pubDate>Sat, 14 Mar 2020 00:22:49 +0800</pubDate>
+                
+                    <author>burningdian@gmail.com (秋屿)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
+                    <description><![CDATA[<p><img src="https://raw.githubusercontent.com/kamranahmedse/developer-roadmap/master/img/backend.png" alt=""></p>
+]]></description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>谈谈对ACM集训队的选拔与管理</title>
@@ -85,9 +106,9 @@
             </item>
         
             <item>
-                <title>a-new-world</title>
-                <link>https://1aomn.com/skills/golang%E5%88%9D%E5%B0%9D/</link>
-                <guid isPermaLink="true">https://1aomn.com/skills/golang%E5%88%9D%E5%B0%9D/</guid>
+                <title>Golang入门总结</title>
+                <link>https://1aomn.com/skills/a-new-world/</link>
+                <guid isPermaLink="true">https://1aomn.com/skills/a-new-world/</guid>
                 <pubDate>Sun, 08 Mar 2020 01:35:09 +0800</pubDate>
                 
                     <author>burningdian@gmail.com (秋屿)</author>
@@ -95,27 +116,164 @@
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
                     <description><![CDATA[<h2 id="输入输出">输入输出</h2>
-<p>fmt.Println</p>
-<p>fmt.Printf</p>
-<p>fmt.Scanf</p>
-<p>bufio.NewReader()   os.stdin   file..</p>
+<p>Golang有类似C语言的格式化输入输出，常用占位符如下：</p>
+<pre><code>%v		//对应值的默认格式
+</code></pre><p>整数：</p>
+<pre><code>%d		十进制表示
+%b		二进制表示
+%o		八进制表示
+%x		十六进制表示
+</code></pre><p>Golang没有无符号整型的占位符</p>
+<p>浮点数：</p>
+<pre><code>%f		一般小数
+%e		科学计数法
+</code></pre><p>字符串：</p>
+<pre><code>%s		字符串
+</code></pre><p>指针：</p>
+<pre><code>%p		十六进制表示，前缀0x
+</code></pre><h4 id="print">Print</h4>
+<pre><code>func Print(a ...interface{}) (n int, err error)
+</code></pre><p>使用其操作数的默认格式进行格式化并写入到标准输出。 当两个连续的操作数均不为字符串时，它们之间就会添加空格。</p>
+<h4 id="printf">Printf</h4>
+<pre><code>func Printf(format string, a ...interface{}) (n int, err error)
+</code></pre><p>根据格式说明符写入到标准输出。</p>
+<h4 id="println">Println</h4>
+<pre><code>func Println(a ...interface{}) (n int, err error)
+</code></pre><p>根据默认格式格式化后写入到标准输出，格式之间添加空格，最后添加换行符。</p>
+<h4 id="scan">Scan</h4>
+<pre><code>func Scan(a ...interface{}) (n int, err error)
+</code></pre><p>Scan 扫描从标准输入中读取的文本，并将连续由空格分隔的值存储为连续的实参。 换行符计为空格。</p>
+<h4 id="scanf">Scanf</h4>
+<pre><code>func Scanf(format string, a ...interface{}) (n int, err error)
+</code></pre><p>扫描从标准输入中读取的文本， 并将连续由空格分隔的值存储为连续的实参 。</p>
+<h4 id="scanln">Scanln</h4>
+<pre><code>func Scanln(a ...interface{}) (n int, err error)
+</code></pre><p>类似Scan，但它在换行符处停止扫描，且最后的条目之后必须为换行符或 EOF。</p>
+<h4 id="sprint">Sprint</h4>
+<pre><code>func Sprint(a ...interface{}) string
+</code></pre><p>使用其操作数的默认格式进行格式化并返回其结果字符串。 当两个连续的操作数均不为字符串时，它们之间就会添加空格。</p>
+<h4 id="sprintf">Sprintf</h4>
+<pre><code>func Sprintf(format string, a ...interface{}) string
+</code></pre><hr>
 <h2 id="变量">变量</h2>
-<p>定义方式</p>
-<p>常量</p>
-<p>定义技巧</p>
-<p>int int8 int 16 int32 int64 (u) *int</p>
-<p>float32 float63</p>
-<p>type rune</p>
-<p>bool</p>
-<p>函数变量</p>
+<p>变量类型：</p>
+<h4 id="整数">整数</h4>
+<pre><code>(u)int  (u)int8  (u)int16  (u)int32  (u)int64
+</code></pre><h4 id="浮点数">浮点数</h4>
+<pre><code>float32  float64
+</code></pre><h4 id="字符字符串">字符/字符串</h4>
+<pre><code>string	byte  rune(每个字符占一个长度)
+</code></pre><h4 id="布尔型">布尔型</h4>
+<pre><code>bool
+</code></pre><h4 id="常量">常量</h4>
+<pre><code>const a float32 = 3.14
+const (
+		A = 1
+		B = 2)
+</code></pre><p>常量的值必须是编译期间确定的数字、字符串、布尔值</p>
+<h4 id="函数变量">函数变量</h4>
+<pre><code>func test(a int)int{
+	return a*a
+}
+var f = test
+var f2 = func(a int)int{
+	return a*a
+}//匿名函数
+f(3)//9
+</code></pre><h4 id="变量声明">变量声明</h4>
+<pre><code>var v type
+v := value
+</code></pre><hr>
 <h2 id="字符串">字符串</h2>
-<p>各种函数</p>
-<h2 id="数组">数组</h2>
+<p>一个字符串是一个不可改变的字节序列。 字符串的相加会产生一个新字符串并返回。</p>
+<p>字符串可以用反引号代替双引号，表示字符串的原生格式。</p>
+<pre><code>var s string = `
+Line: 1
+Line: 2  //这是第二行`
+
+Line: 1
+Line: 2  //这是第二行 
+</code></pre><h4 id="常用函数">常用函数</h4>
+<pre><code>strings包下
+Index(str,s string) int//查询字符串第一次出现的位置
+LastIndex(str,s string) int//查询字符串最后一次出现的位置
+Replace(str,old string,new string,n) string//替换子串old为new，次数为n,-1代表无限次
+Count(str,substr string) int//查询出现次数
+Repeat(s string,count int) string//生成新字符串，值为s重复count次
+TrimSpace(str string) string//去除首位空格
+Trim(str string,cutset string) string//去除首位字符串cutstr
+Split(str string,sep string)//以sep分隔开，返回一个string切片
+Join(str string,sep string) string//将切片str以sep连接，返回新字符串
+</code></pre><p>strconv包提供了布尔型、整型数、浮点数和对应字符串的相互转换。</p>
+<pre><code>strconv包下
+x, err := strconv.Atoi(&quot;123&quot;)
+y, err := strconv.ParseInt(&quot;123&quot;,10,64) //10进制，64位。默认返回int64类型
+</code></pre><h2 id="数组">数组</h2>
+<p>数组是一个由固定长度的特定类型元素组成的序列，一个数组可以由零个或多个元素组成。</p>
+<p>数组是固定的，不同长度的数组是不同类型，数组的长度必须是常量表达式，在编译时确定。</p>
+<p>数组定义时，默认被初始化元素类型对应的零值。</p>
+<p>数组的长度是...时，表示数组长度根据初始化值的个数来计算。</p>
+<pre><code>b := [3]int{1,2,3}
+var b [3]int = [...]int{1,2,3}
+b := [...]int{1:2,3:4}//指定索引赋值
+</code></pre><p>数组是值类型，作为函数的参数时为值传递</p>
+<p>两个数组的长度和类型均相同时可以被比较，否则会编译错误。</p>
 <h2 id="切片">切片</h2>
+<p>切片是在数组之上的抽象数据类型，数组不够灵活，切片应运而生。</p>
+<pre><code>a := []int{1,2,3}
+</code></pre><h4 id="创建切片">创建切片</h4>
+<p>基于数组创建</p>
+<pre><code>a := [5]{1,2,3,4,5}
+b := a[1:3]//slice
+b == &amp;a[1]
+</code></pre><p>新切片和原数组共享内存，当切片被扩容时，会开辟新的地址，并将原切片复制过去。</p>
+<p>也可以使用<code>make</code>创建</p>
+<pre><code>func make([]T, len, cap) []T
+</code></pre><p>T表示被创建的切片的元素类型， 函数 <code>make</code> 接受一个类型、一个长度和一个可选的容量参数。 调用 <code>make</code> 时，内部会分配一个数组，然后返回数组对应的切片。</p>
+<pre><code>var s []byte
+s = make([]byte,5,5)
+</code></pre><p>容量参数被忽略时，默认为<code>len</code></p>
+<pre><code>s := make([]byte,5)
+len(s) == 5
+cap(s) == 5
+</code></pre><h4 id="切片的原理">切片的原理</h4>
+<p>切片本身不是数组，他表面上是数组片段。它包含了指向数组的指针，片段长度，最大容量(指向的数组长度)。</p>
+<p><img src="https://i.loli.net/2020/03/13/GlBdFOgMH8VpsWm.png" alt="image.png"></p>
+<p>使用make([]byte,5)创建切片后，s结构如下</p>
+<p><img src="https://i.loli.net/2020/03/13/59Gvb1kq82aBZf7.png" alt="image.png"></p>
+<p>切片可以通过<code>append</code>函数扩容</p>
+<pre><code>func append(s []T, x ...T) []T
+</code></pre><p><code>append</code>函数将x添加到切片s的尾部，并在必要时增加容量。</p>
+<pre><code>s := []int{1,2,3}
+q := s
+//q==s
+append(q,4,5)
+//q!=s
+</code></pre><p>对达到最大容量的切片扩容时，会创建一个新的更大的切片并将原数据复制过去。</p>
 <h2 id="函数">函数</h2>
 <p>格式</p>
 <p>传参方式</p>
 <p>refer</p>
+<hr>
+<h2 id="常用内置函数">常用内置函数</h2>
+<p>new 分配内存 值类型 返回指针</p>
+<p>make 分配内存 引用类型</p>
+<hr>
+<h2 id="goroute">goroute</h2>
+<h2 id="channel">channel</h2>
+<ul>
+<li></li>
+</ul>
+<h2 id="异常处理">异常处理</h2>
+<p>panic</p>
+<ul>
+<li></li>
+</ul>
+<h2 id="time">time</h2>
+<ul>
+<li></li>
+</ul>
+<h2 id="闭包">闭包</h2>
 ]]></description>
                 
                 
