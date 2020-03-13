@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-03-14T00:29:34+08:00</updated>
+    <updated>2020-03-14T00:42:59+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -49,7 +49,7 @@
             <title type="text">谈谈对ACM集训队的选拔与管理</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/talk-about-acm-team/" />
             <id>https://1aomn.com/skills/talk-about-acm-team/</id>
-            <updated>2020-03-12T23:17:23+08:00</updated>
+            <updated>2020-03-14T00:41:39+08:00</updated>
             <published>2020-03-10T21:58:44+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -58,9 +58,9 @@
                     </author>
             <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     
-    <summary type="html"><![CDATA[​ 接手校ACM集训队和协会之后，我就想过调整协会的结构和新生的选拔方案，但毕竟我没什……]]></summary>
+    <summary type="html"><![CDATA[接手校ACM集训队和协会之后，我就想过调整协会的结构和新生的选拔方案，但毕竟我没什么……]]></summary>
             
-                <content type="html"><![CDATA[<p>​	接手校ACM集训队和协会之后，我就想过调整协会的结构和新生的选拔方案，但毕竟我没什么经验，其他管理也没有相同的想法，所以没有贸然调整。</p>
+                <content type="html"><![CDATA[<p>接手校ACM集训队和协会之后，我就想过调整协会的结构和新生的选拔方案，但毕竟我没什么经验，其他管理也没有相同的想法，所以没有贸然调整。</p>
 <p>​	我们这届包括前几届，协会都是由集训队+普通会员构成的，所谓的管理层也是由集训队担当。协会会员没有门槛，交30元社费即可入社，而集训队需要进行选拔，表现优异者方可入队。集训队选拔分三批，第一批是协会纳新之后，有三次面向全体新社员的新生赛，最后按三次比赛的成绩进行排名，取前几名选入新生集训队。第二批是来年的5月份左右，有一次面向全校的校级程序设计竞赛，举办单位为院级，规则也较新生赛更为严苛，赛后依照排名选取部分同学进入集训队。第三批是在暑假里，协会会号召有志愿的同学留校集训，持续一个多月，期间有老师授课，并且定期比赛，最后依照做题量和每次的排名再选取几名同学进入集训队。这样在大一下学期之前，最终选取18名左右的同学进入集训队，无特殊情况不再变动。</p>
 <p>​	所以说对一名新生来说，最有机会进入集训队的时间是第一批，其次是第三批，最后是第二批。想被选入第一批，新生需要入社之后开始刷题，紧跟协会的教学计划，最后在新生赛取得好成绩。这样的方式也产生一些问题，比如新生开学后的事情还是比较多的，同时新生赛安排在周末，必然会有一部分同学因时间冲突而无法参加，其中不乏编程佼佼者。要知道缺席一次新生赛就可能没机会进入集训队。但如果为了避免时间冲突而把三次新生赛缩减为一次，又无法考量新生的综合水平和阶段性学习情况，有失公允，颇难抉择。所以说</p>
 <p>​	协会的活动也就前期的几次授课和新生赛了，选完集训队只会普通成员就没啥事了，说是协会就是集训队也不为过</p>
@@ -109,7 +109,7 @@
             <title type="text">Golang入门总结</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/a-new-world/" />
             <id>https://1aomn.com/skills/a-new-world/</id>
-            <updated>2020-03-14T00:25:37+08:00</updated>
+            <updated>2020-03-14T00:42:13+08:00</updated>
             <published>2020-03-08T01:35:09+08:00</published>
             <author>
                     <name>秋屿</name>
