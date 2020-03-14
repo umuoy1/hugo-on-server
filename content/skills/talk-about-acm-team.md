@@ -4,6 +4,7 @@ date: 2020-03-10T21:58:44+08:00
 draft: false
 indent: true
 indentFirstParagraph: true
+tags: ["杂谈"]
 ---
 
 接手校ACM集训队和协会之后，我就想过调整协会的结构和新生的选拔方案，但毕竟我没什么经验，其他管理也没有相同的想法，所以没有贸然调整。

@@ -3,23 +3,33 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>https://1aomn.com/tags/bfs/</loc>
+    <lastmod>2020-03-15T02:11:19+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://1aomn.com/solutions/</loc>
-    <lastmod>2020-03-15T01:26:12+08:00</lastmod>
+    <lastmod>2020-03-15T02:11:41+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://1aomn.com/tags/</loc>
+    <lastmod>2020-03-15T02:11:41+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://1aomn.com/solutions/uva-6425/</loc>
-    <lastmod>2020-03-15T01:26:12+08:00</lastmod>
+    <lastmod>2020-03-15T02:11:19+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://1aomn.com/</loc>
-    <lastmod>2020-03-15T01:26:12+08:00</lastmod>
+    <lastmod>2020-03-15T02:11:41+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://1aomn.com/skills/</loc>
-    <lastmod>2020-03-14T03:00:52+08:00</lastmod>
+    <lastmod>2020-03-15T02:10:58+08:00</lastmod>
   </url>
   
   <url>
@@ -28,8 +38,13 @@
   </url>
   
   <url>
+    <loc>https://1aomn.com/tags/%E6%9D%82%E8%B0%88/</loc>
+    <lastmod>2020-03-15T02:10:47+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://1aomn.com/skills/talk-about-acm-team/</loc>
-    <lastmod>2020-03-14T00:50:25+08:00</lastmod>
+    <lastmod>2020-03-15T02:10:47+08:00</lastmod>
   </url>
   
   <url>
@@ -38,18 +53,33 @@
   </url>
   
   <url>
+    <loc>https://1aomn.com/tags/rmq/</loc>
+    <lastmod>2020-03-15T02:11:41+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>https://1aomn.com/solutions/uva-6531/</loc>
-    <lastmod>2020-03-10T21:53:00+08:00</lastmod>
+    <lastmod>2020-03-15T02:11:41+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://1aomn.com/tags/%E5%8D%95%E8%B0%83%E6%A0%88/</loc>
+    <lastmod>2020-03-15T02:11:41+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://1aomn.com/solutions/uva-6527/</loc>
-    <lastmod>2020-03-10T21:52:50+08:00</lastmod>
+    <lastmod>2020-03-15T02:11:25+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>https://1aomn.com/tags/go/</loc>
+    <lastmod>2020-03-15T02:10:58+08:00</lastmod>
   </url>
   
   <url>
     <loc>https://1aomn.com/skills/golang-start/</loc>
-    <lastmod>2020-03-14T03:00:52+08:00</lastmod>
+    <lastmod>2020-03-15T02:10:58+08:00</lastmod>
   </url>
   
   <url>
@@ -74,10 +104,6 @@
   
   <url>
     <loc>https://1aomn.com/categories/</loc>
-  </url>
-  
-  <url>
-    <loc>https://1aomn.com/tags/</loc>
   </url>
   
 </urlset>

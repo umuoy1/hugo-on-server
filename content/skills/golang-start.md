@@ -4,6 +4,7 @@ date: 2020-03-08T01:35:09+08:00
 draft: false
 comments: true
 toc: true
+tags: ["Go"]
 ---
 
 ## 输入输出

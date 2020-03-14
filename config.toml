@@ -193,12 +193,12 @@ uglyURLs = false
         weight = 3
         pre = "internal"
         post = "life"
-    #[[menu.main]]
-    #    url = "/tags/"
-    #    name = "标签"
-    #    weight = 4
-    #    pre = "internal"
-    #    post = "tags"
+    [[menu.main]]
+        url = "/tags/"
+        name = "标签"
+        weight = 4
+        pre = "internal"
+        post = "tags"
     [[menu.main]]
         url = "/solutions/"
         name = "题解"

@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-03-15T01:26:15+08:00</updated>
+    <updated>2020-03-15T02:13:50+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -49,7 +49,7 @@
             <title type="text">谈谈对ACM集训队的选拔与管理</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/talk-about-acm-team/" />
             <id>https://1aomn.com/skills/talk-about-acm-team/</id>
-            <updated>2020-03-14T00:50:25+08:00</updated>
+            <updated>2020-03-15T02:10:47+08:00</updated>
             <published>2020-03-10T21:58:44+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -73,6 +73,14 @@
                 
                     
                 
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://1aomn.com/tags/%E6%9D%82%E8%B0%88/" term="杂谈" label="杂谈" />
+                            
+                        
                     
                 
             
@@ -109,7 +117,7 @@
             <title type="text">Golang入门总结</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/golang-start/" />
             <id>https://1aomn.com/skills/golang-start/</id>
-            <updated>2020-03-14T03:00:52+08:00</updated>
+            <updated>2020-03-15T02:10:58+08:00</updated>
             <published>2020-03-08T01:35:09+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -343,6 +351,14 @@ c := make(chan int,10)
                 
                     
                 
+                    
+                        
+                            
+                            
+                            
+                                <category scheme="https://1aomn.com/tags/go/" term="Go" label="Go" />
+                            
+                        
                     
                 
             
