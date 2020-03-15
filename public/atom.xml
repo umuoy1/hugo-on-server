@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-03-15T02:13:50+08:00</updated>
+    <updated>2020-03-16T02:23:26+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -16,6 +16,165 @@
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     <generator uri="https://gohugo.io/" version="0.66.0">Hugo</generator>
+        <entry>
+            <title type="text">Cookie和Session</title>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/cookie-session/" />
+            <id>https://1aomn.com/skills/cookie-session/</id>
+            <updated>2020-03-16T02:22:49+08:00</updated>
+            <published>2020-03-15T17:42:40+08:00</published>
+            <author>
+                    <name>秋屿</name>
+                    <uri>https://1aomn.com</uri>
+                    <email>burningdian@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
+    
+    <summary type="html"><![CDATA[Cookie 定义 Cookie，中文名「小甜饼」，是一段用来标识用户身份和附加信息而存储在本地客……]]></summary>
+            
+                <content type="html"><![CDATA[<h1 id="cookie">Cookie</h1>
+<h2 id="定义">定义</h2>
+<p>Cookie，中文名「小甜饼」，是一段用来标识用户身份和附加信息而存储在本地客户端上的字符串。</p>
+<h2 id="特点">特点</h2>
+<p>Cookie有以下几个特点</p>
+<ul>
+<li>大小有限制，一般不超过5kb</li>
+<li>cookie 是没有结构的，但可以用格式如 &quot;a1=v1;a2=v2;a3=v3&quot;来存储结构化数据</li>
+<li>跨域不共享，即浏览器为每个域名存储一个 cookie，</li>
+<li>浏览器每次发送 http 请求，都会将请求域的 cookie 发送给服务端。这里的请求域仅指本次请求的域，比如在本站首页向 网易云音乐 发送 http 请求，则会向 网易云云音乐 发送本地存储的 cookie 。</li>
+<li>服务端可以修改 cookie 并返回给浏览器。</li>
+<li>浏览器可以在限制条件下修改 cookie 并返回给服务端。</li>
+<li>cookie 在指定的域名及根域名下都生效。</li>
+</ul>
+<h2 id="分类">分类</h2>
+<p>这里直接引用维基百科的介绍：</p>
+<p>Cookie总是保存在客户端中，按在客户端中的存储位置，可分为内存Cookie和硬盘Cookie。</p>
+<p>内存Cookie由浏览器维护，保存在内存中，浏览器关闭后就消失了，其存在时间是短暂的。硬盘Cookie保存在硬盘裡，有一个过期时间，除非用户手工清理或到了过期时间，硬盘Cookie不会被删除，其存在时间是长期的。所以，按存在时间，可分为非持久Cookie和持久Cookie</p>
+<h2 id="使用">使用</h2>
+<p>以下的例子在 Node.js 中演示。</p>
+<p>首先是解析 cookie</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="kr">const</span> <span class="nx">cookieStr</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span>
+    <span class="nx">cookieStr</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">element</span> <span class="p">=&gt;</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">element</span><span class="p">){</span>
+            <span class="k">return</span>
+        <span class="p">}</span>
+        <span class="kr">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
+        <span class="kr">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+        <span class="kr">const</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+        <span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span><span class="o">=</span><span class="nx">val</span>
+    <span class="p">});</span>
+    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span><span class="p">)</span> <span class="c1">//为了方便测试，把cookie打印出来
+</span></code></pre></td></tr></table>
+</div>
+</div><p>在有登录验证的场景中，可以使用 cookie 验证用户是否登录</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">if</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span><span class="p">.</span><span class="nx">username</span><span class="p">)</span> <span class="p">{</span>
+            <span class="c1">//已登录
+</span><span class="c1"></span>        <span class="p">}</span>
+        <span class="k">else</span> <span class="p">{</span>
+            <span class="c1">//尚未登陆
+</span><span class="c1"></span>        <span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>服务端设置 cookie</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">//假如已经登录成功，设置 cookie 返回给客户端
+</span><span class="c1"></span><span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span><span class="sb">`usernamed=</span><span class="si">${</span><span class="nx">userNamed</span><span class="si">}</span><span class="sb">; path=/`</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>刚才提到客户端可以修改 cookie 并返回给服务端，但修改是有限制的，假如客户端能修改 cookie 来绕过登录验证，是很危险的,可以添加 <code>httpOnly</code> 属性来允许 cookie 仅能由服务端修改，这里的修改是指不能对已设置的 cookie 修改和删除，但可以追加。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span><span class="sb">`usernamed=</span><span class="si">${</span><span class="nx">userNamed</span><span class="si">}</span><span class="sb">; path=/; httpOnly`</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>在很多网站的登录页面，都可以看到类似&quot;保存用户名xx天&quot;的选项，实现原理就是修改 cookie 的过期时间，这里设置过期时间为 1day。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">getCookieExpires</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
+    <span class="kr">const</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
+    <span class="nx">d</span><span class="p">.</span><span class="nx">setTime</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
+    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">toGMTString</span><span class="p">()</span> <span class="c1">//cookie 中的expires为GMT格式
+</span><span class="c1"></span><span class="p">}</span>
+
+<span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span> <span class="sb">`usernamed=</span><span class="si">${</span><span class="nx">userNamed</span><span class="si">}</span><span class="sb">; httpOnly; expires=</span><span class="si">${</span><span class="nx">getCookieExpires</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
+
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="缺陷">缺陷</h2>
+<p>cookie 通常有以下几个缺陷</p>
+<ol>
+<li>cookie 在 http 请求中是鸣文传递的，有信息泄露的风险</li>
+<li>cookie 的大小有限制，不易存储复杂信息</li>
+</ol>
+<h1 id="session">Session</h1>
+<p>session 的本意是会话状态，在 http 中的实现是用来跟踪用户的状态。</p>
+<p>由于HTTP协议是无状态的，服务端不知道用户上一次做了什么，所以服务端会在用户初始状态的时候创建特定的 session ，用来标识并跟踪这个用户。</p>
+<h2 id="原理">原理</h2>
+<p>session 是保存在服务端中的，第一次创建 session 时，服务端会创建一个特殊的表示 session ID，并且通过 cookie 返回给客户端，客户端将含有 session ID 的cookie保存。之后客户端在访问服务端时，就可以把保存有 session ID 的 cookie 发送给服务端，服务端就会指定客户端是谁了。</p>
+<p>可见 session 是通过 cookie 来实现的，既然服务端可以通过 session 知道客户端的身份，用户的 账号密码等信息就可以存储在 session 里，解决了 cookie 不安全的问题。</p>
+<hr>
+<h1 id="总结">总结</h1>
+<p>Cookie 保存在客户端中，用来存储用户的信息。</p>
+<p>Session 保存在服务端中，用来跟踪用户，对用户进行唯一标识，可以通过 cookie 实现。</p>
+<hr>
+]]></content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
         <entry>
             <title type="text">Web后端开发路线图</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/back-end-roadmap/" />
