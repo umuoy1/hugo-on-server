@@ -2,20 +2,20 @@
 title: "Cookie和Session"
 date: 2020-03-15T17:42:40+08:00
 draft: false
-indent: false
-indentFirstParagraph: false
+indent: true
+indentFirstParagraph: true
 comments: true
 toc: true
 tags: []
 ---
 
-# Cookie
+## Cookie
 
-## 定义
+### 定义
 
 Cookie，中文名「小甜饼」，是一段用来标识用户身份和附加信息而存储在本地客户端上的字符串。
 
-## 特点
+### 特点
 
 Cookie有以下几个特点
 
@@ -27,7 +27,7 @@ Cookie有以下几个特点
 - 浏览器可以在限制条件下修改 cookie 并返回给服务端。
 - cookie 在指定的域名及根域名下都生效。
 
-## 分类
+### 分类
 
 这里直接引用维基百科的介绍：
 
@@ -35,7 +35,7 @@ Cookie总是保存在客户端中，按在客户端中的存储位置，可分�
 
 内存Cookie由浏览器维护，保存在内存中，浏览器关闭后就消失了，其存在时间是短暂的。硬盘Cookie保存在硬盘裡，有一个过期时间，除非用户手工清理或到了过期时间，硬盘Cookie不会被删除，其存在时间是长期的。所以，按存在时间，可分为非持久Cookie和持久Cookie
 
-## 使用
+### 使用
 
 以下的例子在 Node.js 中演示。
 
@@ -97,7 +97,7 @@ res.setHeader('Set-Cookie', `usernamed=${userNamed}; httpOnly; expires=${getCook
 
 ```
 
-## 缺陷
+### 缺陷
 
 cookie 通常有以下几个缺陷
 
@@ -106,25 +106,31 @@ cookie 通常有以下几个缺陷
 
 
 
-# Session
+------
+
+
+
+## Session
 
 session 的本意是会话状态，在 http 中的实现是用来跟踪用户的状态。
 
 由于HTTP协议是无状态的，服务端不知道用户上一次做了什么，所以服务端会在用户初始状态的时候创建特定的 session ，用来标识并跟踪这个用户。
 
-## 原理
+### 原理
 
 session 是保存在服务端中的，第一次创建 session 时，服务端会创建一个特殊的表示 session ID，并且通过 cookie 返回给客户端，客户端将含有 session ID 的cookie保存。之后客户端在访问服务端时，就可以把保存有 session ID 的 cookie 发送给服务端，服务端就会指定客户端是谁了。
 
 可见 session 是通过 cookie 来实现的，既然服务端可以通过 session 知道客户端的身份，用户的 账号密码等信息就可以存储在 session 里，解决了 cookie 不安全的问题。
 
+
+
 ------
 
-# 总结
+
+
+## 总结
 
 Cookie 保存在客户端中，用来存储用户的信息。
 
 Session 保存在服务端中，用来跟踪用户，对用户进行唯一标识，可以通过 cookie 实现。
-
-------
 
