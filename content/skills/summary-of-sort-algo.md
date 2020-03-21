@@ -1,7 +1,7 @@
 ---
 title: "我会写的排序算法总结"
 date: 2020-03-17T01:28:15+08:00
-draft: true
+draft: false
 indent: true
 indentFirstParagraph: true
 comments: true

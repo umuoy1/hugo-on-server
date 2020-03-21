@@ -118,11 +118,9 @@ session 的本意是会话状态，在 http 中的实现是用来跟踪用户的
 
 ### 原理
 
-session 是保存在服务端中的，第一次创建 session 时，服务端会创建一个特殊的表示 session ID，并且通过 cookie 返回给客户端，客户端将含有 session ID 的cookie保存。之后客户端在访问服务端时，就可以把保存有 session ID 的 cookie 发送给服务端，服务端就会指定客户端是谁了。
-
-可见 session 是通过 cookie 来实现的，既然服务端可以通过 session 知道客户端的身份，用户的 账号密码等信息就可以存储在 session 里，解决了 cookie 不安全的问题。
-
-
+1. 服务端在cookie中找到对应的seesionid。
+2. 根据sessionid，从服务端对应的session中获取数据，然后返回。
+3. 如果找不到sessionid，服务端创建一个新session，并将session添加到cookie中，写入响应头。
 
 ------
 
