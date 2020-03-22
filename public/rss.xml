@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Sun, 22 Mar 2020 01:34:37 +0800</lastBuildDate>
+        <lastBuildDate>Sun, 22 Mar 2020 17:55:21 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -38,11 +38,8 @@
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
-                    <description><![CDATA[<p>用C++和Go写，有时间再用Javascript写。就当作是复习。</p>
-<p>个人习惯下标从<code>1</code>开始。</p>
+                    <description><![CDATA[<p>C++和Go。</p>
 <hr>
-<h2 id="冒泡排序">冒泡排序</h2>
-<p>C++：</p>
 ]]></description>
                 
                 
