@@ -113,6 +113,8 @@ func Sprintf(format string, a ...interface{}) string
 
 Golang中的变量一经定义，必须使用
 
+全局定义的变量，如果首字母大写则对其他包可以访问。
+
 变量类型：
 
 #### 整数
@@ -421,6 +423,126 @@ c := make(chan int,10)
 ```
 
 ---
+
+## 结构体
+
+Golang 中没有类的概念，但结构体可以看作是其他语言的类。
+
+### 声明
+
+```go
+type 标识符 struct{
+	field1 type
+	field2 type
+}
+```
+
+### 定义
+
+结构体的定义有三种形式
+
+```go
+var A People
+var A *People  = new(People)
+var A *People = &People{}
+```
+
+### 访问
+
+和C语言一样，使用`.`
+
+```
+type People struct{
+	Name string
+	age int
+}
+
+fmt.println(A.Name)//指针形式也可以通过此方式访问
+fmt.println((*A).Name)
+```
+
+### 初始化
+
+```go
+A := People{Name:"Youmu",}
+```
+
+Golang没有构造函数，可以通过工厂模式实现结构体的实例化。
+
+```go
+func NewPeople(name string,age ing)(*People) {
+	return &People{
+		Name: name,
+		Age:  age,
+	}
+}
+
+people := NewPeople("Youmu",14)
+```
+
+### tag
+
+结构体的每个字段可以写上一个`tag`，这个`tag`可以在运行时通过`reflection`包读取。`tag`通常用在`json`的转换中。
+
+```go
+type People struct{
+	Name string `json:"user_name"`
+	age int
+}
+
+A := People(Name:"Youmu",age:14)
+d,_ := json.Marshal(A)
+fmt.Println(string(A))
+//{"user_name":"Youmu"}
+//age为首字母小写，外部包"encoding/json"对其不可访问。
+```
+
+### 匿名字段 和 继承
+
+匿名字段通常搭配继承使用
+
+```
+type People struct{
+	Name string
+	age int
+}
+
+type Student struct{
+	People	//Studeng继承People的所有属性，方法
+	score int
+}
+
+stu := Student{
+	People{
+		Name: "Marisa"
+		age:  15
+	},
+	score:	0,
+}
+fmt.Println(stu.Name,stu.People.Name,stu.age,stu.score)
+//可以隐式地引用所继承结构体的变量，但是如果结构体中有重名变量，需要显示引用
+```
+
+### 方法
+
+```
+type People struct{
+	Name string
+	age int
+}
+func (this People)eat()(string){//该方法属于结构体People
+	return this.Name + " eat something"
+}
+func (this *People)setAge(age int){
+	this.Age = age
+}
+A := People(Name:"Yuyuko",age:1000)
+A.setAge(1001)
+fmt.Println(A.eat(),A.Age)
+//Yuyuko eat something 1001
+```
+
+
 
 ## goroute
 

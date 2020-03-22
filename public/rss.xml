@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Sun, 22 Mar 2020 17:55:21 +0800</lastBuildDate>
+        <lastBuildDate>Mon, 23 Mar 2020 00:57:24 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -350,6 +350,7 @@
 </code></pre><hr>
 <h2 id="变量">变量</h2>
 <p>Golang中的变量一经定义，必须使用</p>
+<p>全局定义的变量，如果首字母大写则对其他包可以访问。</p>
 <p>变量类型：</p>
 <h4 id="整数">整数</h4>
 <pre><code>(u)int  (u)int8  (u)int16  (u)int32  (u)int64
@@ -507,7 +508,143 @@ s := new(string)
 <pre><code>v := make([]int,10,50)//len=10, cap=50
 c := make(chan int,10)
 </code></pre><hr>
-<h2 id="goroute">goroute</h2>
+<h2 id="结构体">结构体</h2>
+<p>Golang 中没有类的概念，但结构体可以看作是其他语言的类。</p>
+<h3 id="声明">声明</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">标识符</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">field1</span> <span class="kd">type</span>
+	<span class="nx">field2</span> <span class="kd">type</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="定义">定义</h3>
+<p>结构体的定义有三种形式</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">var</span> <span class="nx">A</span> <span class="nx">People</span>
+<span class="kd">var</span> <span class="nx">A</span> <span class="o">*</span><span class="nx">People</span>  <span class="p">=</span> <span class="nb">new</span><span class="p">(</span><span class="nx">People</span><span class="p">)</span>
+<span class="kd">var</span> <span class="nx">A</span> <span class="o">*</span><span class="nx">People</span> <span class="p">=</span> <span class="o">&amp;</span><span class="nx">People</span><span class="p">{}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="访问">访问</h3>
+<p>和C语言一样，使用<code>.</code></p>
+<pre><code>type People struct{
+	Name string
+	age int
+}
+
+fmt.println(A.Name)//指针形式也可以通过此方式访问
+fmt.println((*A).Name)
+</code></pre><h3 id="初始化">初始化</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">A</span> <span class="o">:=</span> <span class="nx">People</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="s">&#34;Youmu&#34;</span><span class="p">,}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Golang没有构造函数，可以通过工厂模式实现结构体的实例化。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">NewPeople</span><span class="p">(</span><span class="nx">name</span> <span class="kt">string</span><span class="p">,</span><span class="nx">age</span> <span class="nx">ing</span><span class="p">)(</span><span class="o">*</span><span class="nx">People</span><span class="p">)</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="o">&amp;</span><span class="nx">People</span><span class="p">{</span>
+		<span class="nx">Name</span><span class="p">:</span> <span class="nx">name</span><span class="p">,</span>
+		<span class="nx">Age</span><span class="p">:</span>  <span class="nx">age</span><span class="p">,</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nx">people</span> <span class="o">:=</span> <span class="nf">NewPeople</span><span class="p">(</span><span class="s">&#34;Youmu&#34;</span><span class="p">,</span><span class="mi">14</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="tag">tag</h3>
+<p>结构体的每个字段可以写上一个<code>tag</code>，这个<code>tag</code>可以在运行时通过<code>reflection</code>包读取。<code>tag</code>通常用在<code>json</code>的转换中。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">People</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Name</span> <span class="kt">string</span> <span class="s">`json:&#34;user_name&#34;`</span>
+	<span class="nx">age</span> <span class="kt">int</span>
+<span class="p">}</span>
+
+<span class="nx">A</span> <span class="o">:=</span> <span class="nf">People</span><span class="p">(</span><span class="nx">Name</span><span class="p">:</span><span class="s">&#34;Youmu&#34;</span><span class="p">,</span><span class="nx">age</span><span class="p">:</span><span class="mi">14</span><span class="p">)</span>
+<span class="nx">d</span><span class="p">,</span><span class="nx">_</span> <span class="o">:=</span> <span class="nx">json</span><span class="p">.</span><span class="nf">Marshal</span><span class="p">(</span><span class="nx">A</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nb">string</span><span class="p">(</span><span class="nx">A</span><span class="p">))</span>
+<span class="c1">//{&#34;user_name&#34;:&#34;Youmu&#34;}
+</span><span class="c1">//age为首字母小写，外部包&#34;encoding/json&#34;对其不可访问。
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="匿名字段-和-继承">匿名字段 和 继承</h3>
+<p>匿名字段通常搭配继承使用</p>
+<pre><code>type People struct{
+	Name string
+	age int
+}
+
+type Student struct{
+	People	//Studeng继承People的所有属性，方法
+	score int
+}
+
+stu := Student{
+	People{
+		Name: &quot;Marisa&quot;
+		age:  15
+	},
+	score:	0,
+}
+fmt.Println(stu.Name,stu.People.Name,stu.age,stu.score)
+//可以隐式地引用所继承结构体的变量，但是如果结构体中有重名变量，需要显示引用
+</code></pre><h3 id="方法">方法</h3>
+<pre><code>type People struct{
+	Name string
+	age int
+}
+func (this People)eat()(string){//该方法属于结构体People
+	return this.Name + &quot; eat something&quot;
+}
+func (this *People)setAge(age int){
+	this.Age = age
+}
+A := People(Name:&quot;Yuyuko&quot;,age:1000)
+A.setAge(1001)
+fmt.Println(A.eat(),A.Age)
+//Yuyuko eat something 1001
+</code></pre><h2 id="goroute">goroute</h2>
 <h2 id="channel">channel</h2>
 <ul>
 <li></li>
