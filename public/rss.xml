@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Mon, 23 Mar 2020 00:57:24 +0800</lastBuildDate>
+        <lastBuildDate>Mon, 23 Mar 2020 01:42:13 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -610,41 +610,158 @@ fmt.println((*A).Name)
 </div>
 </div><h3 id="匿名字段-和-继承">匿名字段 和 继承</h3>
 <p>匿名字段通常搭配继承使用</p>
-<pre><code>type People struct{
-	Name string
-	age int
-}
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">People</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Name</span> <span class="kt">string</span>
+	<span class="nx">age</span> <span class="kt">int</span>
+<span class="p">}</span>
 
-type Student struct{
-	People	//Studeng继承People的所有属性，方法
-	score int
-}
+<span class="kd">type</span> <span class="nx">Student</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">People</span>	<span class="c1">//Studeng继承People的所有属性，方法
+</span><span class="c1"></span>	<span class="nx">score</span> <span class="kt">int</span>
+<span class="p">}</span>
 
-stu := Student{
-	People{
-		Name: &quot;Marisa&quot;
-		age:  15
-	},
-	score:	0,
-}
-fmt.Println(stu.Name,stu.People.Name,stu.age,stu.score)
-//可以隐式地引用所继承结构体的变量，但是如果结构体中有重名变量，需要显示引用
-</code></pre><h3 id="方法">方法</h3>
-<pre><code>type People struct{
-	Name string
-	age int
-}
-func (this People)eat()(string){//该方法属于结构体People
-	return this.Name + &quot; eat something&quot;
-}
-func (this *People)setAge(age int){
-	this.Age = age
-}
-A := People(Name:&quot;Yuyuko&quot;,age:1000)
-A.setAge(1001)
-fmt.Println(A.eat(),A.Age)
-//Yuyuko eat something 1001
-</code></pre><h2 id="goroute">goroute</h2>
+<span class="nx">stu</span> <span class="o">:=</span> <span class="nx">Student</span><span class="p">{</span>
+	<span class="nx">People</span><span class="p">{</span>
+		<span class="nx">Name</span><span class="p">:</span> <span class="s">&#34;Marisa&#34;</span>
+		<span class="nx">age</span><span class="p">:</span>  <span class="mi">15</span>
+	<span class="p">},</span>
+	<span class="nx">score</span><span class="p">:</span>	<span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">stu</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="nx">stu</span><span class="p">.</span><span class="nx">People</span><span class="p">.</span><span class="nx">Name</span><span class="p">,</span><span class="nx">stu</span><span class="p">.</span><span class="nx">age</span><span class="p">,</span><span class="nx">stu</span><span class="p">.</span><span class="nx">score</span><span class="p">)</span>
+<span class="c1">//可以隐式地引用所继承结构体的变量，但是如果结构体中有重名变量，需要显示引用
+</span></code></pre></td></tr></table>
+</div>
+</div><h3 id="方法">方法</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">People</span> <span class="kd">struct</span><span class="p">{</span>
+	<span class="nx">Name</span> <span class="kt">string</span>
+	<span class="nx">age</span> <span class="kt">int</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="nx">People</span><span class="p">)</span><span class="nf">eat</span><span class="p">()(</span><span class="kt">string</span><span class="p">){</span><span class="c1">//该方法属于结构体People，this是执行方法执行者的副本
+</span><span class="c1"></span>	<span class="k">return</span> <span class="nx">this</span><span class="p">.</span><span class="nx">Name</span> <span class="o">+</span> <span class="s">&#34; eat something&#34;</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">this</span> <span class="o">*</span><span class="nx">People</span><span class="p">)</span><span class="nf">setAge</span><span class="p">(</span><span class="nx">age</span> <span class="kt">int</span><span class="p">){</span>
+	<span class="nx">this</span><span class="p">.</span><span class="nx">Age</span> <span class="p">=</span> <span class="nx">age</span>
+<span class="p">}</span>
+<span class="nx">A</span> <span class="o">:=</span> <span class="nf">People</span><span class="p">(</span><span class="nx">Name</span><span class="p">:</span><span class="s">&#34;Yuyuko&#34;</span><span class="p">,</span><span class="nx">age</span><span class="p">:</span><span class="mi">1000</span><span class="p">)</span>
+<span class="nx">A</span><span class="p">.</span><span class="nf">setAge</span><span class="p">(</span><span class="mi">1001</span><span class="p">)</span>
+<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">A</span><span class="p">.</span><span class="nf">eat</span><span class="p">(),</span><span class="nx">A</span><span class="p">.</span><span class="nx">Age</span><span class="p">)</span>
+<span class="c1">//Yuyuko eat something 1001
+</span></code></pre></td></tr></table>
+</div>
+</div><hr>
+<h2 id="接口">接口</h2>
+<p>接口定义了一组方法，这些方法不需要被实现，同时接口内不能定义任何变量。</p>
+<p>一个结构体实现了接口中的所有方法，那么这个结构体就实现了这个接口，不需要显示的实现。</p>
+<p>显然，一个结构体可以实现多个接口。</p>
+<h3 id="定义-1">定义</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">example</span> <span class="kd">interface</span><span class="p">{</span>
+	<span class="nf">Method1</span><span class="p">(</span><span class="nx">参数列表</span><span class="p">)</span> <span class="p">(</span><span class="nx">返回值列表</span><span class="p">)</span>
+	<span class="nf">Method2</span><span class="p">(</span><span class="nx">参数列表</span><span class="p">)</span> <span class="p">(</span><span class="nx">返回值列表</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="实现">实现</h3>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span><span class="lnt">13
+</span><span class="lnt">14
+</span><span class="lnt">15
+</span><span class="lnt">16
+</span><span class="lnt">17
+</span><span class="lnt">18
+</span><span class="lnt">19
+</span><span class="lnt">20
+</span><span class="lnt">21
+</span><span class="lnt">22
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">Car</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">getName</span><span class="p">()</span> <span class="kt">string</span>
+	<span class="nf">run</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="kd">type</span> <span class="nx">BMW</span> <span class="kd">struct</span> <span class="p">{</span>
+	<span class="nx">Name</span> <span class="kt">string</span>
+<span class="p">}</span>
+
+<span class="kd">func</span> <span class="p">(</span><span class="nx">car</span> <span class="nx">BMW</span><span class="p">)</span><span class="nf">getName</span><span class="p">()</span><span class="kt">string</span>  <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">car</span><span class="p">.</span><span class="nx">Name</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="p">(</span><span class="nx">car</span> <span class="nx">BMW</span><span class="p">)</span><span class="nf">run</span><span class="p">()</span>  <span class="p">{</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">car</span><span class="p">.</span><span class="nf">getName</span><span class="p">(),</span><span class="s">&#34;is running&#34;</span><span class="p">)</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">car1</span> <span class="nx">BMW</span> <span class="p">=</span> <span class="nx">BMW</span><span class="p">{</span><span class="nx">Name</span><span class="p">:</span><span class="s">&#34;MyCar&#34;</span><span class="p">}</span>
+	<span class="nx">car1</span><span class="p">.</span><span class="nf">run</span><span class="p">()</span>
+	
+	<span class="kd">var</span> <span class="nx">car2</span> <span class="nx">Car</span>
+	<span class="nx">car2</span> <span class="p">=</span> <span class="nx">car1</span>
+	<span class="nx">car2</span><span class="p">.</span><span class="nf">run</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>实现了接口的结构体实例可以赋值给接口变量，这点类似于Java的上转型对象。</p>
+<h2 id="goroute">goroute</h2>
 <h2 id="channel">channel</h2>
 <ul>
 <li></li>

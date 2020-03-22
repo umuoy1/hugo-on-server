@@ -501,7 +501,7 @@ fmt.Println(string(A))
 
 匿名字段通常搭配继承使用
 
-```
+```go
 type People struct{
 	Name string
 	age int
@@ -525,12 +525,12 @@ fmt.Println(stu.Name,stu.People.Name,stu.age,stu.score)
 
 ### 方法
 
-```
+```go
 type People struct{
 	Name string
 	age int
 }
-func (this People)eat()(string){//该方法属于结构体People
+func (this People)eat()(string){//该方法属于结构体People，this是执行方法执行者的副本
 	return this.Name + " eat something"
 }
 func (this *People)setAge(age int){
@@ -542,7 +542,53 @@ fmt.Println(A.eat(),A.Age)
 //Yuyuko eat something 1001
 ```
 
+------
 
+## 接口
+
+接口定义了一组方法，这些方法不需要被实现，同时接口内不能定义任何变量。
+
+一个结构体实现了接口中的所有方法，那么这个结构体就实现了这个接口，不需要显示的实现。
+
+显然，一个结构体可以实现多个接口。
+
+### 定义
+
+```go
+type example interface{
+	Method1(参数列表) (返回值列表)
+	Method2(参数列表) (返回值列表)
+}
+```
+
+### 实现
+
+```go
+type Car interface {
+	getName() string
+	run()
+}
+type BMW struct {
+	Name string
+}
+
+func (car BMW)getName()string  {
+	return car.Name
+}
+func (car BMW)run()  {
+	fmt.Println(car.getName(),"is running")
+}
+func main() {
+	var car1 BMW = BMW{Name:"MyCar"}
+	car1.run()
+	
+	var car2 Car
+	car2 = car1
+	car2.run()
+}
+```
+
+实现了接口的结构体实例可以赋值给接口变量，这点类似于Java的上转型对象。
 
 ## goroute
 
