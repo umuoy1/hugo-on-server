@@ -7,7 +7,7 @@ comments: true
 
 这里是秋屿的个人博客，记录生活点滴与技术灵感。
 
-QQ：[2475978801](http://tool.gljlw.com/qq/?qq=2475978801)
+QQ：[2475978801](http://wpa.qq.com/msgrd?v=3&uin=2475978801&site=qq&menu=yes)
 
 Twitter：[秋屿](https://twitter.com/Burningdian)
 
