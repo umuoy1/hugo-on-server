@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Mon, 23 Mar 2020 01:42:13 +0800</lastBuildDate>
+        <lastBuildDate>Mon, 23 Mar 2020 17:40:00 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -692,7 +692,6 @@ fmt.println((*A).Name)
 </div><hr>
 <h2 id="接口">接口</h2>
 <p>接口定义了一组方法，这些方法不需要被实现，同时接口内不能定义任何变量。</p>
-<p>一个结构体实现了接口中的所有方法，那么这个结构体就实现了这个接口，不需要显示的实现。</p>
 <p>显然，一个结构体可以实现多个接口。</p>
 <h3 id="定义-1">定义</h3>
 <div class="highlight"><div class="chroma">
@@ -710,6 +709,7 @@ fmt.println((*A).Name)
 </code></pre></td></tr></table>
 </div>
 </div><h3 id="实现">实现</h3>
+<p>一个结构体实现了接口中的所有方法，那么这个结构体就实现了这个接口，不需要显式的实现。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -761,7 +761,102 @@ fmt.println((*A).Name)
 </code></pre></td></tr></table>
 </div>
 </div><p>实现了接口的结构体实例可以赋值给接口变量，这点类似于Java的上转型对象。</p>
-<h2 id="goroute">goroute</h2>
+<h3 id="嵌套">嵌套</h3>
+<p>一个接口可以嵌套在另一个接口。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">A</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nf">A_func1</span><span class="p">()</span>
+<span class="p">}</span>
+<span class="kd">type</span> <span class="nx">B</span> <span class="kd">interface</span> <span class="p">{</span>
+	<span class="nx">A</span>
+	<span class="nf">B_func1</span><span class="p">()</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h3 id="类型断言">类型断言</h3>
+<p>类型断言可以得到一个接口变量隐含的值。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">t</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">.(</span><span class="nx">T</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>上面的代码表示<code>i</code>是一个接口变量，<code>T</code>是<code>i</code>所隐含的值的类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">add</span><span class="p">(</span><span class="nx">a</span> <span class="kt">int</span><span class="p">)</span> <span class="kt">int</span> <span class="p">{</span>
+	<span class="k">return</span> <span class="nx">a</span><span class="o">+</span><span class="mi">1</span>
+<span class="p">}</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">i</span> <span class="kd">interface</span><span class="p">{}</span><span class="c1">//任何类型都实现了空接口，所以任何类型都可以赋值给空接口。
+</span><span class="c1"></span>	<span class="nx">i</span> <span class="p">=</span> <span class="mi">3</span>
+	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nf">add</span><span class="p">(</span><span class="nx">i</span><span class="p">.(</span><span class="kt">int</span><span class="p">)))</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>如果<code>i</code>不包含类型<code>T</code>，则会抛出<code>panic</code>异常，用<code>ok</code>来判断是否转换成功。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">t</span><span class="p">,</span><span class="nx">ok</span> <span class="o">:=</span> <span class="nx">i</span><span class="p">.(</span><span class="nx">T</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用类型断言搭配<code>switch</code>实现判断参数的类型。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">judgeType</span><span class="p">(</span><span class="nx">items</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">{</span>
+	<span class="k">for</span> <span class="nx">_</span><span class="p">,</span><span class="nx">item</span> <span class="o">:=</span> <span class="k">range</span> <span class="nx">items</span> <span class="p">{</span>
+		<span class="k">switch</span> <span class="nx">item</span><span class="p">.(</span><span class="kd">type</span><span class="p">)</span> <span class="p">{</span>
+		<span class="k">case</span> <span class="kt">int</span><span class="p">:</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%d is int\n&#34;</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+		<span class="k">case</span> <span class="kt">string</span><span class="p">:</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Printf</span><span class="p">(</span><span class="s">&#34;%s is string\n&#34;</span><span class="p">,</span> <span class="nx">item</span><span class="p">)</span>
+		<span class="k">default</span><span class="p">:</span>
+			<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="s">&#34;other type&#34;</span><span class="p">)</span>
+		<span class="p">}</span>
+	<span class="p">}</span>
+<span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><h2 id="go-route">go route</h2>
 <h2 id="channel">channel</h2>
 <ul>
 <li></li>

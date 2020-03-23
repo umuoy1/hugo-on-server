@@ -548,8 +548,6 @@ fmt.Println(A.eat(),A.Age)
 
 接口定义了一组方法，这些方法不需要被实现，同时接口内不能定义任何变量。
 
-一个结构体实现了接口中的所有方法，那么这个结构体就实现了这个接口，不需要显示的实现。
-
 显然，一个结构体可以实现多个接口。
 
 ### 定义
@@ -562,6 +560,8 @@ type example interface{
 ```
 
 ### 实现
+
+一个结构体实现了接口中的所有方法，那么这个结构体就实现了这个接口，不需要显式的实现。
 
 ```go
 type Car interface {
@@ -590,7 +590,67 @@ func main() {
 
 实现了接口的结构体实例可以赋值给接口变量，这点类似于Java的上转型对象。
 
-## goroute
+### 嵌套
+
+一个接口可以嵌套在另一个接口。
+
+```go
+type A interface {
+	A_func1()
+}
+type B interface {
+	A
+	B_func1()
+}
+```
+
+### 类型断言
+
+类型断言可以得到一个接口变量隐含的值。
+
+```go
+t := i.(T)
+```
+
+上面的代码表示`i`是一个接口变量，`T`是`i`所隐含的值的类型。
+
+```go
+func add(a int) int {
+	return a+1
+}
+func main() {
+	var i interface{}//任何类型都实现了空接口，所以任何类型都可以赋值给空接口。
+	i = 3
+	fmt.Println(add(i.(int)))
+}
+```
+
+如果`i`不包含类型`T`，则会抛出`panic`异常，用`ok`来判断是否转换成功。
+
+```go
+t,ok := i.(T)
+```
+
+使用类型断言搭配`switch`实现判断参数的类型。
+
+```go
+func judgeType(items ...interface{}) {
+	for _,item := range items {
+		switch item.(type) {
+		case int:
+			fmt.Printf("%d is int\n", item)
+		case string:
+			fmt.Printf("%s is string\n", item)
+		default:
+			fmt.Println("other type")
+		}
+	}
+}
+```
+
+
+
+## go route
 
 
 
