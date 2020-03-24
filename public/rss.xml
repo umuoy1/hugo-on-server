@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Mon, 23 Mar 2020 17:50:20 +0800</lastBuildDate>
+        <lastBuildDate>Tue, 24 Mar 2020 23:30:06 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -55,9 +55,9 @@
             </item>
         
             <item>
-                <title>Cookie和Session</title>
-                <link>https://1aomn.com/skills/cookie-session/</link>
-                <guid isPermaLink="true">https://1aomn.com/skills/cookie-session/</guid>
+                <title>Cookie，Session和token</title>
+                <link>https://1aomn.com/skills/cookie-session-token/</link>
+                <guid isPermaLink="true">https://1aomn.com/skills/cookie-session-token/</guid>
                 <pubDate>Sun, 15 Mar 2020 17:42:40 +0800</pubDate>
                 
                     <author>burningdian@gmail.com (秋屿)</author>
@@ -78,125 +78,44 @@
 <li>浏览器可以在限制条件下修改 cookie 并返回给服务端。</li>
 <li>cookie 在指定的域名及根域名下都生效。</li>
 </ul>
-<h3 id="分类">分类</h3>
-<p>这里直接引用维基百科的介绍：</p>
-<p>Cookie总是保存在客户端中，按在客户端中的存储位置，可分为内存Cookie和硬盘Cookie。</p>
-<p>内存Cookie由浏览器维护，保存在内存中，浏览器关闭后就消失了，其存在时间是短暂的。硬盘Cookie保存在硬盘裡，有一个过期时间，除非用户手工清理或到了过期时间，硬盘Cookie不会被删除，其存在时间是长期的。所以，按存在时间，可分为非持久Cookie和持久Cookie</p>
-<h3 id="使用">使用</h3>
-<p>以下的例子在 Node.js 中演示。</p>
-<p>首先是解析 cookie</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt"> 1
-</span><span class="lnt"> 2
-</span><span class="lnt"> 3
-</span><span class="lnt"> 4
-</span><span class="lnt"> 5
-</span><span class="lnt"> 6
-</span><span class="lnt"> 7
-</span><span class="lnt"> 8
-</span><span class="lnt"> 9
-</span><span class="lnt">10
-</span><span class="lnt">11
-</span><span class="lnt">12
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">=</span> <span class="p">{}</span>
-    <span class="kr">const</span> <span class="nx">cookieStr</span> <span class="o">=</span> <span class="nx">req</span><span class="p">.</span><span class="nx">headers</span><span class="p">.</span><span class="nx">cookie</span> <span class="o">||</span> <span class="s1">&#39;&#39;</span>
-    <span class="nx">cookieStr</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;;&#39;</span><span class="p">).</span><span class="nx">forEach</span><span class="p">(</span><span class="nx">element</span> <span class="p">=&gt;</span> <span class="p">{</span>
-        <span class="k">if</span><span class="p">(</span><span class="o">!</span><span class="nx">element</span><span class="p">){</span>
-            <span class="k">return</span>
-        <span class="p">}</span>
-        <span class="kr">const</span> <span class="nx">arr</span> <span class="o">=</span> <span class="nx">element</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s1">&#39;=&#39;</span><span class="p">)</span>
-        <span class="kr">const</span> <span class="nx">key</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
-        <span class="kr">const</span> <span class="nx">val</span> <span class="o">=</span> <span class="nx">arr</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
-        <span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span><span class="p">[</span><span class="nx">key</span><span class="p">]</span><span class="o">=</span><span class="nx">val</span>
-    <span class="p">});</span>
-    <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span><span class="p">)</span> <span class="c1">//为了方便测试，把cookie打印出来
-</span></code></pre></td></tr></table>
-</div>
-</div><p>在有登录验证的场景中，可以使用 cookie 验证用户是否登录</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="k">if</span><span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">cookie</span><span class="p">.</span><span class="nx">username</span><span class="p">)</span> <span class="p">{</span>
-            <span class="c1">//已登录
-</span><span class="c1"></span>        <span class="p">}</span>
-        <span class="k">else</span> <span class="p">{</span>
-            <span class="c1">//尚未登陆
-</span><span class="c1"></span>        <span class="p">}</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>服务端设置 cookie</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="c1">//假如已经登录成功，设置 cookie 返回给客户端
-</span><span class="c1"></span><span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span><span class="sb">`usernamed=</span><span class="si">${</span><span class="nx">userNamed</span><span class="si">}</span><span class="sb">; path=/`</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>刚才提到客户端可以修改 cookie 并返回给服务端，但修改是有限制的，假如客户端能修改 cookie 来绕过登录验证，是很危险的,可以添加 <code>httpOnly</code> 属性来允许 cookie 仅能由服务端修改，这里的修改是指不能对已设置的 cookie 修改和删除，但可以追加。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span><span class="sb">`usernamed=</span><span class="si">${</span><span class="nx">userNamed</span><span class="si">}</span><span class="sb">; path=/; httpOnly`</span><span class="p">)</span>
-</code></pre></td></tr></table>
-</div>
-</div><p>在很多网站的登录页面，都可以看到类似&quot;保存用户名xx天&quot;的选项，实现原理就是修改 cookie 的过期时间，这里设置过期时间为 1day。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
-</span><span class="lnt">6
-</span><span class="lnt">7
-</span><span class="lnt">8
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kr">const</span> <span class="nx">getCookieExpires</span> <span class="o">=</span> <span class="p">()</span> <span class="p">=&gt;</span> <span class="p">{</span>
-    <span class="kr">const</span> <span class="nx">d</span> <span class="o">=</span> <span class="k">new</span> <span class="nb">Date</span><span class="p">()</span>
-    <span class="nx">d</span><span class="p">.</span><span class="nx">setTime</span><span class="p">(</span><span class="nx">d</span><span class="p">.</span><span class="nx">getTime</span><span class="p">()</span> <span class="o">+</span> <span class="p">(</span><span class="mi">24</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">60</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">))</span>
-    <span class="k">return</span> <span class="nx">d</span><span class="p">.</span><span class="nx">toGMTString</span><span class="p">()</span> <span class="c1">//cookie 中的expires为GMT格式
-</span><span class="c1"></span><span class="p">}</span>
-
-<span class="nx">res</span><span class="p">.</span><span class="nx">setHeader</span><span class="p">(</span><span class="s1">&#39;Set-Cookie&#39;</span><span class="p">,</span> <span class="sb">`usernamed=</span><span class="si">${</span><span class="nx">userNamed</span><span class="si">}</span><span class="sb">; httpOnly; expires=</span><span class="si">${</span><span class="nx">getCookieExpires</span><span class="p">()</span><span class="si">}</span><span class="sb">`</span><span class="p">)</span>
-
-</code></pre></td></tr></table>
-</div>
-</div><h3 id="缺陷">缺陷</h3>
+<h3 id="缺陷">缺陷</h3>
 <p>cookie 通常有以下几个缺陷</p>
 <ol>
-<li>cookie 在 http 请求中是鸣文传递的，有信息泄露的风险</li>
-<li>cookie 的大小有限制，不易存储复杂信息</li>
+<li>cookie 在 http 请求中是明文传递的，有信息泄露的风险</li>
+<li>cookie 的大小有限制(4kb)，不易存储复杂信息</li>
 </ol>
 <hr>
 <h2 id="session">Session</h2>
 <p>session 的本意是会话状态，在 http 中的实现是用来跟踪用户的状态。</p>
 <p>由于HTTP协议是无状态的，服务端不知道用户上一次做了什么，所以服务端会在用户初始状态的时候创建特定的 session ，用来标识并跟踪这个用户。</p>
+<p>就比如购物网站的购物车，我添加了商品，服务端也做了相应的处理，但服务端不知道这个商品添加到哪，也不知道这个购物车是谁了，有了session，客户端就可以通过它来追踪我，然后服务端也就知道这一系列行为是我做的。</p>
 <h3 id="原理">原理</h3>
 <ol>
-<li>服务端在cookie中找到对应的seesionid。</li>
-<li>根据sessionid，从服务端对应的session中获取数据，然后返回。</li>
-<li>如果找不到sessionid，服务端创建一个新session，并将session添加到cookie中，写入响应头。</li>
+<li>服务端在 cookie 中找到对应的seesionid。</li>
+<li>根据 sessionid，从服务端对应的 session 中获取数据，然后返回。</li>
+<li>如果找不到 sessionid，服务端创建一个新 session，并将 sessionid 添加到 cookie 中，写入响应头。</li>
+</ol>
+<h3 id="缺点">缺点</h3>
+<ol>
+<li>session 存在服务端中，扩展性差。</li>
+<li>session 存的东西太多，就会占用过多的内存，无形中增添服务器压力。</li>
+<li>依赖于浏览器的 cookie ，有跨域问题</li>
+<li>受CSRF攻击的风险。</li>
 </ol>
 <hr>
-<h2 id="总结">总结</h2>
-<p>Cookie 保存在客户端中，用来存储用户的信息。</p>
-<p>Session 保存在服务端中，用来跟踪用户，对用户进行唯一标识，可以通过 cookie 实现。</p>
+<h2 id="token">Token</h2>
+<h3 id="原理-1">原理</h3>
+<ol>
+<li>客户端登录，服务端验证用户名和密码之后，对用户名编码，生成 token 返回给客户端。</li>
+<li>客户端将 token 储存，并在每次发送请求的时候附上 token。</li>
+<li>客户端后续发送请求，服务端对用户名用同样的方式编码，然后和客户端发过来的 token 做对比，以验证用户合法性。</li>
+</ol>
+<h3 id="特点-1">特点</h3>
+<ol>
+<li>Token 不依赖于 Cookie ，可以在不支持 Cookie 的平台上使用，也不会有CSFR攻击的风险</li>
+<li>Token 在服务端生成和验证</li>
+<li>Token 储存在客户端，比如存在 Cookie ， sessionStorage ， localStorage 中。</li>
+</ol>
 ]]></description>
                 
                 
@@ -251,7 +170,7 @@
 <p>我们这届包括前几届，协会都是由集训队+普通会员构成的，所谓的管理层也是由集训队担任，貌似之前还分A组C组M组，不过这个概念在上一届就淡化了。协会会员没有门槛，交30元社费即可入社，而集训队需要进行选拔，表现优异者方可入队。集训队选拔分三批，第一批是协会纳新之后，有三次面向全体新社员的新生赛，最后按三次比赛的成绩进行排名，取前几名选入新生集训队。第二批是来年的5月份左右，有一次面向全校的校级程序设计竞赛，举办单位为院级，规则也较新生赛更为严苛，赛后依照排名选取部分同学进入集训队。第三批是在暑假里，协会会号召有志愿的同学留校集训，持续一个多月，期间有老师授课，并且定期比赛，最后依照做题量和每次的排名再选取几名同学进入集训队。这样在大一下学期之前，最终选取18名左右的同学进入集训队，无特殊情况不再变动。</p>
 <p>所以说对一名新生来说，最有机会进入集训队的时间是第一批，其次是第三批，最后是第二批。想被选入第一批，新生需要入社之后开始刷题，紧跟协会的教学计划，最后在新生赛取得好成绩。这样的方式也产生一些问题，比如说新生开学后的事情比较多，同时新生赛安排在周末，必然会有一部分同学因时间冲突而无法参加，其中不乏编程佼佼者。要知道缺席一次新生赛就可能没机会进入集训队。但如果为了避免时间冲突而把三次新生赛缩减为一次，又无法考量新生的综合水平和阶段性学习情况，有失公允，颇难抉择。</p>
 <p>前面主要谈了新生选拔的情况，我感觉目前协会在选拔方面最大的问题是新生赛时间安排不合理，以及新生赛排名对选拔结果的影响太大。另一方面，协会考虑到新生的水平，将三次新生赛的题目设置比较简单，没啥选拔性，通过几次新生赛的最终榜单可以看到，新生AC数量的曲线过于陡峭，有大量爆零或者只过一道题的情况出现。新生赛的目的是让高水平同学在激烈的对抗中脱颖而出，而不是让一大批小白仅仅在体验挨打后丧失兴趣，体验生活。要解决这样的问题，我认为以比赛为主的选拔方式并不可行（仅对我弱校的情况）。就拿一个学校的课程考核来说，一个人的最终成绩也不仅仅由学生的最终考试成绩决定，还有平时成绩、课堂表现等多方面的因素，另外普通课程有一个特别的制度，叫“作业”，我觉得这是一个很好的点。选拔初期，新生的主要学习方式是自学，虽有授课安排，但个人认为收效不大。如何把授课和新生的平时练习结合起来？我认为最好的方式是“留作业”，把巩固和学习的时间放到平时，给学生介绍网上的课程，安排适当的习题，然后把授课的主要内容改为答疑和精讲重难点。着重新生的平时训练，实时公布排名，把做题量排名也算入最终排名，刺激新生平时训练的欲望。这样就一并解决了三个问题，新生赛排名权重过大、授课效率低以及新生平时训练缺乏监督。对于新生赛也要做适当的调整，方式也不难想到就是减少新生赛的次数，有了新生平时的训练情况，题目难度的设置也有了标准。这样也解决的新生时间冲突的问题，如果还有冲突那只能说运气不好。</p>
-<p>说了这么多，听起来貌似很好，但终究是纸上谈兵，没经过实践的考研。这些东西让我来做是没机会了，争取退役之后能跟学弟们谈谈吧，希望未来能招进来更高质量的队员，也希望学校竞赛能搞的越来越好。</p>
+<p>说了这么多，但终究是纸上得来终觉浅啊，没经过实践的考验。这些东西让我来做是没机会了，争取退役之后能跟学弟们谈谈吧，希望未来能招进来更高质量的队员，也希望学校竞赛能搞的越来越好。</p>
 ]]></description>
                 
                 
@@ -310,44 +229,141 @@
                 
                     <description><![CDATA[<h2 id="输入输出">输入输出</h2>
 <p>Golang 有类似C语言的格式化输入输出，常用占位符如下：</p>
-<pre><code>%v		//对应值的默认格式
-</code></pre><p>整数：</p>
-<pre><code>%d		十进制表示
-%b		二进制表示
-%o		八进制表示
-%x		十六进制表示
-</code></pre><p>Golang没有无符号整型的占位符</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="o">%</span><span class="nx">v</span>		<span class="nx">对应值的默认格式</span>
+<span class="o">%</span><span class="nx">T</span>		<span class="nx">对应值的类别</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>整数：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="o">%</span><span class="nx">d</span>		<span class="nx">十进制表示</span>
+<span class="o">%</span><span class="nx">b</span>		<span class="nx">二进制表示</span>
+<span class="o">%</span><span class="nx">o</span>		<span class="nx">八进制表示</span>
+<span class="o">%</span><span class="nx">x</span>		<span class="nx">十六进制表示</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Golang没有无符号整型的占位符</p>
 <p>浮点数：</p>
-<pre><code>%f		一般小数
-%e		科学计数法
-</code></pre><p>字符串：</p>
-<pre><code>%s		字符串
-</code></pre><p>指针：</p>
-<pre><code>%p		十六进制表示，前缀0x
-</code></pre><h4 id="print">Print</h4>
-<pre><code>func Print(a ...interface{}) (n int, err error)
-</code></pre><p>使用其操作数的默认格式进行格式化并写入到标准输出。 当两个连续的操作数均不为字符串时，它们之间就会添加空格。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="o">%</span><span class="nx">f</span>		<span class="nx">一般小数</span>
+<span class="o">%</span><span class="nx">e</span>		<span class="nx">科学计数法</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>字符串：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="o">%</span><span class="nx">s</span>		<span class="nx">字符串</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>指针：</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="o">%</span><span class="nx">p</span>		<span class="nx">十六进制表示</span><span class="err">，</span><span class="nx">前缀0x</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="print">Print</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Print</span><span class="p">(</span><span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用其操作数的默认格式进行格式化并写入到标准输出。 当两个连续的操作数均不为字符串时，它们之间就会添加空格。</p>
 <h4 id="printf">Printf</h4>
-<pre><code>func Printf(format string, a ...interface{}) (n int, err error)
-</code></pre><p>根据格式说明符写入到标准输出。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Printf</span><span class="p">(</span><span class="nx">format</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>根据格式说明符写入到标准输出。</p>
 <h4 id="println">Println</h4>
-<pre><code>func Println(a ...interface{}) (n int, err error)
-</code></pre><p>根据默认格式格式化后写入到标准输出，格式之间添加空格，最后添加换行符。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Println</span><span class="p">(</span><span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>根据默认格式格式化后写入到标准输出，格式之间添加空格，最后添加换行符。</p>
 <h4 id="scan">Scan</h4>
-<pre><code>func Scan(a ...interface{}) (n int, err error)
-</code></pre><p>Scan 扫描从标准输入中读取的文本，并将连续由空格分隔的值存储为连续的实参。 换行符计为空格。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Scan</span><span class="p">(</span><span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>Scan 扫描从标准输入中读取的文本，并将连续由空格分隔的值存储为连续的实参。 换行符计为空格。</p>
 <h4 id="scanf">Scanf</h4>
-<pre><code>func Scanf(format string, a ...interface{}) (n int, err error)
-</code></pre><p>扫描从标准输入中读取的文本， 并将连续由空格分隔的值存储为连续的实参 。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Scanf</span><span class="p">(</span><span class="nx">format</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>扫描从标准输入中读取的文本， 并将连续由空格分隔的值存储为连续的实参 。</p>
 <h4 id="scanln">Scanln</h4>
-<pre><code>func Scanln(a ...interface{}) (n int, err error)
-</code></pre><p>类似Scan，但它在换行符处停止扫描，且最后的条目之后必须为换行符或 EOF。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Scanln</span><span class="p">(</span><span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="p">(</span><span class="nx">n</span> <span class="kt">int</span><span class="p">,</span> <span class="nx">err</span> <span class="kt">error</span><span class="p">)</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>类似Scan，但它在换行符处停止扫描，且最后的条目之后必须为换行符或 EOF。</p>
 <h4 id="sprint">Sprint</h4>
-<pre><code>func Sprint(a ...interface{}) string
-</code></pre><p>使用其操作数的默认格式进行格式化并返回其结果字符串。 当两个连续的操作数均不为字符串时，它们之间就会添加空格。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Sprint</span><span class="p">(</span><span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="kt">string</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>使用其操作数的默认格式进行格式化并返回其结果字符串。 当两个连续的操作数均不为字符串时，它们之间就会添加空格。</p>
 <h4 id="sprintf">Sprintf</h4>
-<pre><code>func Sprintf(format string, a ...interface{}) string
-</code></pre><hr>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">Sprintf</span><span class="p">(</span><span class="nx">format</span> <span class="kt">string</span><span class="p">,</span> <span class="nx">a</span> <span class="o">...</span><span class="kd">interface</span><span class="p">{})</span> <span class="kt">string</span>
+</code></pre></td></tr></table>
+</div>
+</div><hr>
 <h2 id="变量">变量</h2>
 <p>Golang中的变量一经定义，必须使用</p>
 <p>全局定义的变量，如果首字母大写则对其他包可以访问。</p>
@@ -486,16 +502,33 @@ fmt.Println(b)
 <h4 id="defer">defer</h4>
 <p><code>defer</code>关键字表示的语句，会在函数返回时执行，<code>defer</code>语句中的变量，在<code>defer</code>声明时就决定了</p>
 <p>多个<code>defer</code>以栈的顺序执行。</p>
-<pre><code>func f(){
-	i := 3
-	refer fmt.Println(i)
-	i++
-	refer fmt.Println(i)
-	return
-}
-//4
-//3
-</code></pre><hr>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span><span class="lnt">6
+</span><span class="lnt">7
+</span><span class="lnt">8
+</span><span class="lnt">9
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">func</span> <span class="nf">f</span><span class="p">(){</span>
+	<span class="nx">i</span> <span class="o">:=</span> <span class="mi">3</span>
+	<span class="nx">refer</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+	<span class="nx">i</span><span class="o">++</span>
+	<span class="nx">refer</span> <span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">i</span><span class="p">)</span>
+	<span class="k">return</span>
+<span class="p">}</span>
+<span class="c1">//4
+</span><span class="c1">//3
+</span></code></pre></td></tr></table>
+</div>
+</div><h4 id="init">init</h4>
+<p><code>init()</code>函数在包初始化时执行，在<code>main</code>函数之前完成。</p>
+<hr>
 <h2 id="常用内置函数">常用内置函数</h2>
 <h4 id="new">new</h4>
 <p><code>new</code>给变量分配内存，并置为零值，然后返回指针</p>
@@ -856,7 +889,61 @@ fmt.println((*A).Name)
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><h2 id="go-route">go route</h2>
+</div><h3 id="反射">反射</h3>
+<p>Golang的反射机制，允许程序操作任意类型的变量。</p>
+<p>常见的用法是将一个未知的变量存储在空接口<code>interface{}</code>中，作为参数传递给<code>reflect.ValueOf()</code>，然后该函数对空接口进行解包，将隐含的数据封装到<code>value</code>类型中并返回。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt"> 1
+</span><span class="lnt"> 2
+</span><span class="lnt"> 3
+</span><span class="lnt"> 4
+</span><span class="lnt"> 5
+</span><span class="lnt"> 6
+</span><span class="lnt"> 7
+</span><span class="lnt"> 8
+</span><span class="lnt"> 9
+</span><span class="lnt">10
+</span><span class="lnt">11
+</span><span class="lnt">12
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="kd">type</span> <span class="nx">fakeInt</span> <span class="kt">float32</span>
+<span class="kd">func</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+	<span class="kd">var</span> <span class="nx">a</span> <span class="nx">fakeInt</span> <span class="p">=</span> <span class="mf">3.3</span>
+	<span class="nx">v</span> <span class="o">:=</span> <span class="nx">reflect</span><span class="p">.</span><span class="nf">ValueOf</span><span class="p">(</span><span class="nx">a</span><span class="p">)</span><span class="c1">//变量a本身就实现了Interface{}，不用显示转换
+</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nf">Float</span><span class="p">())</span><span class="c1">//3.299999952316284
+</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nf">Type</span><span class="p">())</span><span class="c1">//main.fakeInt
+</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">v</span><span class="p">.</span><span class="nf">Kind</span><span class="p">())</span><span class="c1">//float32
+</span><span class="c1"></span>
+	<span class="nx">vi</span> <span class="o">:=</span> <span class="nx">v</span><span class="p">.</span><span class="nf">Interface</span><span class="p">()</span><span class="c1">//转回Interface{}
+</span><span class="c1"></span>	<span class="nx">vif</span> <span class="o">:=</span> <span class="nx">vi</span><span class="p">.(</span><span class="nx">fakeInt</span><span class="p">)</span><span class="c1">//转回fakeInt
+</span><span class="c1"></span>	<span class="nx">fmt</span><span class="p">.</span><span class="nf">Println</span><span class="p">(</span><span class="nx">vif</span><span class="p">)</span><span class="c1">//3.3
+</span><span class="c1"></span><span class="p">}</span>
+</code></pre></td></tr></table>
+</div>
+</div><p>变量，<code>Interface{}</code>，<code>Reflect.Value</code> 之间的关系如下</p>
+<p><img src="https://i.loli.net/2020/03/23/7Je4mAnWbZx5wfE.png" alt="未命名绘图 1.png"></p>
+<p>从<code>Interface()</code>到<code>reflect.Value</code>的可逆过程，正是反射的精髓所在。</p>
+<h4 id="反射包中的一些方法">反射包中的一些方法</h4>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
+</span><span class="lnt">5
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-go" data-lang="go"><span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nf">Type</span><span class="p">()</span>	<span class="nx">返回变量的的静态类型</span>
+<span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nf">kind</span><span class="p">()</span>	<span class="nx">返回变量的基本类型</span>
+<span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nf">Elem</span><span class="p">()</span>	<span class="nx">返回指针所指向的变量</span><span class="err">，</span><span class="nx">相当于</span><span class="s">`*`</span><span class="nx">操作</span>
+<span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nf">canSet</span><span class="p">()</span>	<span class="nx">返回变量是否可以被修改</span>
+<span class="nx">reflect</span><span class="p">.</span><span class="nx">Value</span><span class="p">.</span><span class="nf">SetT</span><span class="p">()</span>	<span class="nx">设置变量的值</span><span class="err">，</span><span class="nx">T指变量类型</span>
+</code></pre></td></tr></table>
+</div>
+</div><h4 id="结构体的反射操作">结构体的反射操作</h4>
+<h2 id="go-route">go route</h2>
 <h2 id="channel">channel</h2>
 <ul>
 <li></li>

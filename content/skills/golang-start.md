@@ -11,13 +11,14 @@ tags: ["Go"]
 
 Golang 有类似C语言的格式化输入输出，常用占位符如下：
 
-```
-%v		//对应值的默认格式
+```go
+%v		对应值的默认格式
+%T		对应值的类别
 ```
 
 整数：
 
-```
+```go
 %d		十进制表示
 %b		二进制表示
 %o		八进制表示
@@ -28,26 +29,26 @@ Golang没有无符号整型的占位符
 
 浮点数：
 
-```
+```go
 %f		一般小数
 %e		科学计数法
 ```
 
 字符串：
 
-```
+```go
 %s		字符串
 ```
 
 指针：
 
-```
+```go
 %p		十六进制表示，前缀0x
 ```
 
 #### Print
 
-```
+```go
 func Print(a ...interface{}) (n int, err error)
 ```
 
@@ -55,7 +56,7 @@ func Print(a ...interface{}) (n int, err error)
 
 #### Printf
 
-```
+```go
 func Printf(format string, a ...interface{}) (n int, err error)
 ```
 
@@ -63,7 +64,7 @@ func Printf(format string, a ...interface{}) (n int, err error)
 
 #### Println
 
-```
+```go
 func Println(a ...interface{}) (n int, err error)
 ```
 
@@ -71,7 +72,7 @@ func Println(a ...interface{}) (n int, err error)
 
 #### Scan
 
-```
+```go
 func Scan(a ...interface{}) (n int, err error)
 ```
 
@@ -79,7 +80,7 @@ func Scan(a ...interface{}) (n int, err error)
 
 #### Scanf
 
-```
+```go
 func Scanf(format string, a ...interface{}) (n int, err error)
 ```
 
@@ -87,7 +88,7 @@ func Scanf(format string, a ...interface{}) (n int, err error)
 
 #### Scanln
 
-```
+```go
 func Scanln(a ...interface{}) (n int, err error)
 ```
 
@@ -95,7 +96,7 @@ func Scanln(a ...interface{}) (n int, err error)
 
 #### Sprint
 
-```
+```go
 func Sprint(a ...interface{}) string
 ```
 
@@ -103,7 +104,7 @@ func Sprint(a ...interface{}) string
 
 #### Sprintf
 
-```
+```go
 func Sprintf(format string, a ...interface{}) string
 ```
 
@@ -386,7 +387,7 @@ func add(arg...)int{
 
 多个`defer`以栈的顺序执行。
 
-```
+```go
 func f(){
 	i := 3
 	refer fmt.Println(i)
@@ -397,6 +398,10 @@ func f(){
 //4
 //3
 ```
+
+#### init
+
+`init()`函数在包初始化时执行，在`main`函数之前完成。
 
 ---
 
@@ -647,6 +652,45 @@ func judgeType(items ...interface{}) {
 	}
 }
 ```
+
+### 反射
+
+Golang的反射机制，允许程序操作任意类型的变量。
+
+常见的用法是将一个未知的变量存储在空接口`interface{}`中，作为参数传递给`reflect.ValueOf()`，然后该函数对空接口进行解包，将隐含的数据封装到`value`类型中并返回。
+
+```go
+type fakeInt float32
+func main() {
+	var a fakeInt = 3.3
+	v := reflect.ValueOf(a)//变量a本身就实现了Interface{}，不用显示转换
+	fmt.Println(v.Float())//3.299999952316284
+	fmt.Println(v.Type())//main.fakeInt
+	fmt.Println(v.Kind())//float32
+
+	vi := v.Interface()//转回Interface{}
+	vif := vi.(fakeInt)//转回fakeInt
+	fmt.Println(vif)//3.3
+}
+```
+
+变量，`Interface{}`，`Reflect.Value` 之间的关系如下
+
+![未命名绘图 _1_.png](https://i.loli.net/2020/03/23/7Je4mAnWbZx5wfE.png)
+
+从`Interface()`到`reflect.Value`的可逆过程，正是反射的精髓所在。
+
+#### 反射包中的一些方法
+
+```go
+reflect.Value.Type()	返回变量的的静态类型
+reflect.Value.kind()	返回变量的基本类型
+reflect.Value.Elem()	返回指针所指向的变量，相当于`*`操作
+reflect.Value.canSet()	返回变量是否可以被修改
+reflect.Value.SetT()	设置变量的值，T指变量类型
+```
+
+#### 结构体的反射操作
 
 
 
