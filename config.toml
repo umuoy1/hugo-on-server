@@ -1178,7 +1178,7 @@ uglyURLs = false
     # 自定义页脚（支持 Markdown）
     customFooter = "鲁ICP备19060154号-1"
 
-    displayBusuanziSiteUVAndPV = true
+    displayBusuanziSiteUVAndPV = false
     busuanziSiteUVText = ""
     busuanziSiteUVIcon = "user"
     busuanziSitePVText = ""
