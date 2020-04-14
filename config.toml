@@ -339,7 +339,7 @@ uglyURLs = false
     # 注意：请保持此格式，更改数字
 
     # 站点的推特帐号
-    siteTwitter = "Burningdian"
+    siteTwitter = "umuoy11"
     # 说明：用于 Twitter Cards
 
 
@@ -1176,7 +1176,7 @@ uglyURLs = false
     displaySiteCopyright = true
 
     # 自定义页脚（支持 Markdown）
-    customFooter = ""
+    customFooter = "鲁ICP备19060154号-1"
 
     displayBusuanziSiteUVAndPV = true
     busuanziSiteUVText = ""
