@@ -2,7 +2,7 @@
 # 站点配置
 
 baseURL = "https://1aomn.com/"
-title = "秋屿"
+title = "秋屿博客"
 languageCode = "zh-CN"
 hasCJKLanguage = true
 # 版权信息（支持 Markdown）

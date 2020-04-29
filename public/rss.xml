@@ -7,7 +7,7 @@
 
 <rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
     <channel>
-        <title>秋屿</title>
+        <title>秋屿博客</title>
         <link>https://1aomn.com/</link>
         <description>秋屿的个人博客，记载生活点滴与技术灵感。</description>
         <generator>Hugo 0.66.0 https://gohugo.io/</generator>
@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Tue, 14 Apr 2020 13:05:33 +0800</lastBuildDate>
+        <lastBuildDate>Wed, 29 Apr 2020 11:20:01 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
