@@ -13,13 +13,13 @@ tags: []
 
 <img src="https://camo.githubusercontent.com/657a163e660f32aae67fce0af8cbdef47251f106/68747470733a2f2f73312e617831782e636f6d2f323032302f30372f32322f55624b4370712e706e67" style="zoom:20%;" />
 
-## 介绍
+## Introduction
 
 `StreamerHelper`是一个开源项目，可以实现虎牙、斗鱼、AfreecaTV等主流直播平台主播开播时自动录像，并适时上传。Github地址：[https://github.com/ZhangMingZhao1/StreamerHelper](https://github.com/ZhangMingZhao1/StreamerHelper)。
 
 `StreamerHelper`使用`Node.js`开发，同时集成了直播录制和视频上传的功能，软件部署后，后台实时批量监测各个平台主播是否在线，并使用`FFmpeg`录制直播保存为视频文件，停播后投稿到b站。
 
-## 项目结构
+## Project Tree
 
 ```
 StreamerHelper
@@ -66,7 +66,7 @@ StreamerHelper
 
 日志文件会自动创建，在`./logs/`下。
 
-## 流程
+## How does it work?
 
 程序启动之后，首先`app.ts`里有一个大的定时器`const timer = setInterval(F, 12000);`，每`12s`遍历一遍`info.json`
 
@@ -78,7 +78,7 @@ StreamerHelper
 
 下载的录播文件会暂时存放于`./download/`下，并在上传成功后自动删除。
 
-## 遇到的困难
+## Troubles & Solutions
 
 在获取直播源后的地址可以用`PotPlayer`播放器正常播放，但无法使用`FFmpeg`下载，并且返回了`403 Forbidden`错误，多次测试后发现，`PotPlayer`在播放直播流时默认携带了一系列`Headers`信息，之后在`FFmpeg`启动参数中加入`Headers`信息，可以成功下载。
 
