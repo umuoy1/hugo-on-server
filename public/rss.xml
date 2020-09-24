@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Fri, 25 Sep 2020 02:15:56 +0800</lastBuildDate>
+        <lastBuildDate>Fri, 25 Sep 2020 02:17:40 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -98,7 +98,7 @@
 <p>所有的函数对象继承自<code>Function.prototype</code>。</p>
 <p>所有由<code>{}</code>，<code>new Object()</code>产生的对象继承自<code>Object</code>。</p>
 <p>经典老图</p>
-<p><img src="C:%5CUsers%5C1aoMn%5CDesktop%5Cjsobj_full.jpg" alt="jsobj_full"></p>
+<p><img src="https://i.loli.net/2020/09/25/aSvQ6XxiDusJzd7.jpg" alt="jsobj_full.jpg"></p>
 ]]></description>
                 
                 
