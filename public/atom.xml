@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿记</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-09-25T02:17:40+08:00</updated>
+    <updated>2020-09-25T15:21:49+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Javascript原型链</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/%E5%8E%9F%E5%9E%8B%E9%93%BE/" />
             <id>https://1aomn.com/skills/%E5%8E%9F%E5%9E%8B%E9%93%BE/</id>
-            <updated>2020-09-25T02:17:37+08:00</updated>
+            <updated>2020-09-25T15:21:42+08:00</updated>
             <published>2020-09-18T00:05:05+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -37,10 +37,14 @@
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
+</span><span class="lnt">3
+</span><span class="lnt">4
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">make</span><span class="p">(){}</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">make</span> <span class="o">===</span> <span class="nx">make</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span><span class="p">)</span> <span class="c1">// true
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(){</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="sb">`Jack`</span>
+<span class="p">}</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Person</span> <span class="o">===</span> <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span><span class="p">)</span> <span class="c1">// true
 </span></code></pre></td></tr></table>
 </div>
 </div><p>通过<code>new</code>调用函数(当作构造函数)来构造对象时，会创建该函数的实例化对象，新对象的<code>__proto__</code>指向原函数的<code>prototype</code>属性来实现继承。</p>
@@ -48,22 +52,32 @@
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
 </span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span><span class="lnt">5
 </span></code></pre></td>
 <td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(){</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="sb">`Jack`</span>
-<span class="p">}</span>
-<span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">()</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span><span class="o">===</span><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span> <span class="c1">// true
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">()</span>
+<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span> <span class="c1">// true
+</span></code></pre></td></tr></table>
+</div>
+</div><p>函数也是一个对象，函数对象由<code>Function</code>构造，其<code>__proto__</code>指向<code>Function.prototype</code>。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">Person</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
 </span></code></pre></td></tr></table>
 </div>
 </div><p>通过<code>new Object()</code>和<code>{}</code>创建的对象，<code>__proto__</code>属性都指向<code>Object.prototype</code>，因为<code>Object</code>就是他们的构造函数，这与上面的行为是相一致的。</p>
-<p>上面提到的，既然<code>prototype</code>属性的值是一个对象，那么该对象也是有原型的，即<code>Object.prototype</code>，至此达到了该原型链的顶端。</p>
-<p>其实到这里，原型链就已经讲明白了。</p>
-<p>但其实深究下去会发现，既然<code>Object</code>本身是构造函数，其<code>__proto__</code>指向<code>Function.prototype</code>，<code>Function.prototype</code>也是对象，继承了<code>Object.prototype</code>，这就产生了&quot;你中有我，我中有你&quot;的奇怪问题。</p>
+<p>上面提到的，既然<code>Person.prototype</code>的值是一个对象，那么该对象也是有原型的，我们发现它指向<code>Object.prototype</code>，至此达到了该原型链的顶端。</p>
+<div class="highlight"><div class="chroma">
+<table class="lntable"><tr><td class="lntd">
+<pre class="chroma"><code><span class="lnt">1
+</span></code></pre></td>
+<td class="lntd">
+<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
+</span></code></pre></td></tr></table>
+</div>
+</div><p>但深究下去会发现，既然<code>Object</code>本身是构造函数，其<code>__proto__</code>指向<code>Function.prototype</code>，<code>Function.prototype</code>也是对象，继承了<code>Object.prototype</code>，这就产生了&quot;你中有我，我中有你&quot;的奇怪问题。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
@@ -78,18 +92,23 @@
 </div>
 </div><p>在<code>ECMA</code>规范<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.3.4">15.3.4</a>中：</p>
 <blockquote>
-<p>The Function prototype object is itself a Function object (its [[Class]] is <code>&quot;Function&quot;</code>) that, when invoked, accepts any arguments and returns <strong>undefined</strong>.</p>
+<p>object (its [[Class]] is <code>&quot;Function&quot;</code>) that, when invoked, accepts any arguments and returns <strong>undefined</strong>.</p>
 <p>The value of the [[Prototype]] internal property of the Function prototype object is the standard built-in Object prototype object (<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.4">15.2.4</a>). The initial value of the [[Extensible]] internal property of the Function prototype object is <strong>true</strong>.</p>
 <p>The Function prototype object does not have a <code>valueOf</code> property of its own; however, it inherits the <code>valueOf</code> property from the Object prototype Object.</p>
 <p>The <code>length</code> property of the Function prototype object is <strong>0</strong>.</p>
 </blockquote>
 <p>所以说普通函数都是<code>Function</code>的实例，他们的<code>__proto__</code>都指向<code>Function.prototype</code>。</p>
-<p>而根据规范说明，<code>Function.prototype</code>本身是一个函数对象，它继承自<code>Object.prototype</code>，而且<code>Object.prototype</code>没有<code>prototype</code>属性。</p>
+<p>而根据规范说明，<code>Function.prototype</code>本身是一个函数对象，它继承自<code>Object.prototype</code>，但<code>Object.prototype</code>自身没有<code>prototype</code>属性。</p>
+<p>在<code>ECMA</code>规范<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.4">15.2.4</a>中：</p>
+<blockquote>
+<p>The value of the [[Prototype]] internal property of the Object prototype object is <strong>null</strong>, the value of the [[Class]] internal property is <code>&quot;Object&quot;</code>, and the initial value of the [[Extensible]] internal property is <strong>true</strong>.</p>
+</blockquote>
 <p>总结如下：</p>
 <p><code>Object.prototype</code>是最顶级的原型，它的<code>__proto__</code>为<code>null</code>。</p>
 <p><code>Function.prototype</code>继承自<code>Object.prototype</code>。</p>
 <p>所有的函数对象继承自<code>Function.prototype</code>。</p>
 <p>所有由<code>{}</code>，<code>new Object()</code>产生的对象继承自<code>Object</code>。</p>
+<p>由函数对象产生的对象，原型指向其构造函数的<code>prototype</code>属性。</p>
 <p>经典老图</p>
 <p><img src="https://i.loli.net/2020/09/25/aSvQ6XxiDusJzd7.jpg" alt="jsobj_full.jpg"></p>
 ]]></content>
