@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿记</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-09-25T15:21:49+08:00</updated>
+    <updated>2020-09-25T16:38:03+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Javascript原型链</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/%E5%8E%9F%E5%9E%8B%E9%93%BE/" />
             <id>https://1aomn.com/skills/%E5%8E%9F%E5%9E%8B%E9%93%BE/</id>
-            <updated>2020-09-25T15:21:42+08:00</updated>
+            <updated>2020-09-25T16:37:54+08:00</updated>
             <published>2020-09-18T00:05:05+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -72,9 +72,11 @@
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt">1
+</span><span class="lnt">2
 </span></code></pre></td>
 <td class="lntd">
 <pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
+</span><span class="c1"></span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">// null
 </span></code></pre></td></tr></table>
 </div>
 </div><p>但深究下去会发现，既然<code>Object</code>本身是构造函数，其<code>__proto__</code>指向<code>Function.prototype</code>，<code>Function.prototype</code>也是对象，继承了<code>Object.prototype</code>，这就产生了&quot;你中有我，我中有你&quot;的奇怪问题。</p>
@@ -98,7 +100,7 @@
 <p>The <code>length</code> property of the Function prototype object is <strong>0</strong>.</p>
 </blockquote>
 <p>所以说普通函数都是<code>Function</code>的实例，他们的<code>__proto__</code>都指向<code>Function.prototype</code>。</p>
-<p>而根据规范说明，<code>Function.prototype</code>本身是一个函数对象，它继承自<code>Object.prototype</code>，但<code>Object.prototype</code>自身没有<code>prototype</code>属性。</p>
+<p>而根据规范，<code>Function.prototype</code>本身是一个函数对象，它继承自<code>Object.prototype</code>。</p>
 <p>在<code>ECMA</code>规范<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.4">15.2.4</a>中：</p>
 <blockquote>
 <p>The value of the [[Prototype]] internal property of the Object prototype object is <strong>null</strong>, the value of the [[Class]] internal property is <code>&quot;Object&quot;</code>, and the initial value of the [[Extensible]] internal property is <strong>true</strong>.</p>
