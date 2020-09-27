@@ -1,3 +1,15 @@
+---
+title: "StreamerHelper"
+date: 2020-09-18T00:05:05+08:00
+draft: true
+indent: true
+indentFirstParagraph: true
+comments: true
+toc: false
+tags: []
+
+---
+
 为什么用泛型不用any
 
 - any 放弃了类型检查

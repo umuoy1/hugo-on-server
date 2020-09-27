@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Fri, 25 Sep 2020 16:38:03 +0800</lastBuildDate>
+        <lastBuildDate>Sun, 27 Sep 2020 15:49:28 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -487,44 +487,6 @@ HUGO_ENABLEGITINFO = &quot;true&quot;</p>
 <p><img src="https://i.loli.net/2020/03/09/xan3kQCeifIWtvy.png" alt="image.png"></p>
 <p>等待10分钟后，就可以通过域名访问自己的网站了。</p>
 <p>Netlify推荐使用 SSL/TLS 的域名，白嫖的方法很多，这里就不赘述了。</p>
-]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
-        
-            <item>
-                <title></title>
-                <link>https://1aomn.com/skills/ts%E7%AC%94%E8%AE%B0/</link>
-                <guid isPermaLink="true">https://1aomn.com/skills/ts%E7%AC%94%E8%AE%B0/</guid>
-                <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<p>为什么用泛型不用any</p>
-<ul>
-<li>
-<p>any 放弃了类型检查</p>
-</li>
-<li>
-<p>泛型可以传入参数返回参数一致，并且检查类型</p>
-</li>
-</ul>
-<p>继承</p>
-<ul>
-<li>对象冒充：可以继承构造函数的方法，但不能继承原型链的方法</li>
-<li>原型链继承：</li>
-</ul>
 ]]></description>
                 
                 
