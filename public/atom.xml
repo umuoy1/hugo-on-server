@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿记</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-09-28T17:55:37+08:00</updated>
+    <updated>2020-09-28T17:59:47+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -131,7 +131,7 @@
             <title type="text">StreamerHelper</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/streamerhelper/" />
             <id>https://1aomn.com/skills/streamerhelper/</id>
-            <updated>2020-09-18T19:45:12+08:00</updated>
+            <updated>2020-09-28T17:59:42+08:00</updated>
             <published>2020-09-18T00:05:05+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -182,21 +182,20 @@
 <p><code>./templates/info.json</code>保存用于投稿的信息，所需录制主播信息。</p>
 <p>日志文件会自动创建，在<code>./logs/</code>下。</p>
 <h2 id="how-does-it-work">How does it work?</h2>
-<p>程序启动之后，首先<code>app.ts</code>里有一个大的定时器<code>const timer = setInterval(F, 12000);</code>，每<code>12s</code>遍历一遍<code>info.json</code></p>
-<p>里的主播信息，并调用<code>getStreamUrl()</code>检测主播是否在线，如果检测到在线，会实例化一个<code>Recorder</code>，同时将直播流链接传入构造器，启动下载线程，同时，会有一个监听器监听直播流断开事件。</p>
-<p><code>Recorder</code>类的代码在<code>message.ts</code>里，实例化后，会调用子进程启动<code>FFmpeg</code>来以原码率、原音视频编码的格式下载传入的直播流（占用极小，实际测试中占用不到CPU的<code>1%</code>）。直播流断开后，触发<code>streamDiscon</code>事件，事件触发后，程序会根据直播流是否为正常断开，来选择是否上传。</p>
-<p>项目以异步的方式下载多个直播流，并且由统一的事件触发器处理直播流断开的情况。当用户向进程发送<code>SIGINT</code>信号后，程序会移除监听<code>streamDiscn</code>事件，并等待<code>FFmpeg</code>子进程结束后退出。</p>
+<p>程序启动之后，首先<code>app.ts</code>里有一个大的定时器<code>const timer = setInterval(F, 12000);</code>，每<code>12s</code>遍历一遍<code>info.json</code>里的主播信息，并调用<code>getStreamUrl()</code>检测主播是否在线，如果检测到在线，会实例化<code>Recorder</code>来启动下载线程，同时，会有一个监听器监听直播流断开事件。</p>
+<p><code>Recorder</code>类的代码在<code>message.ts</code>里，实例化后，会调用子进程启动<code>FFmpeg</code>来以原码率、原音视频编码的格式下载传入的直播流（占用极小，实际测试中占用不到CPU的<code>2%</code>）。直播流断开后，触发<code>streamDiscon</code>事件，事件触发后，程序会根据直播流是否为正常断开，来选择上传或继续下载。</p>
+<p>程序以异步的方式下载多个直播流，并且由统一的事件触发器处理直播流断开的情况。当用户向进程发送<code>SIGINT</code>信号后，程序会移除监听<code>streamDiscn</code>事件，并等待<code>FFmpeg</code>子进程结束后退出。</p>
 <p>下载的录播文件会暂时存放于<code>./download/</code>下，并在上传成功后自动删除。</p>
 <h2 id="troubles--solutions">Troubles &amp; Solutions</h2>
 <p>在获取直播源后的地址可以用<code>PotPlayer</code>播放器正常播放，但无法使用<code>FFmpeg</code>下载，并且返回了<code>403 Forbidden</code>错误，多次测试后发现，<code>PotPlayer</code>在播放直播流时默认携带了一系列<code>Headers</code>信息，之后在<code>FFmpeg</code>启动参数中加入<code>Headers</code>信息，可以成功下载。</p>
-<p>项目经历过一次比较大的结构调整，主要是将下载器包装成一个<code>Recorder</code>类，可以通过实例化来异步地单独下载每一个直播流，并统一由<code>app.ts</code>管理，这么做的好处是解下载模块与上传模块的耦合，降低复杂度。</p>
+<p>项目经历过一次比较大的结构调整，主要是将下载器包装成一个<code>Recorder</code>类，可以通过实例化来异步地单独下载每一个直播流，并统一由<code>app.ts</code>管理，这么做的好处是解开下载模块与上传模块的耦合，降低复杂度。</p>
 <p>当需要强制使一个<code>FFmpeg</code>子进程退出时，可以通过向子进程的<code>stdin</code>的可写流写入<code>q</code>来通知<code>FFmpeg</code>主动退出。</p>
 <p>上传模块中，为了避免频繁登录触发验证码，使用了长期有效的<code>access_token</code>来避免验证。</p>
 <h2 id="未来计划">未来计划</h2>
 <ul>
 <li><input disabled="" type="checkbox">支持<code>Twitch</code>。</li>
 <li><input disabled="" type="checkbox">支持<code>docker</code>部署。</li>
-<li><input disabled="" type="checkbox">爬虫定时区间，节省服务器流量...</li>
+<li><input disabled="" type="checkbox">爬虫定时区间，节省服务器流量</li>
 <li><input disabled="" type="checkbox">重启后同时检测本地是否有上传失败的视频文件，并上传。</li>
 </ul>
 ]]></content>
