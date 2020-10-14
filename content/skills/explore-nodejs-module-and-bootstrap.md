@@ -49,7 +49,7 @@ int Start(int argc, char** argv) {
 
 初始化函数`InitializeNodeWithArgs`主要是调用`RegisterBuiltinModules`注册内建模块，处理一些`Node.js`配置及参数相关的内容。
 
-调用`RegisterBuiltinModules`注册核心模块，其中定义了一个宏，调用`NODE_BUILTIN_MODULES(
+调用`RegisterBuiltinModules`注册核心模块，其中定义了一个宏，调用`NODE_BUILTIN_MODULES(`
 
 ```c++
 // node_binding.cc
@@ -953,7 +953,7 @@ MaybeLocal<Value> StartExecution(Environment* env, const char* main_script_id) {
 
 之后看一下`lib\internal\main\run_main_module.js`。
 
-```c++
+```javascript
 // lib\internal\main\run_main_module.js
 'use strict';
 
@@ -980,7 +980,7 @@ require('internal/modules/cjs/loader').Module.runMain(process.argv[1]);
 
 其中有两步需要注意。
 
-```c++
+```javascript
 // pre_execution.js
 function initializeCJSLoader() {
   const CJSLoader = require('internal/modules/cjs/loader');
@@ -1010,7 +1010,7 @@ function loadPreloadModules() {
 
 这里看一下`_preloadModules`。
 
-```c++
+```javascript
 // lib\internal\modules\cjs\loader.js
 Module._preloadModules = function(requests) {
   if (!ArrayIsArray(requests))
@@ -1036,7 +1036,7 @@ Module._preloadModules = function(requests) {
 
 OK，回去看` executeUserEntryPoint `，启动文件就是通过这个方法执行。
 
-```c++
+```javascript
 // lib\internal\modules\run_main.js
 'use strict';
 
@@ -1123,7 +1123,7 @@ module.exports = {
 
 首先会调用`Module`的`_load`方法。
 
-```c++
+```javascript
 // lib\internal\modules\cjs\loader.js
 Module._load = function(request, parent, isMain) {
   let relResolveCacheIdentifier;
@@ -1220,7 +1220,7 @@ Module._load = function(request, parent, isMain) {
 
 如果当前模块有父模块，会根据父模块找到当前模块的文件名。之后会检查模块是否有缓存，有则直接返回。下一步，会判断模块是否为`NativeModule`，如果是则直接导出。之后只会是自定义模块了，首先会根据文件名实例化一个`Module`对象并做缓存处理，然后调用`load`方法。
 
-```c++
+```javascript
 // lib\internal\modules\cjs\loader.js
 Module.prototype.load = function(filename) {
   debug('load %j for module %j', filename, this.id);
@@ -1250,7 +1250,7 @@ Module.prototype.load = function(filename) {
 
 这里会根据不同的文件扩展名调用` Module._extension `方法，分别是`.js .json .node`。
 
-```c++
+```javascript
 // lib\internal\modules\cjs\loader.js
 Module._extensions['.js'] = function(module, filename) {
   if (filename.endsWith('.js')) {
@@ -1278,7 +1278,7 @@ Module._extensions['.js'] = function(module, filename) {
 
 对于`.js`模块，会调用`fs.readFileSync`读取文件内容，有缓存则直接读缓存，然后调用`_compile`编译。
 
-```c++
+```javascript
 // lib\internal\modules\cjs\loader.js
 Module.prototype._compile = function(content, filename) {
   let moduleURL;
@@ -1337,7 +1337,7 @@ Module.prototype._compile = function(content, filename) {
 
 首先会调用`wrapSafe`方法给源代码包装，传入`6`个参数`exports, require, mudole, __filename, __dirname`形成一个新函数，如果已经包装过，就直接调用`vm.runInThisContext`运行这个函数，否则就调用内建模块` contextify `里的`compileFunction`函数编译，最终返回一个可执行的函数体。
 
-```c++
+```javascript
 // lib\internal\modules\cjs\loader.js
 let wrap = function(script) {
   return Module.wrapper[0] + script + Module.wrapper[1];
@@ -1390,7 +1390,7 @@ function wrapSafe(filename, content, cjsModuleInstance) {
 
 这里看一下`require`方法的具体实现
 
-```
+```javascript
 // // lib\internal\modules\cjs\loader.js
 Module.prototype.require = function(id) {
   validateString(id, 'id');
