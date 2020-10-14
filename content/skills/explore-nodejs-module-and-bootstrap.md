@@ -650,7 +650,7 @@ MaybeLocal<Function> NativeModuleLoader::LookupAndCompile(
 }
 ```
 
-首先调用了`LoadBuiltinModuleSource`加载文件代码
+首先调用`LoadBuiltinModuleSource`加载文件代码
 
 ```c++
 // node_native_module.cc

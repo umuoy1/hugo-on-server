@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Thu, 15 Oct 2020 01:35:48 +0800</lastBuildDate>
+        <lastBuildDate>Thu, 15 Oct 2020 01:37:44 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -1210,7 +1210,7 @@
 <span class="p">}</span>
 </code></pre></td></tr></table>
 </div>
-</div><p>首先调用了<code>LoadBuiltinModuleSource</code>加载文件代码</p>
+</div><p>首先调用<code>LoadBuiltinModuleSource</code>加载文件代码</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
