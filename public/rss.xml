@@ -23,15 +23,15 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Thu, 15 Oct 2020 01:23:58 +0800</lastBuildDate>
+        <lastBuildDate>Thu, 15 Oct 2020 01:28:40 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
         
             <item>
                 <title>Node.js探索——启动与模块加载</title>
-                <link>https://1aomn.com/skills/nodejs%E6%8E%A2%E7%B4%A2%E5%90%AF%E5%8A%A8%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD/</link>
-                <guid isPermaLink="true">https://1aomn.com/skills/nodejs%E6%8E%A2%E7%B4%A2%E5%90%AF%E5%8A%A8%E4%B8%8E%E6%A8%A1%E5%9D%97%E5%8A%A0%E8%BD%BD/</guid>
+                <link>https://1aomn.com/skills/explore-nodejs-module-and-bootstrap/</link>
+                <guid isPermaLink="true">https://1aomn.com/skills/explore-nodejs-module-and-bootstrap/</guid>
                 <pubDate>Thu, 08 Oct 2020 20:17:56 +0800</pubDate>
                 
                     <author>burningdian@gmail.com (秋屿)</author>
