@@ -2,8 +2,6 @@
 title: "Node.js探索——启动与模块加载"
 date: 2020-10-08T20:17:56+08:00
 draft: false
-indent: true
-indentFirstParagraph: true
 comments: true
 toc: false
 tags: [Node.js]
