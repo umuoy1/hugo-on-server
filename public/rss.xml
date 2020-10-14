@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Thu, 15 Oct 2020 01:31:47 +0800</lastBuildDate>
+        <lastBuildDate>Thu, 15 Oct 2020 01:32:40 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -38,8 +38,7 @@
                 
                 <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
                 
-                    <description><![CDATA[<h2 id="nodejs启动流程与模块加载机制">Node.js启动流程与模块加载机制</h2>
-<p>版本：14.13.1</p>
+                    <description><![CDATA[<p>版本：14.13.1</p>
 <p><code>NOde.js</code>的实际入口是<code>src\node_main.cc</code>，这里以<code>Windows</code>为例。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">

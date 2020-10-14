@@ -7,8 +7,6 @@ toc: false
 tags: [Node.js]
 ---
 
-## Node.js启动流程与模块加载机制
-
 版本：14.13.1
 
 `NOde.js`的实际入口是`src\node_main.cc`，这里以`Windows`为例。

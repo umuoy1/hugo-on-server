@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿记</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2020-10-15T01:31:47+08:00</updated>
+    <updated>2020-10-15T01:32:40+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -20,7 +20,7 @@
             <title type="text">Node.js探索——启动与模块加载</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/explore-nodejs-module-and-bootstrap/" />
             <id>https://1aomn.com/skills/explore-nodejs-module-and-bootstrap/</id>
-            <updated>2020-10-15T01:31:41+08:00</updated>
+            <updated>2020-10-15T01:32:33+08:00</updated>
             <published>2020-10-08T20:17:56+08:00</published>
             <author>
                     <name>秋屿</name>
@@ -29,10 +29,9 @@
                     </author>
             <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     
-    <summary type="html"><![CDATA[Node.js启动流程与模块加载机制 版本：14.13.1 NOde.js的实际入口是s……]]></summary>
+    <summary type="html"><![CDATA[版本：14.13.1 NOde.js的实际入口是src\node_main.cc，这里……]]></summary>
             
-                <content type="html"><![CDATA[<h2 id="nodejs启动流程与模块加载机制">Node.js启动流程与模块加载机制</h2>
-<p>版本：14.13.1</p>
+                <content type="html"><![CDATA[<p>版本：14.13.1</p>
 <p><code>NOde.js</code>的实际入口是<code>src\node_main.cc</code>，这里以<code>Windows</code>为例。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
