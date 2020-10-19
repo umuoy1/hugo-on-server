@@ -976,7 +976,7 @@ require('internal/modules/cjs/loader').Module.runMain(process.argv[1]);
 
 代码很短，主要是执行`prepareMainThreadExecution`，做最后初始化工作，并标记`Bootstrap`已完成。
 
-然后通过引入`'internal/modules/cjs/loader`，调用`runMain`方法执行要启动的`JS`文件，就比如`node index.js`里的`index.js`。
+然后通过引入`'internal/modules/cjs/loader`，调用`runMain`方法执行要启动的`JS`文件，就比如`node index.js`里的`index.js`。这里执行的是其中的同步代码，异步代码会放到后续的`Event Loop`中。
 
 其中有两步需要注意。
 
