@@ -1,85 +1,282 @@
-<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+    <head prefix="og: http://ogp.me/ns# article: http://ogp.me/ns/article#">
+    <meta charset="UTF-8" />
+
+    <meta name="generator" content="Hugo 0.66.0" /><meta name="theme-color" content="#fff" />
+        <script>
+            const userPrefers = localStorage.getItem('theme');
+            const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+            const lightModeMediaQuery = window.matchMedia('(prefers-color-scheme: light)');
+            if (userPrefers === 'dark') {
+                changeModeMeta('dark');
+            } else if (userPrefers === 'light') {
+                changeModeMeta('light');
+            } else if (darkModeMediaQuery.matches) {
+                changeModeMeta('dark');
+            } else if (lightModeMediaQuery.matches) {
+                changeModeMeta('light');
+            }
+            function changeModeMeta(theme) {
+                document.documentElement.setAttribute('data-theme', theme);
+                if (theme === 'dark') {
+                    changeThemeColor('#1c1c21');
+                } else {
+                    changeThemeColor('#fff');
+                }
+            }
+            function changeThemeColor(themeColor) {
+                document.querySelector('meta[name="theme-color"]').setAttribute('content', themeColor);
+            }
+        </script>
+
+    
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=2.0, user-scalable=yes" />
+    
+    <meta name="format-detection" content="telephone=no, date=no, address=no, email=no" />
+    
+    <meta http-equiv="Cache-Control" content="no-transform" />
+    
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>Node.js探索——启动与模块加载 | 秋屿记</title>
+
+    <link rel="stylesheet" href="/css/meme.min.a8f82c8a9dde89c3a3b4eb751a69ce972c9f87a4b731a5fae523dac906b1c119.css" integrity="sha256-qPgsip3eicOjtOt1GmnOlyyfh6S3MaX65SPayQaxwRk=" />
+
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" media="print" onload="this.media='all'" />
+        <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=EB&#43;Garamond:ital,wght@0,400;0,500;0,700;1,400;1,700&amp;family=Noto&#43;Serif&#43;SC:wght@400;500;700&amp;family=Source&#43;Code&#43;Pro:ital,wght@0,400;0,700;1,400;1,700&amp;display=swap" /></noscript>
+
+    <meta name="author" content="秋屿" />
+    
+    
+    <meta name="description" content="版本：14.13.1 NOde.js的实际入口是src\node_main.cc，这里……" />
+
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="mask-icon" href="/icons/safari-pinned-tab.svg" color="#2a6df4" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="秋屿记" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="application-name" content="秋屿记" />
+    <meta name="msapplication-starturl" content="../../" />
+    <meta name="msapplication-TileColor" content="#fff" />
+    <meta name="msapplication-TileImage" content="../../icons/mstile-150x150.png" />
+    <link rel="manifest" href="/manifest.json" />
+
+    
+    
+
+    
+    <link rel="canonical" href="https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/" />
+
+
+
+<script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "BlogPosting",
+        "datePublished": "2020-10-08T20:17:56+08:00",
+        "dateModified": "2020-10-19T12:52:44+08:00",
+        "url": "https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/",
+        "headline": "Node.js探索——启动与模块加载",
+        "description": "版本：14.13.1 NOde.js的实际入口是src\\node_main.cc，这里……",
+        "inLanguage" : "zh-CN",
+        "articleSection": "dev",
+        "wordCount":  9676 ,
+        "image": "https://1aomn.com/icons/apple-touch-icon.png",
+        "author": {
+            "@type": "Person",
+            "description": "Glory",
+            "email": "burningdian@gmail.com",
+            "image": "https://1aomn.com/icons/apple-touch-icon.png",
+            "url": "https://1aomn.com",
+            "name": "秋屿"
+        },
+        "license": "[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)",
+        "publisher": {
+            "@type": "Organization",
+            "name": "秋屿记",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://1aomn.com/icons/apple-touch-icon.png"
+            },
+            "url": "https://1aomn.com/"
+        },
+        "mainEntityOfPage": {
+            "@type": "WebSite",
+            "@id": "https://1aomn.com/"
+        }
+    }
+</script>
+
+    
+
+
+
+<meta name="twitter:card" content="summary" />
+
+<meta name="twitter:site" content="@umuoy11" />
+<meta name="twitter:creator" content="@秋屿" />
+
+    
 
 
 
 
 
+<meta property="og:title" content="Node.js探索——启动与模块加载" />
+<meta property="og:description" content="版本：14.13.1 NOde.js的实际入口是src\node_main.cc，这里……" />
+<meta property="og:url" content="https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/" />
+<meta property="og:site_name" content="秋屿记" />
+<meta property="og:locale" content="zh-CN" /><meta property="og:image" content="https://1aomn.com/icons/apple-touch-icon.png" />
+    <meta property="og:type" content="article" />
+    <meta property="article:published_time" content="2020-10-08T20:17:56+08:00" />
+    <meta property="article:modified_time" content="2020-10-19T12:52:44+08:00" />
+    
+    <meta property="article:section" content="dev" />
 
-<rss xmlns:atom="http://www.w3.org/2005/Atom" version="2.0">
-    <channel>
-        <title>秋屿记</title>
-        <link>https://1aomn.com/</link>
-        <description>秋屿的个人博客，记载生活点滴与技术灵感。</description>
-        <generator>Hugo 0.66.0 https://gohugo.io/</generator>
+
+
+    
+</head>
+
+    <body>
+        <div class="container">
+            
+    <header class="header" data-scroll-header>
         
-            <language>zh-CN</language>
-        
-        
-            <managingEditor>burningdian@gmail.com (秋屿)</managingEditor>
-        
-        
-            <webMaster>burningdian@gmail.com (秋屿)</webMaster>
-        
-        
-            <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-        
-        <lastBuildDate>Tue, 14 Sep 2021 00:59:00 +0800</lastBuildDate>
-        
-            <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
-        
-        
-            <item>
-                <title>DDIA Notes</title>
-                <link>https://1aomn.com/dev/ddia-notes/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/ddia-notes/</guid>
-                <pubDate>Sun, 21 Feb 2021 19:04:10 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<h1 id="第三章-数据存储与检索">第三章 数据存储与检索</h1>
-<h2 id="数据结构">数据结构</h2>
-<p>索引会引入额外的开销，任何类型的索引都会降低写的速度，应避免引入过多不必要的开销</p>
-]]></description>
-                
-                
-                
-                
-                
+            <div class="header-wrapper">
+                <div class="header-inner">
                     
-                        
-                    
-                        
-                            
-                                
-                                
-                                
-                                    <category domain="https://1aomn.com/tags/%E5%88%86%E5%B8%83%E5%BC%8F/">分布式</category>
-                                
-                            
-                                
-                                
-                                
-                                    <category domain="https://1aomn.com/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</category>
-                                
-                            
-                        
-                    
-                
-            </item>
+    <div class="site-brand">
         
-            <item>
-                <title>Node.js探索——启动与模块加载</title>
-                <link>https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/</guid>
-                <pubDate>Thu, 08 Oct 2020 20:17:56 +0800</pubDate>
+            <a href="/"><svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" width="65px" height="30px" viewBox="0 0 70 32" enable-background="new 0 0 70 32" xml:space="preserve">  <image id="image0" width="70" height="32" x="0" y="0"    href="data:image/png;base64,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" /></svg></a>
+        
+    </div>
+
+                    <nav class="nav">
+    <ul class="menu" id="menu">
+        
+            
+        
+        
+        
+        
+            
+                <li class="menu-item"><a href="/skills/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon "><path d="M32 448c0 17.7 14.3 32 32 32h384c17.7 0 32-14.3 32-32V160H32v288zm160-212c0-6.6 5.4-12 12-12h104c6.6 0 12 5.4 12 12v8c0 6.6-5.4 12-12 12H204c-6.6 0-12-5.4-12-12v-8zM480 32H32C14.3 32 0 46.3 0 64v48c0 8.8 7.2 16 16 16h480c8.8 0 16-7.2 16-16V64c0-17.7-14.3-32-32-32z"/></svg><span class="menu-item-name">技术</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/life/"><svg t="1583581138214" class="icon " viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="13696" width="200" height="200"><path d="M899.518796 159.9998L860.798844 43.839945A63.99992 63.99992 0 0 0 799.99892 0H223.99964a63.99992 63.99992 0 0 0-60.799924 43.839945L124.159765 159.9998A63.99992 63.99992 0 0 0 63.99984 223.99972v95.99988a63.99992 63.99992 0 0 0 63.99992 63.99992h31.99996a59.839925 59.839925 0 0 0 0 7.039991l63.99992 575.99928A63.99992 63.99992 0 0 0 287.99956 1023.99872h447.99944a63.99992 63.99992 0 0 0 63.99992-56.959929l63.99992-575.99928a53.759933 53.759933 0 0 0 0-7.039991h31.99996a63.99992 63.99992 0 0 0 63.99992-63.99992V223.99972a63.99992 63.99992 0 0 0-60.479924-63.99992zM223.99964 63.99992h575.99928l31.99996 95.99988H191.99968z m63.99992 895.99888l-10.559987-95.99988h469.119414L735.999 959.9988z m462.079422-127.99984H273.919578L238.079622 511.99936h547.839316z m39.039952-351.99956H234.559627L223.99964 383.99952h575.99928zM895.9988 319.9996H127.99976V223.99972h767.99904z" fill="#707070" p-id="13697"></path></svg><span class="menu-item-name">生活</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/tags/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" class="icon "><path d="M497.941 225.941L286.059 14.059A48 48 0 0 0 252.118 0H48C21.49 0 0 21.49 0 48v204.118a48 48 0 0 0 14.059 33.941l211.882 211.882c18.744 18.745 49.136 18.746 67.882 0l204.118-204.118c18.745-18.745 18.745-49.137 0-67.882zM112 160c-26.51 0-48-21.49-48-48s21.49-48 48-48 48 21.49 48 48-21.49 48-48 48zm513.941 133.823L421.823 497.941c-18.745 18.745-49.137 18.745-67.882 0l-.36-.36L527.64 323.522c16.999-16.999 26.36-39.6 26.36-63.64s-9.362-46.641-26.36-63.64L331.397 0h48.721a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882z"/></svg><span class="menu-item-name">标签</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/solutions/"><svg t="1583739571338" class="icon " viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="9303" width="200" height="200"><path d="M116.363636 93.090909c0-39.563636 30.254545-69.818182 69.818182-69.818182h442.181818v209.454546-209.454546H186.181818C146.618182 23.272727 116.363636 53.527273 116.363636 93.090909v837.818182V93.090909z m523.636364-69.818182L907.636364 290.909091 640 23.272727z" fill="#666666" p-id="9304"></path><path d="M651.636364 0H186.181818C134.981818 0 93.090909 41.890909 93.090909 93.090909v837.818182c0 51.2 41.890909 93.090909 93.090909 93.090909h651.636364c51.2 0 93.090909-41.890909 93.090909-93.090909V279.272727L651.636364 0z m69.818181 744.727273H302.545455c-13.963636 0-23.272727-9.309091-23.272728-23.272728s9.309091-23.272727 23.272728-23.272727h418.90909c13.963636 0 23.272727 9.309091 23.272728 23.272727s-9.309091 23.272727-23.272728 23.272728z m0-162.909091H302.545455c-13.963636 0-23.272727-9.309091-23.272728-23.272727s9.309091-23.272727 23.272728-23.272728h418.90909c13.963636 0 23.272727 9.309091 23.272728 23.272728s-9.309091 23.272727-23.272728 23.272727z m-23.272727-302.545455c-25.6 0-46.545455-20.945455-46.545454-46.545454V67.490909l211.781818 211.781818H698.181818z" fill="#666666" p-id="9305"></path></svg><span class="menu-item-name">题解</span></a>
+                </li>
+            
+        
+            
+                <li class="menu-item"><a href="/about/"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon "><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm0 96c48.6 0 88 39.4 88 88s-39.4 88-88 88-88-39.4-88-88 39.4-88 88-88zm0 344c-58.7 0-111.3-26.6-146.5-68.2 18.8-35.4 55.6-59.8 98.5-59.8 2.4 0 4.8.4 7.1 1.1 13 4.2 26.6 6.9 40.9 6.9 14.3 0 28-2.7 40.9-6.9 2.3-.7 4.7-1.1 7.1-1.1 42.9 0 79.7 24.4 98.5 59.8C359.3 421.4 306.7 448 248 448z"/></svg><span class="menu-item-name">关于</span></a>
+                </li>
+            
+        
+            
                 
-                    <author>burningdian@gmail.com (秋屿)</author>
+                    <li class="menu-item">
+                        
+    
+        
+            
+        
+        <div id="theme-switcher">🌞</div>
+    
+
+
+                    </li>
                 
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+            
+        
+            
                 
-                    <description><![CDATA[<p>版本：14.13.1</p>
+            
+        
+    </ul>
+</nav>
+
+                </div>
+            </div>
+            
+    <input type="checkbox" id="nav-toggle" aria-hidden="true" />
+    <label for="nav-toggle" class="nav-toggle"></label>
+    <label for="nav-toggle" class="nav-curtain"></label>
+
+
+        
+    </header>
+
+
+
+
+            
+            
+    <main class="main single" id="main">
+    <div class="main-inner">
+
+        <article class="content post" data-align="justify" data-type="dev" data-toc-num="true">
+
+            <h1 class="post-title">Node.js探索——启动与模块加载</h1>
+
+            
+
+            
+                
+            
+
+            
+                
+
+<div class="post-meta">
+    
+        
+        <time datetime="2020-10-08T20:17:56+08:00" class="post-meta-item published"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M148 288h-40c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v40c0 6.6-5.4 12-12 12zm108-12v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 96v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm-96 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm192 0v-40c0-6.6-5.4-12-12-12h-40c-6.6 0-12 5.4-12 12v40c0 6.6 5.4 12 12 12h40c6.6 0 12-5.4 12-12zm96-260v352c0 26.5-21.5 48-48 48H48c-26.5 0-48-21.5-48-48V112c0-26.5 21.5-48 48-48h48V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h128V12c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h48c26.5 0 48 21.5 48 48zm-48 346V160H48v298c0 3.3 2.7 6 6 6h340c3.3 0 6-2.7 6-6z"/></svg>&nbsp;2020.10.8</time>
+    
+    
+        
+        <time datetime="2020-10-19T12:52:44+08:00" class="post-meta-item modified"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon post-meta-icon"><path d="M400 64h-48V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H160V12c0-6.627-5.373-12-12-12h-40c-6.627 0-12 5.373-12 12v52H48C21.49 64 0 85.49 0 112v352c0 26.51 21.49 48 48 48h352c26.51 0 48-21.49 48-48V112c0-26.51-21.49-48-48-48zm-6 400H54a6 6 0 0 1-6-6V160h352v298a6 6 0 0 1-6 6zm-52.849-200.65L198.842 404.519c-4.705 4.667-12.303 4.637-16.971-.068l-75.091-75.699c-4.667-4.705-4.637-12.303.068-16.971l22.719-22.536c4.705-4.667 12.303-4.637 16.97.069l44.104 44.461 111.072-110.181c4.705-4.667 12.303-4.637 16.971.068l22.536 22.718c4.667 4.705 4.636 12.303-.069 16.97z"/></svg>&nbsp;2020.10.19</time>
+    
+    
+    
+        
+        
+        
+            
+        
+    
+    
+        
+        <span class="post-meta-item wordcount"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M497.9 142.1l-46.1 46.1c-4.7 4.7-12.3 4.7-17 0l-111-111c-4.7-4.7-4.7-12.3 0-17l46.1-46.1c18.7-18.7 49.1-18.7 67.9 0l60.1 60.1c18.8 18.7 18.8 49.1 0 67.9zM284.2 99.8L21.6 362.4.4 483.9c-2.9 16.4 11.4 30.6 27.8 27.8l121.5-21.3 262.6-262.6c4.7-4.7 4.7-12.3 0-17l-111-111c-4.8-4.7-12.4-4.7-17.1 0zM124.1 339.9c-5.5-5.5-5.5-14.3 0-19.8l154-154c5.5-5.5 14.3-5.5 19.8 0s5.5 14.3 0 19.8l-154 154c-5.5 5.5-14.3 5.5-19.8 0zM88 424h48v36.3l-64.5 11.3-31.1-31.1L51.7 376H88v48z"/></svg>&nbsp;9676</span>
+    
+    
+        
+        <span class="post-meta-item reading-time"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon post-meta-icon"><path d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm0 448c-110.5 0-200-89.5-200-200S145.5 56 256 56s200 89.5 200 200-89.5 200-200 200zm61.8-104.4l-84.9-61.7c-3.1-2.3-4.9-5.9-4.9-9.7V116c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v141.7l66.8 48.6c5.4 3.9 6.5 11.4 2.6 16.8L334.6 349c-3.9 5.3-11.4 6.5-16.8 2.6z"/></svg>&nbsp;20&nbsp;分钟</span>
+    
+    
+</div>
+            
+
+            <div class="post-body"><p>版本：14.13.1</p>
 <p><code>NOde.js</code>的实际入口是<code>src\node_main.cc</code>，这里以<code>Windows</code>为例。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
@@ -1076,7 +1273,7 @@
 </code></pre></td></tr></table>
 </div>
 </div><p>可以看到，这里调用<code>LookupAndCompile</code>， 将文件路径字符串传入当作<code>id</code>执行，并返回<code>maybe_fn</code>调用<code>call</code>执行真正意义上的第一个<code>JS</code>文件。</p>
-<p>看一下<code>LookupAndCompile</code>，这里的主干代码由秋衣大佬做了修正，具体可以看<a href="https://github.com/nodejs/node/pull/27160">https://github.com/nodejs/node/pull/27160</a>，就不看这个代理类的相关代码了，直接跳到<code>LookupAndCompile</code>。</p>
+<p>看一下<code>LookupAndCompile</code>，这里的主干代码由秋衣大佬做了修正，具体可以看<a href="https://github.com/nodejs/node/pull/27160" target="_blank" rel="noopener">https://github.com/nodejs/node/pull/27160</a>，就不看这个代理类的相关代码了，直接跳到<code>LookupAndCompile</code>。</p>
 <div class="highlight"><div class="chroma">
 <table class="lntable"><tr><td class="lntd">
 <pre class="chroma"><code><span class="lnt"> 1
@@ -2663,520 +2860,299 @@
 <span class="p">}</span> <span class="k">while</span> <span class="p">(</span><span class="n">more</span> <span class="o">==</span> <span class="nb">true</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">env</span><span class="o">-&gt;</span><span class="n">is_stopping</span><span class="p">());</span>
 </code></pre></td></tr></table>
 </div>
-</div>]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                            
-                                
-                                
-                                
-                                    <category domain="https://1aomn.com/tags/node.js/">Node.js</category>
-                                
-                            
-                        
-                    
-                
-            </item>
+</div></div>
+
+        </article>
+
         
-            <item>
-                <title>Javascript原型链</title>
-                <link>https://1aomn.com/dev/%E5%8E%9F%E5%9E%8B%E9%93%BE/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/%E5%8E%9F%E5%9E%8B%E9%93%BE/</guid>
-                <pubDate>Fri, 18 Sep 2020 00:05:05 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<p>每个对象都有<code>__proto__</code>属性标识自己继承的原型。</p>
-<p>函数被创建时，<code>JS</code>会为这个函数添加<code>prototype</code>属性，即该函数可以被当作构造函数使用，值是是一个对象，该对象有一个名为<code>constructor</code>的成员函数，值为该函数本身。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span><span class="lnt">4
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">function</span> <span class="nx">Person</span><span class="p">(){</span>
-    <span class="k">this</span><span class="p">.</span><span class="nx">name</span> <span class="o">=</span> <span class="sb">`Jack`</span>
-<span class="p">}</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">Person</span> <span class="o">===</span> <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">constructor</span><span class="p">)</span> <span class="c1">// true
-</span></code></pre></td></tr></table>
-</div>
-</div><p>通过<code>new</code>调用函数(当作构造函数)来构造对象时，会创建该函数的实例化对象，新对象的<code>__proto__</code>指向原函数的<code>prototype</code>属性来实现继承。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="kd">let</span> <span class="nx">obj</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">Person</span><span class="p">()</span>
-<span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="nx">obj</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">)</span> <span class="c1">// true
-</span></code></pre></td></tr></table>
-</div>
-</div><p>函数也是一个对象，函数对象由<code>Function</code>构造，其<code>__proto__</code>指向<code>Function.prototype</code>。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">Person</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
-</span></code></pre></td></tr></table>
-</div>
-</div><p>通过<code>new Object()</code>和<code>{}</code>创建的对象，<code>__proto__</code>属性都指向<code>Object.prototype</code>，因为<code>Object</code>就是他们的构造函数，这与上面的行为是相一致的。</p>
-<p>上面提到的，既然<code>Person.prototype</code>的值是一个对象，那么该对象也是有原型的，我们发现它指向<code>Object.prototype</code>，至此达到了该原型链的顶端。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nx">Person</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
-</span><span class="c1"></span><span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="c1">// null
-</span></code></pre></td></tr></table>
-</div>
-</div><p>但深究下去会发现，既然<code>Object</code>本身是构造函数，其<code>__proto__</code>指向<code>Function.prototype</code>，<code>Function.prototype</code>也是对象，继承了<code>Object.prototype</code>，这就产生了&quot;你中有我，我中有你&quot;的奇怪问题。</p>
-<div class="highlight"><div class="chroma">
-<table class="lntable"><tr><td class="lntd">
-<pre class="chroma"><code><span class="lnt">1
-</span><span class="lnt">2
-</span><span class="lnt">3
-</span></code></pre></td>
-<td class="lntd">
-<pre class="chroma"><code class="language-javascript" data-lang="javascript"><span class="nb">Object</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
-</span><span class="c1"></span><span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Object</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
-</span><span class="c1"></span><span class="nb">Function</span><span class="p">.</span><span class="nx">__proto__</span> <span class="o">===</span> <span class="nb">Function</span><span class="p">.</span><span class="nx">prototype</span> <span class="c1">// true
-</span></code></pre></td></tr></table>
-</div>
-</div><p>在<code>ECMA</code>规范<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.3.4">15.3.4</a>中：</p>
-<blockquote>
-<p>object (its [[Class]] is <code>&quot;Function&quot;</code>) that, when invoked, accepts any arguments and returns <strong>undefined</strong>.</p>
-<p>The value of the [[Prototype]] internal property of the Function prototype object is the standard built-in Object prototype object (<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.4">15.2.4</a>). The initial value of the [[Extensible]] internal property of the Function prototype object is <strong>true</strong>.</p>
-<p>The Function prototype object does not have a <code>valueOf</code> property of its own; however, it inherits the <code>valueOf</code> property from the Object prototype Object.</p>
-<p>The <code>length</code> property of the Function prototype object is <strong>0</strong>.</p>
-</blockquote>
-<p>所以说普通函数都是<code>Function</code>的实例，他们的<code>__proto__</code>都指向<code>Function.prototype</code>。</p>
-<p>而根据规范，<code>Function.prototype</code>本身是一个函数对象，它继承自<code>Object.prototype</code>。</p>
-<p>在<code>ECMA</code>规范<a href="http://www.ecma-international.org/ecma-262/5.1/#sec-15.2.4">15.2.4</a>中：</p>
-<blockquote>
-<p>The value of the [[Prototype]] internal property of the Object prototype object is <strong>null</strong>, the value of the [[Class]] internal property is <code>&quot;Object&quot;</code>, and the initial value of the [[Extensible]] internal property is <strong>true</strong>.</p>
-</blockquote>
-<p>总结如下：</p>
-<p><code>Object.prototype</code>是最顶级的原型，它的<code>__proto__</code>为<code>null</code>。</p>
-<p><code>Function.prototype</code>继承自<code>Object.prototype</code>。</p>
-<p>所有的函数对象继承自<code>Function.prototype</code>。</p>
-<p>所有由<code>{}</code>，<code>new Object()</code>产生的对象继承自<code>Object</code>。</p>
-<p>由函数对象产生的对象，原型指向其构造函数的<code>prototype</code>属性。</p>
-<p>经典老图</p>
-<p><img src="https://i.loli.net/2020/09/25/aSvQ6XxiDusJzd7.jpg" alt="jsobj_full.jpg"></p>
-]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
+
         
-            <item>
-                <title>StreamerHelper</title>
-                <link>https://1aomn.com/dev/streamerhelper/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/streamerhelper/</guid>
-                <pubDate>Fri, 18 Sep 2020 00:05:05 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<p><img src="https://camo.githubusercontent.com/657a163e660f32aae67fce0af8cbdef47251f106/68747470733a2f2f73312e617831782e636f6d2f323032302f30372f32322f55624b4370712e706e67" style="zoom:20%;" /></p>
-<h2 id="introduction">Introduction</h2>
-<p><code>StreamerHelper</code>是一个开源项目，可以实现虎牙、斗鱼、AfreecaTV等主流直播平台主播开播时自动录像，并适时上传。Github地址：<a href="https://github.com/ZhangMingZhao1/StreamerHelper">https://github.com/ZhangMingZhao1/StreamerHelper</a>。</p>
-<p><code>StreamerHelper</code>使用<code>Node.js</code>开发，同时集成了直播录制和视频上传的功能，软件部署后，后台实时批量监测各个平台主播是否在线，并使用<code>FFmpeg</code>录制直播保存为视频文件，停播后投稿到b站。</p>
-<h2 id="project-tree">Project Tree</h2>
-<pre><code>StreamerHelper
-├─ src
-│  ├─ app.ts
-│  ├─ engine
-│  │  ├─ getStreamUrl.ts
-│  │  ├─ liveStreamStatus.ts
-│  │  ├─ message.ts
-│  │  ├─ RoomStatus.ts
-│  │  └─ website
-│  │     ├─ afreecatv.ts
-│  │     ├─ bilibili.ts
-│  │     ├─ cc.ts
-│  │     ├─ ...
-│  ├─ type
-│  │  ├─ StreamInfo.ts
-│  │  └─ VideoPart.ts
-│  ├─ uploader
-│  │  ├─ caller.ts
-│  │  ├─ example.js
-│  │  ├─ index.js
-│  │  └─ uploadStatus.ts
-│  └─ util
-│     ├─ crypt.js
-│     └─ utils.ts
-└─ templates
-   └─ info.json
-</code></pre><p><code>./src/</code>目录下存放项目源码，<code>src/app.ts</code>为程序入口文件，并且管理下载和上传的业务。</p>
-<p><code>./src/engine/</code>目录下为直播流获取及下载模块。</p>
-<p><code>./src/engine/website/</code>目录下为获取直播流的模块，以插件的方式集成，统一使用<code>axios</code>作为请求库，方便扩展。</p>
-<p><code>./src/uploader/</code>目录下为文件上传/投稿模块，部分代码使用<code>js</code>编写，方便直接调用上传。</p>
-<p><code>./src/type/</code>目录下定义了一系列接口。</p>
-<p><code>./src/util/</code>目录下封装了一些工具方法，如加盐、解析<code>info.json</code>等。</p>
-<p><code>./templates/info.json</code>保存用于投稿的信息，所需录制主播信息。</p>
-<p>日志文件会自动创建，在<code>./logs/</code>下。</p>
-<h2 id="how-does-it-work">How does it work?</h2>
-<p>程序启动之后，首先<code>app.ts</code>里有一个大的定时器<code>const timer = setInterval(F, 12000);</code>，每<code>12s</code>遍历一遍<code>info.json</code>里的主播信息，并调用<code>getStreamUrl()</code>检测主播是否在线，如果检测到在线，会实例化<code>Recorder</code>来启动下载线程，同时，会有一个监听器监听直播流断开事件。</p>
-<p><code>Recorder</code>类的代码在<code>message.ts</code>里，实例化后，会调用子进程启动<code>FFmpeg</code>来以原码率、原音视频编码的格式下载传入的直播流（占用极小，实际测试中占用不到CPU的<code>2%</code>）。直播流断开后，触发<code>streamDiscon</code>事件，事件触发后，程序会根据直播流是否为正常断开，来选择上传或继续下载。</p>
-<p>程序以异步的方式下载多个直播流，并且由统一的事件触发器处理直播流断开的情况。当用户向进程发送<code>SIGINT</code>信号后，程序会移除监听<code>streamDiscn</code>事件，并等待<code>FFmpeg</code>子进程结束后退出。</p>
-<p>下载的录播文件会暂时存放于<code>./download/</code>下，并在上传成功后自动删除。</p>
-<h2 id="troubles--solutions">Troubles &amp; Solutions</h2>
-<p>在获取直播源后的地址可以用<code>PotPlayer</code>播放器正常播放，但无法使用<code>FFmpeg</code>下载，并且返回了<code>403 Forbidden</code>错误，多次测试后发现，<code>PotPlayer</code>在播放直播流时默认携带了一系列<code>Headers</code>信息，之后在<code>FFmpeg</code>启动参数中加入<code>Headers</code>信息，可以成功下载。</p>
-<p>项目经历过一次比较大的结构调整，主要是将下载器包装成一个<code>Recorder</code>类，可以通过实例化来异步地单独下载每一个直播流，并统一由<code>app.ts</code>管理，这么做的好处是解开下载模块与上传模块的耦合，降低复杂度。</p>
-<p>当需要强制使一个<code>FFmpeg</code>子进程退出时，可以通过向子进程的<code>stdin</code>的可写流写入<code>q</code>来通知<code>FFmpeg</code>主动退出。</p>
-<p>上传模块中，为了避免频繁登录触发验证码，使用了长期有效的<code>access_token</code>来避免验证。</p>
-<h2 id="未来计划">未来计划</h2>
-<ul>
-<li><input disabled="" type="checkbox">支持<code>Twitch</code>。</li>
-<li><input disabled="" type="checkbox">支持<code>docker</code>部署。</li>
-<li><input disabled="" type="checkbox">爬虫定时区间，节省服务器流量</li>
-<li><input disabled="" type="checkbox">重启后同时检测本地是否有上传失败的视频文件，并上传。</li>
-</ul>
-]]></description>
+    
+    
+    
+        <ul class="post-copyright">
+            <li class="copyright-item author"><span class="copyright-item-text">作者</span>：<a href="https://1aomn.com" target="_blank" rel="noopener">秋屿</a></li>
+            
                 
                 
                 
                 
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
+                <li class="copyright-item link"><span class="copyright-item-text">链接</span>：<a href="/dev/explore-nodejs-module-and-bootstrap/" target="_blank" rel="noopener">https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/</a></li>
+            
+            <li class="copyright-item license"><span class="copyright-item-text">许可</span>：<a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></li>
+            
+        </ul>
+    
+
+
+
         
-            <item>
-                <title>Cookie，Session和token</title>
-                <link>https://1aomn.com/dev/cookie-session-token/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/cookie-session-token/</guid>
-                <pubDate>Sun, 15 Mar 2020 17:42:40 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<h2 id="cookie">Cookie</h2>
-<h3 id="定义">定义</h3>
-<p>Cookie，中文名「小甜饼」，是一段用来标识用户身份和附加信息而存储在本地客户端上的字符串。</p>
-<h3 id="特点">特点</h3>
-<p>Cookie有以下几个特点</p>
-<ul>
-<li>大小有限制，一般不超过5kb</li>
-<li>cookie 是没有结构的，但可以用格式如 &quot;a1=v1;a2=v2;a3=v3&quot;来存储结构化数据</li>
-<li>跨域不共享，即浏览器为每个域名存储一个 cookie，</li>
-<li>浏览器每次发送 http 请求，都会将请求域的 cookie 发送给服务端。这里的请求域仅指本次请求的域，比如在本站首页向 网易云音乐 发送 http 请求，则会向 网易云云音乐 发送本地存储的 cookie 。</li>
-<li>服务端可以修改 cookie 并返回给浏览器。</li>
-<li>浏览器可以在限制条件下修改 cookie 并返回给服务端。</li>
-<li>cookie 在指定的域名及根域名下都生效。</li>
-</ul>
-<h3 id="缺陷">缺陷</h3>
-<p>cookie 通常有以下几个缺陷</p>
-<ol>
-<li>cookie 在 http 请求中是明文传递的，有信息泄露的风险</li>
-<li>cookie 的大小有限制(4kb)，不易存储复杂信息</li>
-</ol>
-<hr>
-<h2 id="session">Session</h2>
-<p>session 的本意是会话状态，在 http 中的实现是用来跟踪用户的状态。</p>
-<p>由于HTTP协议是无状态的，服务端不知道用户上一次做了什么，所以服务端会在用户初始状态的时候创建特定的 session ，用来标识并跟踪这个用户。</p>
-<p>就比如购物网站的购物车，我添加了商品，服务端也做了相应的处理，但服务端不知道这个商品添加到哪，也不知道这个购物车是谁了，有了session，客户端就可以通过它来追踪我，然后服务端也就知道这一系列行为是我做的。</p>
-<h3 id="原理">原理</h3>
-<ol>
-<li>服务端在 cookie 中找到对应的seesionid。</li>
-<li>根据 sessionid，从服务端对应的 session 中获取数据，然后返回。</li>
-<li>如果找不到 sessionid，服务端创建一个新 session，并将 sessionid 添加到 cookie 中，写入响应头。</li>
-</ol>
-<h3 id="缺点">缺点</h3>
-<ol>
-<li>session 存在服务端中，扩展性差。</li>
-<li>session 存的东西太多，就会占用过多的内存，无形中增添服务器压力。</li>
-<li>依赖于浏览器的 cookie ，有跨域问题</li>
-<li>受CSRF攻击的风险。</li>
-</ol>
-<hr>
-<h2 id="token">Token</h2>
-<h3 id="原理-1">原理</h3>
-<ol>
-<li>客户端登录，服务端验证用户名和密码之后，对用户名编码，生成 token 返回给客户端。</li>
-<li>客户端将 token 储存，并在每次发送请求的时候附上 token。</li>
-<li>客户端后续发送请求，服务端对用户名用同样的方式编码，然后和客户端发过来的 token 做对比，以验证用户合法性。</li>
-</ol>
-<h3 id="特点-1">特点</h3>
-<ol>
-<li>Token 不依赖于 Cookie ，可以在不支持 Cookie 的平台上使用，也不会有CSFR攻击的风险</li>
-<li>Token 在服务端生成和验证</li>
-<li>Token 储存在客户端，比如存在 Cookie ， sessionStorage ， localStorage 中。</li>
-</ol>
-]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
+    <div class="updated-badge-container"><div title="Updated @ 2020-10-19 12:52:44 CST" style="cursor:help;display:inline-block">
+
+<svg xmlns="http://www.w3.org/2000/svg" width="130" height="20" class="updated-badge"><linearGradient id="b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"/><stop offset="1" stop-opacity=".1"/></linearGradient><clipPath id="a"><rect width="130" height="20" rx="3" fill="#fff"/></clipPath><g clip-path="url(#a)"><path class="updated-badge-left" d="M0 0h55v20H0z"/><path class="updated-badge-right" d="M55 0h75v20H55z"/><path fill="url(#b)" d="M0 0h130v20H0z"/></g><g fill="#fff" text-anchor="middle" font-size="110"><text x="285" y="150" fill="#010101" fill-opacity=".3" textLength="450" transform="scale(.1)">updated</text><text x="285" y="140" textLength="450" transform="scale(.1)">updated</text><text x="915" y="150" fill="#010101" fill-opacity=".3" textLength="650" transform="scale(.1)">2020-10-19</text><text x="915" y="140" textLength="650" transform="scale(.1)">2020-10-19</text></g></svg></div></div>
+
+
         
-            <item>
-                <title>Web后端开发路线图</title>
-                <link>https://1aomn.com/dev/back-end-roadmap/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/back-end-roadmap/</guid>
-                <pubDate>Sat, 14 Mar 2020 00:22:49 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<p><a href="https://github.com/kamranahmedse/developer-roadmap"> https://github.com/kamranahmedse/developer-roadmap </a></p>
-<p><img src="https://i.loli.net/2020/03/14/IVQniKDRw9JMBtc.png" alt="image.png"></p>
-]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
+
         
-            <item>
-                <title>谈谈对ACM新生集训队的选拔</title>
-                <link>https://1aomn.com/dev/talk-about-acm-team/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/talk-about-acm-team/</guid>
-                <pubDate>Tue, 10 Mar 2020 21:58:44 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                            
-                                
-                                
-                                
-                                    <category domain="https://1aomn.com/tags/%E6%9D%82%E8%B0%88/">杂谈</category>
-                                
-                            
-                        
-                    
-                
-            </item>
+    
+    
+
+<div class="post-share">
+
         
-            <item>
-                <title>将Hugo博客搭建在服务器上，使用webhook实时构建</title>
-                <link>https://1aomn.com/dev/builg-a-blog-on-server/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/builg-a-blog-on-server/</guid>
-                <pubDate>Tue, 10 Mar 2020 21:55:09 +0800</pubDate>
+
+        <div class="share-items">
+
+            
                 
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[]]></description>
-                
-                
-                
-                
-                
+                <div class="share-item twitter">
                     
-                        
-                    
-                        
-                    
+                    <a href="https://twitter.com/share?url=https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/&amp;text=Node.js%e6%8e%a2%e7%b4%a2%e2%80%94%e2%80%94%e5%90%af%e5%8a%a8%e4%b8%8e%e6%a8%a1%e5%9d%97%e5%8a%a0%e8%bd%bd&amp;via=umuoy11" title="分享到「Twitter」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon twitter-icon"><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253z"/></svg></a>
+                </div>
+            
+
+            
+
+            
+
+            
                 
-            </item>
+                <div class="share-item telegram">
+                    
+                    <a href="https://t.me/share/url?url=https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/&amp;text=Node.js%e6%8e%a2%e7%b4%a2%e2%80%94%e2%80%94%e5%90%af%e5%8a%a8%e4%b8%8e%e6%a8%a1%e5%9d%97%e5%8a%a0%e8%bd%bd" title="分享到「Telegram」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512" class="icon telegram-icon"><path d="M248 8C111 8 0 119 0 256s111 248 248 248 248-111 248-248S385 8 248 8zm121.8 169.9l-40.7 191.8c-3 13.6-11.1 16.9-22.4 10.5l-62-45.7-29.9 28.8c-3.3 3.3-6.1 6.1-12.5 6.1l4.4-63.1 114.9-103.8c5-4.4-1.1-6.9-7.7-2.5l-142 89.4-61.2-19.1c-13.3-4.2-13.6-13.3 2.8-19.7l239.1-92.2c11.1-4 20.8 2.7 17.2 19.5z"/></svg></a>
+                </div>
+            
+
+            
+
+            
+
+            
+                
+                <div class="share-item qq">
+                    
+                    <a href="https://connect.qq.com/widget/shareqq/index.html?url=https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/&amp;title=Node.js%e6%8e%a2%e7%b4%a2%e2%80%94%e2%80%94%e5%90%af%e5%8a%a8%e4%b8%8e%e6%a8%a1%e5%9d%97%e5%8a%a0%e8%bd%bd&amp;summary=%e7%89%88%e6%9c%ac%ef%bc%9a14.13.1%20NOde.js%e7%9a%84%e5%ae%9e%e9%99%85%e5%85%a5%e5%8f%a3%e6%98%afsrc%5cnode_main.cc%ef%bc%8c%e8%bf%99%e9%87%8c%e2%80%a6%e2%80%a6&amp;pics=https://1aomn.com/icons/apple-touch-icon.png&amp;site=%e7%a7%8b%e5%b1%bf%e8%ae%b0" title="分享到「QQ」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qq-icon"><path d="M433.754 420.445c-11.526 1.393-44.86-52.741-44.86-52.741 0 31.345-16.136 72.247-51.051 101.786 16.842 5.192 54.843 19.167 45.803 34.421-7.316 12.343-125.51 7.881-159.632 4.037-34.122 3.844-152.316 8.306-159.632-4.037-9.045-15.25 28.918-29.214 45.783-34.415-34.92-29.539-51.059-70.445-51.059-101.792 0 0-33.334 54.134-44.859 52.741-5.37-.65-12.424-29.644 9.347-99.704 10.261-33.024 21.995-60.478 40.144-105.779C60.683 98.063 108.982.006 224 0c113.737.006 163.156 96.133 160.264 214.963 18.118 45.223 29.912 72.85 40.144 105.778 21.768 70.06 14.716 99.053 9.346 99.704z"/></svg></a>
+                </div>
+            
+
+            
+                
+                <div class="share-item qzone">
+                    
+                    <a href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/&amp;title=Node.js%e6%8e%a2%e7%b4%a2%e2%80%94%e2%80%94%e5%90%af%e5%8a%a8%e4%b8%8e%e6%a8%a1%e5%9d%97%e5%8a%a0%e8%bd%bd&amp;summary=%e7%89%88%e6%9c%ac%ef%bc%9a14.13.1%20NOde.js%e7%9a%84%e5%ae%9e%e9%99%85%e5%85%a5%e5%8f%a3%e6%98%afsrc%5cnode_main.cc%ef%bc%8c%e8%bf%99%e9%87%8c%e2%80%a6%e2%80%a6&amp;pics=https://1aomn.com/icons/apple-touch-icon.png&amp;site=%e7%a7%8b%e5%b1%bf%e8%ae%b0" title="分享到「QQ 空间」" target="_blank" rel="noopener"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon qzone-icon"><path d="M23.985 9.202c-.032-.099-.127-.223-.334-.258-.207-.036-7.351-1.406-7.351-1.406s-.105-.022-.198-.07c-.092-.047-.127-.167-.127-.167S12.447.956 12.349.77C12.25.583 12.104.532 12 .532c-.104 0-.251.051-.349.238-.098.186-3.626 6.531-3.626 6.531s-.035.12-.128.167c-.092.047-.197.07-.197.07S.556 8.908.348 8.943c-.208.036-.302.16-.333.258a.477.477 0 0 0 .125.449l5.362 5.49s.072.08.119.172c.016.104.005.21.005.21s-1.189 7.242-1.22 7.45.075.369.159.43c.083.062.233.106.421.013.189-.093 6.812-3.261 6.812-3.261s.098-.044.201-.061c.103-.017.201.061.201.061s6.623 3.168 6.812 3.261c.188.094.338.049.421-.013a.463.463 0 0 0 .159-.43c-.021-.14-.93-5.677-.93-5.677.876-.54 1.425-1.039 1.849-1.747-2.594.969-6.006 1.717-9.415 1.866-.915.041-2.41.097-3.473-.015-.678-.071-1.17-.144-1.243-.438-.053-.215.054-.46.545-.831a2640.5 2640.5 0 0 1 2.861-2.155c1.285-.968 3.559-2.47 3.559-2.731 0-.285-2.144-.781-4.037-.781-1.945 0-2.275.132-2.811.168-.488.034-.769.005-.804-.138-.06-.248.183-.389.588-.568.709-.314 1.86-.594 1.984-.626.194-.052 3.082-.805 5.618-.535 1.318.14 3.244.668 3.244 1.276 0 .342-1.721 1.494-3.225 2.597-1.149.843-2.217 1.561-2.217 1.688 0 .342 3.533 1.241 6.689 1.01l.003-.022c.048-.092.119-.172.119-.172l5.362-5.49a.477.477 0 0 0 .127-.449z"/></svg></a>
+                </div>
+            
+
+            
+                
+                <div class="share-item qrcode">
+                    <div class="qrcode-container" title="通过「二维码」"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon qrcode-icon"><path d="M0 224h192V32H0v192zM64 96h64v64H64V96zm192-64v192h192V32H256zm128 128h-64V96h64v64zM0 480h192V288H0v192zm64-128h64v64H64v-64zm352-64h32v128h-96v-32h-32v96h-64V288h96v32h64v-32zm0 160h32v32h-32v-32zm-64 0h32v32h-32v-32z"/></svg><div id="qrcode-img"></div>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+
+<script>
+    var typeNumber = 0;
+    var errorCorrectionLevel = 'L';
+    var qr = qrcode(typeNumber, errorCorrectionLevel);
+    qr.addData('https:\/\/1aomn.com\/dev\/explore-nodejs-module-and-bootstrap\/');
+    qr.make();
+    document.getElementById('qrcode-img').innerHTML = qr.createImgTag();
+</script>
+
+                </div>
+            
+
+        </div>
+
+    </div>
+
+
+
+
         
-            <item>
-                <title>搭建Hugo博客，通过Netlify自动部署</title>
-                <link>https://1aomn.com/dev/build-a-blog/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/build-a-blog/</guid>
-                <pubDate>Fri, 06 Mar 2020 22:02:46 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<blockquote>
-<p>本文章基于Windows10，Hugo_extended_0.66.0，博客发布的流程是本地上传到github，触发hook后，netlify自动发布</p>
-</blockquote>
-<h2 id="一下载并安装hugo">一、下载并安装Hugo</h2>
-<ul>
-<li>
-<p><a href="https://github.com/gohugoio/hugo/releases">Hugo下载地址</a></p>
-<p>本教程选择了<img src="https://i.loli.net/2020/03/07/zT8oSZCOAib1q4J.png" alt="1583507935042.png">安装，该版本增加了对sass的支持 。</p>
-<h4 id="第1步安装hugo">第1步：安装Hugo</h4>
-<p>下载解压，完成之后，把hugo.exe添加到全局变量<code>Path</code>。<img src="https://i.loli.net/2020/03/07/LPQvA3RNwEGMJhm.png" alt="1583508112162.png">在控制台中验证安装成功。</p>
-</li>
-<li>
-<p>在Github上新建仓库hugo-on-netlify，并在D:\Blog目录下打开Gitbash，输入指令。</p>
-<blockquote>
-<p>$ git clone  <a href="https://github.com/xxxxx/hugo-on-netlify">https://github.com/xxxxx/hugo-on-netlify</a></p>
-<p>$ hugo new site hugo-on-netlify --force</p>
-</blockquote>
-<p>此时便会在hugo-on-netlify文件夹里生成网站需要的文件，文件结构如下。</p>
-<blockquote>
-<pre><code>myblog
-├── archetypes
-│   └── default.md
-├── content
-├── data
-├── layouts
-├── static
-├── themes
-└── config.toml
-</code></pre></blockquote>
-</li>
-</ul>
-<h4 id="第2步安装主题meme">第2步：安装主题Meme</h4>
-<p>Hugo是没有默认主题的，这里选用主题<a href="https://github.com/reuixiy/hugo-theme-meme">Meme</a>。</p>
-<blockquote>
-<p>$ git clone  <a href="https://github.com/reuixiy/hugo-theme-meme.git">https://github.com/reuixiy/hugo-theme-meme.git</a> themes/meme</p>
-</blockquote>
-<p>然后替换 <code>config.toml</code> 为 <a href="https://github.com/reuixiy/hugo-theme-meme/blob/master/config-examples/zh-cn/config.toml">config.toml</a> ，可以在其中进行个性化设置。</p>
-<h4 id="第3步测试">第3步：测试</h4>
-<p>创建测试页面</p>
-<blockquote>
-<p>$ hugo new posts/my-first-post.md</p>
-<p>$ hugo new about/_index.md</p>
-</blockquote>
-<p>此时，基本工作已经完成了，使用</p>
-<blockquote>
-<p>$ hugo server -D</p>
-</blockquote>
-<p>在浏览器里访问<code>http://localhost:1313/</code>，预览博客效果。</p>
-<h2 id="二上传github">二、上传Github</h2>
-<p>之前我们已经新建了hugo-on-netlify仓库，下一步把博客上传</p>
-<blockquote>
-<p>$ git add .  #将所有文件添加到仓库里</p>
-<p>$ git commit -m &quot;commit message&quot;</p>
-<p>$ git push -u origin master</p>
-</blockquote>
-<p>以上也是更新文章所需的操作，如果嫌麻烦，可以写一个bat脚本减轻工作量。</p>
-<h2 id="三使用netlify发布网站">三、使用Netlify发布网站</h2>
-<p>官网<a href="https://www.netlify.com/">Netlify</a>可以直接通过Github登录，非常方便。</p>
-<h4 id="第1步配置文件">第1步：配置文件</h4>
-<p>首先在网站根目录下添加<code>netlify.toml</code>文件，如官网所示：</p>
-<blockquote>
-<p>[build]
-publish = &quot;public&quot;
-command = &quot;hugo --gc --minify&quot;</p>
-<p>[context.production.environment]
-HUGO_VERSION = &quot;0.66.0&quot;
-HUGO_ENV = &quot;production&quot;
-HUGO_ENABLEGITINFO = &quot;true&quot;</p>
-<p>[context.split1]
-command = &quot;hugo --gc --minify --enableGitInfo&quot;</p>
-<p>[context.split1.environment]
-HUGO_VERSION = &quot;0.66.0&quot;
-HUGO_ENV = &quot;production&quot;</p>
-<p>[context.deploy-preview]
-command = &quot;hugo --gc --minify --buildFuture -b $DEPLOY_PRIME_URL&quot;</p>
-<p>[context.deploy-preview.environment]
-HUGO_VERSION = &quot;0.66.0&quot;</p>
-<p>[context.branch-deploy]
-command = &quot;hugo --gc --minify -b $DEPLOY_PRIME_URL&quot;</p>
-<p>[context.branch-deploy.environment]
-HUGO_VERSION = &quot;0.66.0&quot;</p>
-<p>[context.next.environment]
-HUGO_ENABLEGITINFO = &quot;true&quot;</p>
-</blockquote>
-<h4 id="第2步netlify配置">第2步：Netlify配置</h4>
-<p>根据官网的指引，连接Github中的blog-on-netlify仓库，然后修改设置。</p>
-<p>首先修改<code>Build settings</code>，因为需要Netlify通过hugo构建，故做如下修改</p>
-<p><img src="https://i.loli.net/2020/03/07/Cms9vcMBQaoZxfO.png" alt="1583510667070.png"></p>
-<p>然后修改</p>
-<p><img src="https://i.loli.net/2020/03/07/nEK6tA4o2NzQyGq.png" alt="1583510849748.png"></p>
-<p>这里的修改是因为Netlify默认使用的Hugo版本过低，需要手动设置，否则不支持Meme主题。</p>
-<h4 id="第3步完成">第3步：完成</h4>
-<p>构建完成后，Netlify会自动生成一个二级域名，指向你的博客，至此Hugo博客的搭建就完成了。</p>
-<h2 id="四自定义域名">四、自定义域名</h2>
-<p>因为之前在腾讯云上搭建过博客，也是在上面注册的.com域名，所以这里以腾讯云的DNS解析操作为例。</p>
-<p>操作很简单，首先在Domian management中添加域名<img src="https://i.loli.net/2020/03/07/QN67BfgvWCZuHFE.png" alt="1583511456178.png">然后在腾讯云域名的解析记录里添加两条记录。</p>
-<p><img src="https://i.loli.net/2020/03/09/xan3kQCeifIWtvy.png" alt="image.png"></p>
-<p>等待10分钟后，就可以通过域名访问自己的网站了。</p>
-<p>Netlify推荐使用 SSL/TLS 的域名，白嫖的方法很多，这里就不赘述了。</p>
-]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
+    
+    
+
+
         
-            <item>
-                <title></title>
-                <link>https://1aomn.com/dev/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-%E8%83%A1%E4%B8%96%E6%9D%B0-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</link>
-                <guid isPermaLink="true">https://1aomn.com/dev/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-%E8%83%A1%E4%B8%96%E6%9D%B0-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</guid>
-                <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<p>存储方式——文件存储，块存储，对象存储</p>
-<p>对象存储优势：1.便于横向扩展 2.低代价的数据冗余</p>
-]]></description>
-                
+    
+        <div class="post-tags">
+            
                 
                 
                 
                 
                     
-                        
-                    
-                        
-                    
+                    <a href="/tags/node.js/" rel="tag" class="post-tags-link"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon tag-icon"><path d="M0 252.118V48C0 21.49 21.49 0 48 0h204.118a48 48 0 0 1 33.941 14.059l211.882 211.882c18.745 18.745 18.745 49.137 0 67.882L293.823 497.941c-18.745 18.745-49.137 18.745-67.882 0L14.059 286.059A48 48 0 0 1 0 252.118zM112 64c-26.51 0-48 21.49-48 48s21.49 48 48 48 48-21.49 48-48-21.49-48-48-48z"/></svg>Node.js</a>
                 
-            </item>
+            
+        </div>
+    
+
+
         
-    </channel>
-</rss>
+
+        
+
+        
+    
+        
+        
+    
+    
+    
+    
+        <ul class="post-nav">
+            
+                <li class="post-nav-prev">
+                    <a href="/dev/ddia-notes/" rel="prev">< DDIA Notes</a>
+                </li>
+            
+            
+                <li class="post-nav-next">
+                    <a href="/dev/%E5%8E%9F%E5%9E%8B%E9%93%BE/" rel="next">Javascript原型链 ></a>
+                </li>
+            
+        </ul>
+    
+
+
+        
+    
+
+        <div class="load-comments">
+            <div id="load-comments">加载评论</div>
+        </div>
+
+        
+
+        
+            <div id="vcomments"></div>
+        
+
+        
+
+    
+
+
+
+    </div>
+</main>
+
+
+            
+    <div id="back-to-top" class="back-to-top">
+        <a href="#"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" class="icon"><path d="M34.9 289.5l-22.2-22.2c-9.4-9.4-9.4-24.6 0-33.9L207 39c9.4-9.4 24.6-9.4 33.9 0l194.3 194.3c9.4 9.4 9.4 24.6 0 33.9L413 289.4c-9.5 9.5-25 9.3-34.3-.4L264 168.6V456c0 13.3-10.7 24-24 24h-32c-13.3 0-24-10.7-24-24V168.6L69.2 289.1c-9.3 9.8-24.8 10-34.3.4z"/></svg></a>
+    </div>
+
+            
+    <footer id="footer" class="footer">
+        <div class="footer-inner"><div class="site-info">©&nbsp;2020–2021&nbsp;<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" class="icon footer-icon"><path d="M462.3 62.6C407.5 15.9 326 24.3 275.7 76.2L256 96.5l-19.7-20.3C186.1 24.3 104.5 15.9 49.7 62.6c-62.8 53.6-66.1 149.8-9.9 207.9l193.5 199.8c12.5 12.9 32.8 12.9 45.3 0l193.5-199.8c56.3-58.1 53-154.3-9.8-207.9z"/></svg>&nbsp;秋屿</div><div class="site-copyright"><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank" rel="noopener">CC BY-NC-SA 4.0</a></div><div class="custom-footer">鲁ICP备19060154号-1</div>
+
+            
+        </div>
+    </footer>
+
+
+        </div>
+        <script src="/js/meme.min.1b07ce1830e807202cba8831d1d250ad3b1f18040ab56905a4bf4de8c079fb15.js" integrity="sha256-GwfOGDDoByAsuogx0dJQrTsfGAQKtWkFpL9N6MB5+xU="></script>
+
+
+    <script src="https://cdn.jsdelivr.net/gh/cferdinandi/smooth-scroll/dist/smooth-scroll.polyfills.min.js"></script>
+
+<script>
+    var scroll = new SmoothScroll('a[href*="#"]', {
+        speedAsDuration: true,
+        header: '[data-scroll-header]'
+    });
+</script>
+
+
+
+
+
+
+
+
+    
+
+        
+
+        
+            <script>
+    function loadComments() {
+        if (typeof Valine === 'undefined') {
+            var getScript = (options) => {
+                var script = document.createElement('script');
+                script.defer = true;
+                script.crossOrigin = 'anonymous';
+                Object.keys(options).forEach((key) => {
+                    script[key] = options[key];
+                });
+                document.body.appendChild(script);
+            };
+            getScript({
+                src: 'https://unpkg.com/valine/dist/Valine.min.js',
+                onload: () => {
+                    newValine();
+                }
+            });
+        } else {
+            newValine();
+        }
+    }
+    function newValine() {
+        new Valine({
+            el: '#vcomments',
+            appId: '4eUjJFY4Y4wKW4TFpKb7izK5-gzGzoHsz',
+            appKey: 'hmmEiXiIRfyiLUKhI0ksxCyi',
+            placeholder: 'Leave your comment',
+            notify:  false ,
+            verify:  false ,
+            path: location.pathname,
+            avatar: 'mm',
+            meta: ["nick","mail","link"],
+            pageSize:  10 ,
+            lang: 'zh-cn',
+            visitor:  false ,
+            highlight:  true ,
+            avatarForce:  false ,
+            recordIP:  false ,
+            serverURLs: ''
+        });
+    }
+</script>
+
+        
+
+        
+
+    
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/medium-zoom@latest/dist/medium-zoom.min.js"></script>
+
+<script>
+    mediumZoom(document.querySelectorAll('div.post-body img'), {
+        background: 'hsla(var(--color-bg-h), var(--color-bg-s), var(--color-bg-l), 0.95)'
+    })
+</script>
+
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/instant.page@3.0.0/instantpage.min.js" type="module" defer></script>
+
+
+
+
+
+
+
+
+
+
+    </body>
+</html>
