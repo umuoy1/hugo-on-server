@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿记</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2021-09-14T00:59:00+08:00</updated>
+    <updated>2021-09-14T01:01:30+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -18,8 +18,8 @@
     <generator uri="https://gohugo.io/" version="0.66.0">Hugo</generator>
         <entry>
             <title type="text">DDIA Notes</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/ddia-notes/" />
-            <id>https://1aomn.com/dev/ddia-notes/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/ddia-notes/" />
+            <id>https://1aomn.com/skills/ddia-notes/</id>
             <updated>2021-02-21T20:13:23+08:00</updated>
             <published>2021-02-21T19:04:10+08:00</published>
             <author>
@@ -64,8 +64,8 @@
     
         <entry>
             <title type="text">Node.js探索——启动与模块加载</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/" />
-            <id>https://1aomn.com/dev/explore-nodejs-module-and-bootstrap/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/explore-nodejs-module-and-bootstrap/" />
+            <id>https://1aomn.com/skills/explore-nodejs-module-and-bootstrap/</id>
             <updated>2020-10-19T12:52:44+08:00</updated>
             <published>2020-10-08T20:17:56+08:00</published>
             <author>
@@ -2685,8 +2685,8 @@
     
         <entry>
             <title type="text">Javascript原型链</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/%E5%8E%9F%E5%9E%8B%E9%93%BE/" />
-            <id>https://1aomn.com/dev/%E5%8E%9F%E5%9E%8B%E9%93%BE/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/%E5%8E%9F%E5%9E%8B%E9%93%BE/" />
+            <id>https://1aomn.com/skills/%E5%8E%9F%E5%9E%8B%E9%93%BE/</id>
             <updated>2020-09-25T16:37:54+08:00</updated>
             <published>2020-09-18T00:05:05+08:00</published>
             <author>
@@ -2796,8 +2796,8 @@
     
         <entry>
             <title type="text">StreamerHelper</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/streamerhelper/" />
-            <id>https://1aomn.com/dev/streamerhelper/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/streamerhelper/" />
+            <id>https://1aomn.com/skills/streamerhelper/</id>
             <updated>2020-09-28T17:59:42+08:00</updated>
             <published>2020-09-18T00:05:05+08:00</published>
             <author>
@@ -2881,8 +2881,8 @@
     
         <entry>
             <title type="text">Cookie，Session和token</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/cookie-session-token/" />
-            <id>https://1aomn.com/dev/cookie-session-token/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/cookie-session-token/" />
+            <id>https://1aomn.com/skills/cookie-session-token/</id>
             <updated>2020-03-24T23:30:00+08:00</updated>
             <published>2020-03-15T17:42:40+08:00</published>
             <author>
@@ -2962,8 +2962,8 @@
     
         <entry>
             <title type="text">Web后端开发路线图</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/back-end-roadmap/" />
-            <id>https://1aomn.com/dev/back-end-roadmap/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/back-end-roadmap/" />
+            <id>https://1aomn.com/skills/back-end-roadmap/</id>
             <updated>2020-03-14T00:29:32+08:00</updated>
             <published>2020-03-14T00:22:49+08:00</published>
             <author>
@@ -2991,8 +2991,8 @@
     
         <entry>
             <title type="text">谈谈对ACM新生集训队的选拔</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/talk-about-acm-team/" />
-            <id>https://1aomn.com/dev/talk-about-acm-team/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/talk-about-acm-team/" />
+            <id>https://1aomn.com/skills/talk-about-acm-team/</id>
             <updated>2020-09-28T17:55:31+08:00</updated>
             <published>2020-03-10T21:58:44+08:00</published>
             <author>
@@ -3026,8 +3026,8 @@
     
         <entry>
             <title type="text">将Hugo博客搭建在服务器上，使用webhook实时构建</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/builg-a-blog-on-server/" />
-            <id>https://1aomn.com/dev/builg-a-blog-on-server/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/builg-a-blog-on-server/" />
+            <id>https://1aomn.com/skills/builg-a-blog-on-server/</id>
             <updated>2020-03-10T21:56:13+08:00</updated>
             <published>2020-03-10T21:55:09+08:00</published>
             <author>
@@ -3053,8 +3053,8 @@
     
         <entry>
             <title type="text">搭建Hugo博客，通过Netlify自动部署</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/build-a-blog/" />
-            <id>https://1aomn.com/dev/build-a-blog/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/build-a-blog/" />
+            <id>https://1aomn.com/skills/build-a-blog/</id>
             <updated>2020-03-22T00:43:22+08:00</updated>
             <published>2020-03-06T22:02:46+08:00</published>
             <author>
@@ -3181,8 +3181,8 @@ HUGO_ENABLEGITINFO = &quot;true&quot;</p>
     
         <entry>
             <title type="text"></title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/dev/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-%E8%83%A1%E4%B8%96%E6%9D%B0-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" />
-            <id>https://1aomn.com/dev/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-%E8%83%A1%E4%B8%96%E6%9D%B0-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-%E8%83%A1%E4%B8%96%E6%9D%B0-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/" />
+            <id>https://1aomn.com/skills/%E5%88%86%E5%B8%83%E5%BC%8F%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8-%E8%83%A1%E4%B8%96%E6%9D%B0-%E8%AF%BB%E4%B9%A6%E7%AC%94%E8%AE%B0/</id>
             <updated>2021-01-28T01:21:41+08:00</updated>
             <published>0001-01-01T00:00:00+00:00</published>
             <author>
