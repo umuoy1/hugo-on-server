@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿记</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2022-02-06T02:04:26+08:00</updated>
+    <updated>2022-02-06T02:07:25+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -16,6 +16,68 @@
             </author>
     <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
     <generator uri="https://gohugo.io/" version="0.66.0">Hugo</generator>
+        <entry>
+            <title type="text">JavaScript 正则表达式 test 方法在 V8 中的执行路径</title>
+            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/js-regexp-test-exec-path/" />
+            <id>https://1aomn.com/skills/js-regexp-test-exec-path/</id>
+            <updated>2022-02-06T02:04:04+08:00</updated>
+            <published>2022-02-06T01:57:27+08:00</published>
+            <author>
+                    <name>秋屿</name>
+                    <uri>https://1aomn.com</uri>
+                    <email>burningdian@gmail.com</email>
+                    </author>
+            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights>
+    
+    <summary type="html"><![CDATA[COMMIT ID:c97337ff5ece3c4838fedebddd762984d90ba6f4 regexp.prototype.test regexp-test.tq // 快速模式 -&gt; transitioning javascript builtin RegExpPrototypeTest -&gt; RegExpPrototypeExecBodyWithoutResultFast =&gt; regexp.tq -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResultFast -&gt; RegExpPrototypeExecBodyWithoutResult -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResult -&gt; RegExpExecInternal =&gt; builtins-regexp-gen.cc -&gt; TNode&lt;HeapObject&gt; RegExpBuiltinsAssembler::RegExpExecInternal -&gt; Runtime::kRegExpExec =&gt; runtime-regexp.cc -&gt; RUNTIME_FUNCTION(Runtime_RegExpExec) -&gt;……]]></summary>
+            
+                <content type="html"><![CDATA[<p><code>COMMIT ID:</code><a href="https://github.com/v8/v8/commit/c97337ff5ece3c4838fedebddd762984d90ba6f4">c97337ff5ece3c4838fedebddd762984d90ba6f4</a></p>
+<h2 id="regexpprototypetest">regexp.prototype.test</h2>
+<p><code>regexp-test.tq</code>
+// 快速模式</p>
+<pre><code>-&gt; transitioning javascript builtin RegExpPrototypeTest -&gt; RegExpPrototypeExecBodyWithoutResultFast
+=&gt; regexp.tq
+-&gt; transitioning macro RegExpPrototypeExecBodyWithoutResultFast -&gt; RegExpPrototypeExecBodyWithoutResult -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResult -&gt; RegExpExecInternal
+=&gt; builtins-regexp-gen.cc
+-&gt; TNode&lt;HeapObject&gt; RegExpBuiltinsAssembler::RegExpExecInternal
+-&gt; Runtime::kRegExpExec
+=&gt; runtime-regexp.cc
+-&gt; RUNTIME_FUNCTION(Runtime_RegExpExec) -&gt; RegExpExec
+-&gt; MaybeHandle&lt;Object&gt; RegExpExec -&gt; RegExp::Exec
+=&gt; regexp.cc
+-&gt; MaybeHandle&lt;Object&gt; RegExp::Exec
+-&gt; RegExpImpl::IrregexpExec
+</code></pre><p>// 慢速模式</p>
+<pre><code>-&gt; transitioning javascript builtin RegExpPrototypeTest -&gt; RegExpExec
+=&gt; regexp.tq
+-&gt; transitioning macro RegExpExec(implicit context: Context) -&gt; RegExpPrototypeExecSlow
+=&gt; regexp-exec.tq
+-&gt; RegExpPrototypeExecSlow(implicit context: Context) -&gt; RegExpPrototypeExecBodySlow -&gt; RegExpPrototypeExecBody
+=&gt; regexp.tq
+-&gt; transitioning macro RegExpPrototypeExecBody(implicit context: Context) -&gt; RegExpPrototypeExecBodyWithoutResult -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResult -&gt; RegExpExecInternal
+=&gt; builtins-regexp-gen.cc
+-&gt; TNode&lt;HeapObject&gt; RegExpBuiltinsAssembler::RegExpExecInternal
+-&gt; Runtime::kRegExpExec
+=&gt; runtime-regexp.cc
+-&gt; RUNTIME_FUNCTION(Runtime_RegExpExec) -&gt; RegExpExec
+-&gt; MaybeHandle&lt;Object&gt; RegExpExec -&gt; RegExp::Exec
+=&gt; regexp.cc
+-&gt; MaybeHandle&lt;Object&gt; RegExp::Exec
+-&gt; RegExpImpl::IrregexpExec
+</code></pre>]]></content>
+            
+            
+            
+            
+            
+                
+                    
+                
+                    
+                
+            
+        </entry>
+    
         <entry>
             <title type="text">DDIA Notes</title>
             <link rel="alternate" type="text/html" href="https://1aomn.com/skills/ddia-notes/" />

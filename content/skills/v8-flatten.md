@@ -48,7 +48,7 @@ function alt2 (s) {
 }
 ```
 
-
+v8的正则执行路径有fast和slow两种，但最终都会执行`regexp.cc`下的`MaybeHandle<Object> RegExp::Exec`函数，并使用` irregexp `的实现`MaybeHandle<Object> RegExpImpl::IrregexpExec`，在函数体内的第二行可以看到`subject = String::Flatten(isolate, subject);`，执行字符串的扁平化操作。
 
 二、与 0 相或
 

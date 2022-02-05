@@ -23,10 +23,67 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Sun, 06 Feb 2022 02:04:26 +0800</lastBuildDate>
+        <lastBuildDate>Sun, 06 Feb 2022 02:07:25 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
+        
+            <item>
+                <title>JavaScript 正则表达式 test 方法在 V8 中的执行路径</title>
+                <link>https://1aomn.com/skills/js-regexp-test-exec-path/</link>
+                <guid isPermaLink="true">https://1aomn.com/skills/js-regexp-test-exec-path/</guid>
+                <pubDate>Sun, 06 Feb 2022 01:57:27 +0800</pubDate>
+                
+                    <author>burningdian@gmail.com (秋屿)</author>
+                
+                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
+                
+                    <description><![CDATA[<p><code>COMMIT ID:</code><a href="https://github.com/v8/v8/commit/c97337ff5ece3c4838fedebddd762984d90ba6f4">c97337ff5ece3c4838fedebddd762984d90ba6f4</a></p>
+<h2 id="regexpprototypetest">regexp.prototype.test</h2>
+<p><code>regexp-test.tq</code>
+// 快速模式</p>
+<pre><code>-&gt; transitioning javascript builtin RegExpPrototypeTest -&gt; RegExpPrototypeExecBodyWithoutResultFast
+=&gt; regexp.tq
+-&gt; transitioning macro RegExpPrototypeExecBodyWithoutResultFast -&gt; RegExpPrototypeExecBodyWithoutResult -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResult -&gt; RegExpExecInternal
+=&gt; builtins-regexp-gen.cc
+-&gt; TNode&lt;HeapObject&gt; RegExpBuiltinsAssembler::RegExpExecInternal
+-&gt; Runtime::kRegExpExec
+=&gt; runtime-regexp.cc
+-&gt; RUNTIME_FUNCTION(Runtime_RegExpExec) -&gt; RegExpExec
+-&gt; MaybeHandle&lt;Object&gt; RegExpExec -&gt; RegExp::Exec
+=&gt; regexp.cc
+-&gt; MaybeHandle&lt;Object&gt; RegExp::Exec
+-&gt; RegExpImpl::IrregexpExec
+</code></pre><p>// 慢速模式</p>
+<pre><code>-&gt; transitioning javascript builtin RegExpPrototypeTest -&gt; RegExpExec
+=&gt; regexp.tq
+-&gt; transitioning macro RegExpExec(implicit context: Context) -&gt; RegExpPrototypeExecSlow
+=&gt; regexp-exec.tq
+-&gt; RegExpPrototypeExecSlow(implicit context: Context) -&gt; RegExpPrototypeExecBodySlow -&gt; RegExpPrototypeExecBody
+=&gt; regexp.tq
+-&gt; transitioning macro RegExpPrototypeExecBody(implicit context: Context) -&gt; RegExpPrototypeExecBodyWithoutResult -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResult -&gt; RegExpExecInternal
+=&gt; builtins-regexp-gen.cc
+-&gt; TNode&lt;HeapObject&gt; RegExpBuiltinsAssembler::RegExpExecInternal
+-&gt; Runtime::kRegExpExec
+=&gt; runtime-regexp.cc
+-&gt; RUNTIME_FUNCTION(Runtime_RegExpExec) -&gt; RegExpExec
+-&gt; MaybeHandle&lt;Object&gt; RegExpExec -&gt; RegExp::Exec
+=&gt; regexp.cc
+-&gt; MaybeHandle&lt;Object&gt; RegExp::Exec
+-&gt; RegExpImpl::IrregexpExec
+</code></pre>]]></description>
+                
+                
+                
+                
+                
+                    
+                        
+                    
+                        
+                    
+                
+            </item>
         
             <item>
                 <title>DDIA Notes</title>
