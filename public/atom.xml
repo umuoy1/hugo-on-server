@@ -4,7 +4,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="zh-CN">
     <title type="text">秋屿记</title>
     <subtitle type="html">秋屿的个人博客，记载生活点滴与技术灵感。</subtitle>
-    <updated>2021-11-25T23:41:45+08:00</updated>
+    <updated>2022-02-06T02:04:26+08:00</updated>
     <id>https://1aomn.com/</id>
     <link rel="alternate" type="text/html" href="https://1aomn.com/" />
     <link rel="self" type="application/atom+xml" href="https://1aomn.com/atom.xml" />
@@ -2946,35 +2946,6 @@
 <li>Token 在服务端生成和验证</li>
 <li>Token 储存在客户端，比如存在 Cookie ， sessionStorage ， localStorage 中。</li>
 </ol>
-]]></content>
-            
-            
-            
-            
-            
-                
-                    
-                
-                    
-                
-            
-        </entry>
-    
-        <entry>
-            <title type="text">Web后端开发路线图</title>
-            <link rel="alternate" type="text/html" href="https://1aomn.com/skills/back-end-roadmap/" />
-            <id>https://1aomn.com/skills/back-end-roadmap/</id>
-            <updated>2020-03-14T00:29:32+08:00</updated>
-            <published>2020-03-14T00:22:49+08:00</published>
-            <author>
-                    <name>秋屿</name>
-                    <uri>https://1aomn.com</uri>
-                    <email>burningdian@gmail.com</email>
-                    </author>
-            <rights>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</rights><summary type="html"><![CDATA[https://github.com/kamranahmedse/developer-roadmap]]></summary>
-            
-                <content type="html"><![CDATA[<p><a href="https://github.com/kamranahmedse/developer-roadmap"> https://github.com/kamranahmedse/developer-roadmap </a></p>
-<p><img src="https://i.loli.net/2020/03/14/IVQniKDRw9JMBtc.png" alt="image.png"></p>
 ]]></content>
             
             

@@ -23,7 +23,7 @@
         
             <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
         
-        <lastBuildDate>Thu, 25 Nov 2021 23:41:45 +0800</lastBuildDate>
+        <lastBuildDate>Sun, 06 Feb 2022 02:04:26 +0800</lastBuildDate>
         
             <atom:link rel="self" type="application/rss+xml" href="https://1aomn.com/rss.xml" />
         
@@ -2933,32 +2933,6 @@
 <li>Token 在服务端生成和验证</li>
 <li>Token 储存在客户端，比如存在 Cookie ， sessionStorage ， localStorage 中。</li>
 </ol>
-]]></description>
-                
-                
-                
-                
-                
-                    
-                        
-                    
-                        
-                    
-                
-            </item>
-        
-            <item>
-                <title>Web后端开发路线图</title>
-                <link>https://1aomn.com/skills/back-end-roadmap/</link>
-                <guid isPermaLink="true">https://1aomn.com/skills/back-end-roadmap/</guid>
-                <pubDate>Sat, 14 Mar 2020 00:22:49 +0800</pubDate>
-                
-                    <author>burningdian@gmail.com (秋屿)</author>
-                
-                <copyright>[CC BY-NC-SA 4.0](https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh)</copyright>
-                
-                    <description><![CDATA[<p><a href="https://github.com/kamranahmedse/developer-roadmap"> https://github.com/kamranahmedse/developer-roadmap </a></p>
-<p><img src="https://i.loli.net/2020/03/14/IVQniKDRw9JMBtc.png" alt="image.png"></p>
 ]]></description>
                 
                 
