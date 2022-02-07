@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Homepage on theumuoy&#39;s Garden</title>
+    <link>https://1aomn.com/</link>
+    <description>Recent content in Homepage on theumuoy&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 06 Feb 2022 01:57:27 +0800</lastBuildDate><atom:link href="https://1aomn.com/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>JavaScript 正则表达式 test 方法在 V8 中的执行路径</title>
+      <link>https://1aomn.com/articles/js-regexp-test-exec-path/</link>
+      <pubDate>Sun, 06 Feb 2022 01:57:27 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/js-regexp-test-exec-path/</guid>
+      <description>COMMIT ID:c97337ff5ece3c4838fedebddd762984d90ba6f4
+regexp.prototype.test regexp-test.tq // 快速模式
+-&amp;gt; transitioning javascript builtin RegExpPrototypeTest -&amp;gt; RegExpPrototypeExecBodyWithoutResultFast =&amp;gt; regexp.tq -&amp;gt; transitioning macro RegExpPrototypeExecBodyWithoutResultFast -&amp;gt; RegExpPrototypeExecBodyWithoutResult -&amp;gt; transitioning macro RegExpPrototypeExecBodyWithoutResult -&amp;gt; RegExpExecInternal =&amp;gt; builtins-regexp-gen.cc -&amp;gt; TNode&amp;lt;HeapObject&amp;gt; RegExpBuiltinsAssembler::RegExpExecInternal -&amp;gt; Runtime::kRegExpExec =&amp;gt; runtime-regexp.cc -&amp;gt; RUNTIME_FUNCTION(Runtime_RegExpExec) -&amp;gt; RegExpExec -&amp;gt; MaybeHandle&amp;lt;Object&amp;gt; RegExpExec -&amp;gt; RegExp::Exec =&amp;gt; regexp.cc -&amp;gt; MaybeHandle&amp;lt;Object&amp;gt; RegExp::Exec -&amp;gt; RegExpImpl::IrregexpExec // 慢速模式
+-&amp;gt; transitioning javascript builtin RegExpPrototypeTest -&amp;gt; RegExpExec =&amp;gt; regexp.tq -&amp;gt; transitioning macro RegExpExec(implicit context: Context) -&amp;gt; RegExpPrototypeExecSlow =&amp;gt; regexp-exec.</description>
+    </item>
+    
+    <item>
+      <title>千岛湖大桥</title>
+      <link>https://1aomn.com/portfolio/design1/</link>
+      <pubDate>Sat, 18 Dec 2021 00:00:00 +0000</pubDate>
+      
+      <guid>https://1aomn.com/portfolio/design1/</guid>
+      <description>Canon EOS 5D Mark III + Canon EF 16-35mm F2.8
+F22 / ISO100 / S⅛</description>
+    </item>
+    
+    <item>
+      <title>Distributed Locks</title>
+      <link>https://1aomn.com/articles/distributed-locks/</link>
+      <pubDate>Tue, 23 Feb 2021 22:59:07 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/distributed-locks/</guid>
+      <description>分布式与单机最大的不同在于其是多进程而不是多线程。
+多线程可以采取共享堆内存，通过内存来标记。
+分布式的情况，需要将标记存在一个各进程都能看到的地方。
+主要问题是：网络的延迟和不可靠。
+分布式锁标记在&amp;quot;公共内存&amp;quot;中，如 Redis，Memcache。
+ setnx(lockkey, 当前时间+过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。 get(lockkey) 获取值 oldExpireTime ，并将这个 value 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。 计算 newExpireTime = 当前时间 + 过期超时时间，然后 getset(lockkey, newExpireTime) 会返回当前 lockkey 的值 currentExpireTime。 判断 currentExpireTime 与 oldExpireTime 是否相等，如果相等，说明当前 getset 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。 在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 delete 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。  </description>
+    </item>
+    
+    <item>
+      <title>Node.js探索——启动与模块加载</title>
+      <link>https://1aomn.com/articles/explore-nodejs-module-and-bootstrap/</link>
+      <pubDate>Thu, 08 Oct 2020 20:17:56 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/explore-nodejs-module-and-bootstrap/</guid>
+      <description>版本：14.13.1
+NOde.js的实际入口是src\node_main.cc，这里以Windows为例。
+// node_main.cc int wmain(int argc, wchar_t* wargv[]) { // Windows Server 2012 (not R2) is supported until 10/10/2023, so we allow it  // to run in the experimental support tier.  // ...  argv[argc] = nullptr; return node::Start(argc, argv); } Windows下调用wmain类unix下调用main，调用Start启动Node.js
+// src/node.cc int Start(int argc, char** argv) { // 初始化  InitializationResult result = InitializeOncePerProcess(argc, argv); // ... } 开始初始化，调用InitializeOncePerProcess。
+在V8初始化之前，会执行一步初始化操作
+// node.cc { result.exit_code = InitializeNodeWithArgs(&amp;amp;(result.</description>
+    </item>
+    
+    <item>
+      <title>Javascript 原型链</title>
+      <link>https://1aomn.com/articles/%E5%8E%9F%E5%9E%8B%E9%93%BE/</link>
+      <pubDate>Fri, 18 Sep 2020 00:05:05 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/%E5%8E%9F%E5%9E%8B%E9%93%BE/</guid>
+      <description>每个对象都有__proto__属性标识自己继承的原型。
+函数被创建时，JS会为这个函数添加prototype属性，即该函数可以被当作构造函数使用，值是是一个对象，该对象有一个名为constructor的成员函数，值为该函数本身。
+function Person(){ this.name = `Jack` } console.log(Person === Person.prototype.constructor) // true 通过new调用函数(当作构造函数)来构造对象时，会创建该函数的实例化对象，新对象的__proto__指向原函数的prototype属性来实现继承。
+let obj = new Person() console.log(obj.__proto__ === Person.prototype) // true 函数也是一个对象，函数对象由Function构造，其__proto__指向Function.prototype。
+Person.__proto__ === Function.prototype // true 通过new Object()和{}创建的对象，__proto__属性都指向Object.prototype，因为Object就是他们的构造函数，这与上面的行为是相一致的。
+上面提到的，既然Person.prototype的值是一个对象，那么该对象也是有原型的，我们发现它指向Object.prototype，至此达到了该原型链的顶端。
+Person.prototype.__proto__ === Object.prototype // true Object.prototype.__proto__ // null 但深究下去会发现，既然Object本身是构造函数，其__proto__指向Function.prototype，Function.prototype也是对象，继承了Object.prototype，这就产生了&amp;quot;你中有我，我中有你&amp;quot;的奇怪问题。
+Object.__proto__ === Function.prototype // true Function.prototype.__proto__ === Object.prototype // true Function.__proto__ === Function.prototype // true 在ECMA规范15.3.4中：
+ object (its [[Class]] is &amp;quot;Function&amp;quot;) that, when invoked, accepts any arguments and returns undefined.</description>
+    </item>
+    
+    <item>
+      <title>StreamerHelper</title>
+      <link>https://1aomn.com/articles/streamerhelper/</link>
+      <pubDate>Fri, 18 Sep 2020 00:05:05 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/streamerhelper/</guid>
+      <description>Introduction StreamerHelper 是一个开源项目，可以实现虎牙、斗鱼、AfreecaTV等主流直播平台主播开播时自动录像，并适时上传。Github地址：https://github.com/ZhangMingZhao1/StreamerHelper。
+StreamerHelper 使用Node.js开发，同时集成了直播录制和视频上传的功能，软件部署后，后台实时批量监测各个平台主播是否在线，并使用FFmpeg录制直播保存为视频文件，停播后投稿到b站。
+Project Tree StreamerHelper ├─ src │ ├─ app.ts │ ├─ engine │ │ ├─ getStreamUrl.ts │ │ ├─ liveStreamStatus.ts │ │ ├─ message.ts │ │ ├─ RoomStatus.ts │ │ └─ website │ │ ├─ afreecatv.ts │ │ ├─ bilibili.ts │ │ ├─ cc.ts │ │ ├─ ... │ ├─ type │ │ ├─ StreamInfo.ts │ │ └─ VideoPart.ts │ ├─ uploader │ │ ├─ caller.ts │ │ ├─ example.</description>
+    </item>
+    
+    <item>
+      <title>Cookie，Session和token</title>
+      <link>https://1aomn.com/articles/cookie-session-token/</link>
+      <pubDate>Sun, 15 Mar 2020 17:42:40 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/cookie-session-token/</guid>
+      <description>Cookie 定义 Cookie，中文名「小甜饼」，是一段用来标识用户身份和附加信息而存储在本地客户端上的字符串。
+特点 Cookie有以下几个特点
+ 大小有限制，一般不超过5kb cookie 是没有结构的，但可以用格式如 &amp;ldquo;a1=v1;a2=v2;a3=v3&amp;quot;来存储结构化数据 跨域不共享，即浏览器为每个域名存储一个 cookie， 浏览器每次发送 http 请求，都会将请求域的 cookie 发送给服务端。这里的请求域仅指本次请求的域，比如在本站首页向 网易云音乐 发送 http 请求，则会向 网易云云音乐 发送本地存储的 cookie 。 服务端可以修改 cookie 并返回给浏览器。 浏览器可以在限制条件下修改 cookie 并返回给服务端。 cookie 在指定的域名及根域名下都生效。  使用 以下的例子在 Node.js 中演示。
+首先是解析 cookie
+req.cookie = {} const cookieStr = req.headers.cookie || &amp;#39;&amp;#39; cookieStr.split(&amp;#39;;&amp;#39;).forEach(element =&amp;gt; { if(!element){ return } const arr = element.split(&amp;#39;=&amp;#39;) const key = arr[0] const val = arr[1] req.cookie[key]=val }); console.log(req.cookie) //为了方便测试，把cookie打印出来 在有登录验证的场景中，可以使用 cookie 验证用户是否登录</description>
+    </item>
+    
+    <item>
+      <title>搭建Hugo博客，通过Netlify自动部署</title>
+      <link>https://1aomn.com/articles/build-a-blog/</link>
+      <pubDate>Fri, 06 Mar 2020 22:02:46 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/build-a-blog/</guid>
+      <description>本文章基于Windows10，Hugo_extended_0.66.0，博客发布的流程是本地上传到github，触发hook后，netlify自动发布
+ 一、下载并安装Hugo   Hugo下载地址
+本教程选择了安装，该版本增加了对sass的支持 。
+第1步：安装Hugo 下载解压，完成之后，把hugo.exe添加到全局变量Path。在控制台中验证安装成功。
+  在Github上新建仓库hugo-on-netlify，并在D:\Blog目录下打开Gitbash，输入指令。
+ $ git clone https://github.com/xxxxx/hugo-on-netlify
+$ hugo new site hugo-on-netlify &amp;ndash;force
+ 此时便会在hugo-on-netlify文件夹里生成网站需要的文件，文件结构如下。
+ myblog ├── archetypes │ └── default.md ├── content ├── data ├── layouts ├── static ├── themes └── config.toml    第2步：安装主题Meme Hugo是没有默认主题的，这里选用主题Meme。
+ $ git clone https://github.com/reuixiy/hugo-theme-meme.git themes/meme
+ 然后替换 config.toml 为 config.toml ，可以在其中进行个性化设置。
+第3步：测试 创建测试页面
+ $ hugo new posts/my-first-post.md</description>
+    </item>
+    
+  </channel>
+</rss>

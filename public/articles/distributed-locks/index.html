@@ -1,0 +1,396 @@
+<!DOCTYPE html>
+<html lang="en" itemscope itemtype="http://schema.org/WebPage">
+<head>
+  <meta charset="utf-8" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <link rel="icon" href="https://s3.bmp.ovh/imgs/2022/02/5c58057419ddf5c7.png">
+
+  <title>
+    Distributed Locks - theumuoy&#39;s Garden
+  </title>
+
+  <meta name="description" content="分布式与单机最大的不同在于其是多进程而不是多线程。
+多线程可以采取共享堆内存，通过内存来标记。
+分布式的情况，需要将标记存在一个各进程都能看到的地方。
+主要问题是：网络的延迟和不可靠。
+分布式锁标记在&quot;公共内存&quot;中，如 Redis，Memcache。
+ setnx(lockkey, 当前时间&#43;过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。 get(lockkey) 获取值 oldExpireTime ，并将这个 value 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。 计算 newExpireTime = 当前时间 &#43; 过期超时时间，然后 getset(lockkey, newExpireTime) 会返回当前 lockkey 的值 currentExpireTime。 判断 currentExpireTime 与 oldExpireTime 是否相等，如果相等，说明当前 getset 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。 在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 delete 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。  " /><meta name="generator" content="Hugo 0.92.1" />
+
+  <link rel="stylesheet" href="https://1aomn.com/css/main.css" />
+
+  
+  
+
+  <meta property="og:title" content="Distributed Locks" />
+<meta property="og:description" content="分布式与单机最大的不同在于其是多进程而不是多线程。
+多线程可以采取共享堆内存，通过内存来标记。
+分布式的情况，需要将标记存在一个各进程都能看到的地方。
+主要问题是：网络的延迟和不可靠。
+分布式锁标记在&quot;公共内存&quot;中，如 Redis，Memcache。
+ setnx(lockkey, 当前时间&#43;过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。 get(lockkey) 获取值 oldExpireTime ，并将这个 value 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。 计算 newExpireTime = 当前时间 &#43; 过期超时时间，然后 getset(lockkey, newExpireTime) 会返回当前 lockkey 的值 currentExpireTime。 判断 currentExpireTime 与 oldExpireTime 是否相等，如果相等，说明当前 getset 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。 在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 delete 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。  " />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="https://1aomn.com/articles/distributed-locks/" /><meta property="og:image" content="https://1aomn.com/"/><meta property="article:section" content="articles" />
+<meta property="article:published_time" content="2021-02-23T22:59:07+08:00" />
+<meta property="article:modified_time" content="2021-02-23T22:59:07+08:00" />
+
+
+
+  <meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:image" content="https://1aomn.com/"/>
+
+<meta name="twitter:title" content="Distributed Locks"/>
+<meta name="twitter:description" content="分布式与单机最大的不同在于其是多进程而不是多线程。
+多线程可以采取共享堆内存，通过内存来标记。
+分布式的情况，需要将标记存在一个各进程都能看到的地方。
+主要问题是：网络的延迟和不可靠。
+分布式锁标记在&quot;公共内存&quot;中，如 Redis，Memcache。
+ setnx(lockkey, 当前时间&#43;过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。 get(lockkey) 获取值 oldExpireTime ，并将这个 value 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。 计算 newExpireTime = 当前时间 &#43; 过期超时时间，然后 getset(lockkey, newExpireTime) 会返回当前 lockkey 的值 currentExpireTime。 判断 currentExpireTime 与 oldExpireTime 是否相等，如果相等，说明当前 getset 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。 在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 delete 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。  "/>
+
+
+  <meta itemprop="name" content="Distributed Locks">
+<meta itemprop="description" content="分布式与单机最大的不同在于其是多进程而不是多线程。
+多线程可以采取共享堆内存，通过内存来标记。
+分布式的情况，需要将标记存在一个各进程都能看到的地方。
+主要问题是：网络的延迟和不可靠。
+分布式锁标记在&quot;公共内存&quot;中，如 Redis，Memcache。
+ setnx(lockkey, 当前时间&#43;过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。 get(lockkey) 获取值 oldExpireTime ，并将这个 value 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。 计算 newExpireTime = 当前时间 &#43; 过期超时时间，然后 getset(lockkey, newExpireTime) 会返回当前 lockkey 的值 currentExpireTime。 判断 currentExpireTime 与 oldExpireTime 是否相等，如果相等，说明当前 getset 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。 在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 delete 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。  "><meta itemprop="datePublished" content="2021-02-23T22:59:07+08:00" />
+<meta itemprop="dateModified" content="2021-02-23T22:59:07+08:00" />
+<meta itemprop="wordCount" content="41"><meta itemprop="image" content="https://1aomn.com/"/>
+<meta itemprop="keywords" content="" />
+
+  <meta itemprop="name" content="Distributed Locks">
+<meta itemprop="description" content="分布式与单机最大的不同在于其是多进程而不是多线程。
+多线程可以采取共享堆内存，通过内存来标记。
+分布式的情况，需要将标记存在一个各进程都能看到的地方。
+主要问题是：网络的延迟和不可靠。
+分布式锁标记在&quot;公共内存&quot;中，如 Redis，Memcache。
+ setnx(lockkey, 当前时间&#43;过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。 get(lockkey) 获取值 oldExpireTime ，并将这个 value 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。 计算 newExpireTime = 当前时间 &#43; 过期超时时间，然后 getset(lockkey, newExpireTime) 会返回当前 lockkey 的值 currentExpireTime。 判断 currentExpireTime 与 oldExpireTime 是否相等，如果相等，说明当前 getset 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。 在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 delete 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。  "><meta itemprop="datePublished" content="2021-02-23T22:59:07+08:00" />
+<meta itemprop="dateModified" content="2021-02-23T22:59:07+08:00" />
+<meta itemprop="wordCount" content="41"><meta itemprop="image" content="https://1aomn.com/"/>
+<meta itemprop="keywords" content="" />
+</head><body class="flex relative h-full min-h-screen"><aside
+  class="will-change-transform transform transition-transform -translate-x-full absolute top-0 left-0 md:relative md:translate-x-0 w-3/4 md:w-60 h-full min-h-screen p-3 bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 flex flex-col gap-2.5 z-20 sidebar">
+  <p class="font-bold mb-5 flex items-center gap-2">
+    <button
+      aria-label="Close sidebar"
+      class="md:hidden menu-trigger-close p-1 rounded text-slate-800 dark:text-slate-50 hover:bg-slate-200 dark:hover:bg-slate-700"><svg class="h-6 w-6" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <line x1="18" y1="6" x2="6" y2="18" />
+  <line x1="6" y1="6" x2="18" y2="18" />
+</svg></button>
+    <a href="https://1aomn.com/" class="px-2">
+      <span>theumuoy&#39;s Garden</span>
+    </a>
+    <button
+      aria-label="Toggle dark mode"
+      class="dark-mode-toggle p-2 rounded border dark:border-slate-700 hover:bg-slate-200 dark:hover:bg-slate-700"><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <circle cx="12" cy="12" r="4" />
+  <path d="M3 12h1M12 3v1M20 12h1M12 20v1M5.6 5.6l.7 .7M18.4 5.6l-.7 .7M17.7 17.7l.7 .7M6.3 17.7l-.7 .7" />
+</svg></button>
+  </p>
+
+  
+  <ul class="list-none flex flex-col gap-1">
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/" >
+        <span>Home</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles" >
+        <span>Articles</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/portfolio" >
+        <span>Portfolio</span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm flex items-center justify-between  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/stack" >
+        <span>Stack</span>
+        
+      </a>
+    </li>
+    
+  </ul>
+
+  <div class="flex-1"></div>
+
+  
+
+  <ul class="list-none flex flex-wrap justify-center gap-1 pt-2 border-t border-slate-200 dark:border-slate-600">
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://twitter.com/umuoy11" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Twitter</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path
+    d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="https://github.com/umuoy1" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">GitHub</span>
+        
+        <span><svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+  stroke-linecap="round" stroke-linejoin="round">
+  <path
+    d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="burningdian@gmail.com" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">Email</span>
+        
+        <span><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <rect x="3" y="5" width="18" height="14" rx="2" />
+  <polyline points="3 7 12 13 21 7" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+    <li>
+      <a class="px-2 py-1.5 rounded-md text-sm block text-slate-800 dark:text-slate-50  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/index.xml" target="_blank" rel="noopener noreferrer">
+        <span class="sr-only">RSS</span>
+        
+        <span><svg class="h-4 w-4" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <circle cx="5" cy="19" r="1" />
+  <path d="M4 4a16 16 0 0 1 16 16" />
+  <path d="M4 11a9 9 0 0 1 9 9" />
+</svg></span>
+        
+      </a>
+    </li>
+    
+  </ul>
+</aside>
+
+<div
+  class="fixed bg-slate-700 bg-opacity-5 transition duration-200 ease-in-out inset-0 z-10 pointer-events-auto md:hidden left-0 top-0 w-full h-full hidden menu-overlay">
+</div>
+
+<button
+  aria-label="Toggle Sidebar"
+  class="md:hidden absolute top-3 left-3 z-10 menu-trigger p-1 rounded text-slate-800 dark:text-slate-50 hover:bg-slate-100"><svg class="h-6 w-6" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"
+  fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" />
+  <line x1="4" y1="6" x2="20" y2="6" />
+  <line x1="4" y1="12" x2="20" y2="12" />
+  <line x1="4" y1="18" x2="16" y2="18" />
+</svg></button><div class="flex-1">
+
+
+
+<div class="flex h-screen relative">
+
+  <section
+    class="will-change-transform transform transition-transform -translate-x-[200%] absolute top-0 left-0 lg:relative
+  lg:translate-x-0 lg:min-w-[400px] lg:w-1/4 h-full bg-slate-50 dark:bg-slate-800 border-r border-slate-200 dark:border-slate-700 lg:flex flex-col py-3 overflow-y-auto scroll-area">
+    
+    
+    <a href="https://1aomn.com/articles/">
+      <h2 class="font-bold mb-5 py-1 pl-12 pr-3 md:px-3">Articles</h2>
+    </a>
+    <div class="space-y-2.5">
+      
+      <a class="block px-3 py-4  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/js-regexp-test-exec-path/">
+        
+        
+        <h3 class="text-lg font-semibold mb-0.5">JavaScript 正则表达式 test 方法在 V8 中的执行路径</h3>
+        <div
+          class="text-sm  text-slate-500 dark:text-slate-400  line-clamp-2">
+          COMMIT ID:c97337ff5ece3c4838fedebddd762984d90ba6f4
+regexp.prototype.test regexp-test.tq // 快速模式
+-&gt; transitioning javascript builtin RegExpPrototypeTest -&gt; RegExpPrototypeExecBodyWithoutResultFast =&gt; regexp.tq -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResultFast -&gt; RegExpPrototypeExecBodyWithoutResult -&gt; transitioning macro RegExpPrototypeExecBodyWithoutResult -&gt; RegExpExecInternal =&gt; builtins-regexp-gen.cc -&gt; TNode&lt;HeapObject&gt; RegExpBuiltinsAssembler::RegExpExecInternal -&gt; Runtime::kRegExpExec =&gt; runtime-regexp.cc -&gt; RUNTIME_FUNCTION(Runtime_RegExpExec) -&gt; RegExpExec -&gt; MaybeHandle&lt;Object&gt; RegExpExec -&gt; RegExp::Exec =&gt; regexp.cc -&gt; MaybeHandle&lt;Object&gt; RegExp::Exec -&gt; RegExpImpl::IrregexpExec // 慢速模式
+-&gt; transitioning javascript builtin RegExpPrototypeTest -&gt; RegExpExec =&gt; regexp.tq -&gt; transitioning macro RegExpExec(implicit context: Context) -&gt; RegExpPrototypeExecSlow =&gt; regexp-exec.
+        </div>
+      </a>
+      
+      <a class="block px-3 py-4  bg-slate-900 dark:bg-slate-700 text-slate-50 "
+        href="/articles/distributed-locks/">
+        
+        
+        <h3 class="text-lg font-semibold mb-0.5">Distributed Locks</h3>
+        <div
+          class="text-sm  text-slate-400  line-clamp-2">
+          分布式与单机最大的不同在于其是多进程而不是多线程。
+多线程可以采取共享堆内存，通过内存来标记。
+分布式的情况，需要将标记存在一个各进程都能看到的地方。
+主要问题是：网络的延迟和不可靠。
+分布式锁标记在&quot;公共内存&quot;中，如 Redis，Memcache。
+ setnx(lockkey, 当前时间+过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。 get(lockkey) 获取值 oldExpireTime ，并将这个 value 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。 计算 newExpireTime = 当前时间 + 过期超时时间，然后 getset(lockkey, newExpireTime) 会返回当前 lockkey 的值 currentExpireTime。 判断 currentExpireTime 与 oldExpireTime 是否相等，如果相等，说明当前 getset 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。 在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 delete 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。  
+        </div>
+      </a>
+      
+      <a class="block px-3 py-4  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/explore-nodejs-module-and-bootstrap/">
+        
+        
+        <h3 class="text-lg font-semibold mb-0.5">Node.js探索——启动与模块加载</h3>
+        <div
+          class="text-sm  text-slate-500 dark:text-slate-400  line-clamp-2">
+          版本：14.13.1
+NOde.js的实际入口是src\node_main.cc，这里以Windows为例。
+// node_main.cc int wmain(int argc, wchar_t* wargv[]) { // Windows Server 2012 (not R2) is supported until 10/10/2023, so we allow it  // to run in the experimental support tier.  // ...  argv[argc] = nullptr; return node::Start(argc, argv); } Windows下调用wmain类unix下调用main，调用Start启动Node.js
+// src/node.cc int Start(int argc, char** argv) { // 初始化  InitializationResult result = InitializeOncePerProcess(argc, argv); // ... } 开始初始化，调用InitializeOncePerProcess。
+在V8初始化之前，会执行一步初始化操作
+// node.cc { result.exit_code = InitializeNodeWithArgs(&amp;(result.
+        </div>
+      </a>
+      
+      <a class="block px-3 py-4  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/%E5%8E%9F%E5%9E%8B%E9%93%BE/">
+        
+        
+        <h3 class="text-lg font-semibold mb-0.5">Javascript 原型链</h3>
+        <div
+          class="text-sm  text-slate-500 dark:text-slate-400  line-clamp-2">
+          每个对象都有__proto__属性标识自己继承的原型。
+函数被创建时，JS会为这个函数添加prototype属性，即该函数可以被当作构造函数使用，值是是一个对象，该对象有一个名为constructor的成员函数，值为该函数本身。
+function Person(){ this.name = `Jack` } console.log(Person === Person.prototype.constructor) // true 通过new调用函数(当作构造函数)来构造对象时，会创建该函数的实例化对象，新对象的__proto__指向原函数的prototype属性来实现继承。
+let obj = new Person() console.log(obj.__proto__ === Person.prototype) // true 函数也是一个对象，函数对象由Function构造，其__proto__指向Function.prototype。
+Person.__proto__ === Function.prototype // true 通过new Object()和{}创建的对象，__proto__属性都指向Object.prototype，因为Object就是他们的构造函数，这与上面的行为是相一致的。
+上面提到的，既然Person.prototype的值是一个对象，那么该对象也是有原型的，我们发现它指向Object.prototype，至此达到了该原型链的顶端。
+Person.prototype.__proto__ === Object.prototype // true Object.prototype.__proto__ // null 但深究下去会发现，既然Object本身是构造函数，其__proto__指向Function.prototype，Function.prototype也是对象，继承了Object.prototype，这就产生了&quot;你中有我，我中有你&quot;的奇怪问题。
+Object.__proto__ === Function.prototype // true Function.prototype.__proto__ === Object.prototype // true Function.__proto__ === Function.prototype // true 在ECMA规范15.3.4中：
+ object (its [[Class]] is &quot;Function&quot;) that, when invoked, accepts any arguments and returns undefined.
+        </div>
+      </a>
+      
+      <a class="block px-3 py-4  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/streamerhelper/">
+        
+        
+        <h3 class="text-lg font-semibold mb-0.5">StreamerHelper</h3>
+        <div
+          class="text-sm  text-slate-500 dark:text-slate-400  line-clamp-2">
+          Introduction StreamerHelper 是一个开源项目，可以实现虎牙、斗鱼、AfreecaTV等主流直播平台主播开播时自动录像，并适时上传。Github地址：https://github.com/ZhangMingZhao1/StreamerHelper。
+StreamerHelper 使用Node.js开发，同时集成了直播录制和视频上传的功能，软件部署后，后台实时批量监测各个平台主播是否在线，并使用FFmpeg录制直播保存为视频文件，停播后投稿到b站。
+Project Tree StreamerHelper ├─ src │ ├─ app.ts │ ├─ engine │ │ ├─ getStreamUrl.ts │ │ ├─ liveStreamStatus.ts │ │ ├─ message.ts │ │ ├─ RoomStatus.ts │ │ └─ website │ │ ├─ afreecatv.ts │ │ ├─ bilibili.ts │ │ ├─ cc.ts │ │ ├─ ... │ ├─ type │ │ ├─ StreamInfo.ts │ │ └─ VideoPart.ts │ ├─ uploader │ │ ├─ caller.ts │ │ ├─ example.
+        </div>
+      </a>
+      
+      <a class="block px-3 py-4  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/cookie-session-token/">
+        
+        
+        <h3 class="text-lg font-semibold mb-0.5">Cookie，Session和token</h3>
+        <div
+          class="text-sm  text-slate-500 dark:text-slate-400  line-clamp-2">
+          Cookie 定义 Cookie，中文名「小甜饼」，是一段用来标识用户身份和附加信息而存储在本地客户端上的字符串。
+特点 Cookie有以下几个特点
+ 大小有限制，一般不超过5kb cookie 是没有结构的，但可以用格式如 &ldquo;a1=v1;a2=v2;a3=v3&quot;来存储结构化数据 跨域不共享，即浏览器为每个域名存储一个 cookie， 浏览器每次发送 http 请求，都会将请求域的 cookie 发送给服务端。这里的请求域仅指本次请求的域，比如在本站首页向 网易云音乐 发送 http 请求，则会向 网易云云音乐 发送本地存储的 cookie 。 服务端可以修改 cookie 并返回给浏览器。 浏览器可以在限制条件下修改 cookie 并返回给服务端。 cookie 在指定的域名及根域名下都生效。  使用 以下的例子在 Node.js 中演示。
+首先是解析 cookie
+req.cookie = {} const cookieStr = req.headers.cookie || &#39;&#39; cookieStr.split(&#39;;&#39;).forEach(element =&gt; { if(!element){ return } const arr = element.split(&#39;=&#39;) const key = arr[0] const val = arr[1] req.cookie[key]=val }); console.log(req.cookie) //为了方便测试，把cookie打印出来 在有登录验证的场景中，可以使用 cookie 验证用户是否登录
+        </div>
+      </a>
+      
+      <a class="block px-3 py-4  hover:bg-slate-200 dark:hover:bg-slate-700 "
+        href="/articles/build-a-blog/">
+        
+        
+        <h3 class="text-lg font-semibold mb-0.5">搭建Hugo博客，通过Netlify自动部署</h3>
+        <div
+          class="text-sm  text-slate-500 dark:text-slate-400  line-clamp-2">
+          本文章基于Windows10，Hugo_extended_0.66.0，博客发布的流程是本地上传到github，触发hook后，netlify自动发布
+ 一、下载并安装Hugo   Hugo下载地址
+本教程选择了安装，该版本增加了对sass的支持 。
+第1步：安装Hugo 下载解压，完成之后，把hugo.exe添加到全局变量Path。在控制台中验证安装成功。
+  在Github上新建仓库hugo-on-netlify，并在D:\Blog目录下打开Gitbash，输入指令。
+ $ git clone https://github.com/xxxxx/hugo-on-netlify
+$ hugo new site hugo-on-netlify &ndash;force
+ 此时便会在hugo-on-netlify文件夹里生成网站需要的文件，文件结构如下。
+ myblog ├── archetypes │ └── default.md ├── content ├── data ├── layouts ├── static ├── themes └── config.toml    第2步：安装主题Meme Hugo是没有默认主题的，这里选用主题Meme。
+ $ git clone https://github.com/reuixiy/hugo-theme-meme.git themes/meme
+ 然后替换 config.toml 为 config.toml ，可以在其中进行个性化设置。
+第3步：测试 创建测试页面
+ $ hugo new posts/my-first-post.md
+        </div>
+      </a>
+      </div>
+    </section>
+
+  <div class="overflow-y-auto h-screen w-full">
+    <article class="px-6 py-20 w-full mx-auto prose lg:prose-lg h-fit dark:prose-invert prose-img:mx-auto">
+
+      
+      <h1 class="!mb-2">Distributed Locks</h1>
+      
+      <p class="text-sm text-slate-500 !mb-8">February 23, 2021</p>
+      
+
+      
+
+      <p>分布式与单机最大的不同在于其是<strong>多进程</strong>而不是<strong>多线程</strong>。</p>
+<p>多线程可以采取共享堆内存，通过内存来标记。</p>
+<p>分布式的情况，需要将标记存在一个各进程都能看到的地方。</p>
+<p>主要问题是：网络的延迟和不可靠。</p>
+<p>分布式锁标记在&quot;公共内存&quot;中，如 Redis，Memcache。</p>
+<ol>
+<li><code>setnx(lockkey</code>, 当前时间+过期超时时间)，如果返回 1，则获取锁成功；如果返回 0 则没有获取到锁，转向 2。</li>
+<li><code>get(lockkey)</code> 获取值 <code>oldExpireTime</code> ，并将这个 <code>value</code> 值与当前的系统时间进行比较，如果小于当前系统时间，则认为这个锁已经超时，可以允许别的请求重新获取，转向 3。</li>
+<li>计算 <code>newExpireTime</code> = 当前时间 + 过期超时时间，然后 <code>getset(lockkey, newExpireTime)</code> 会返回当前 <code>lockkey</code> 的值 <code>currentExpireTime</code>。</li>
+<li>判断 <code>currentExpireTime</code> 与 <code>oldExpireTime</code> 是否相等，如果相等，说明当前 <code>getset</code> 设置成功，获取到了锁。如果不相等，说明这个锁又被别的请求获取走了，那么当前请求可以直接返回失败，或者继续重试。</li>
+<li>在获取到锁之后，当前线程可以开始自己的业务处理，当处理完毕后，比较自己的处理时间和对于锁设置的超时时间，如果小于锁设置的超时时间，则直接执行 <code>delete</code> 释放锁；如果大于锁设置的超时时间，则不需要再锁进行处理。</li>
+</ol>
+
+    </article>
+  </div>
+
+</div>
+
+
+  </div>
+<script type="text/javascript" src="/main.js" defer></script>
+
+
+<script type="application/javascript">
+var doNotTrack = false;
+if (!doNotTrack) {
+	(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	ga('create', 'UA-PROPERTY_ID', 'auto');
+	
+	ga('send', 'pageview');
+}
+</script>
+</body>
+
+</html>

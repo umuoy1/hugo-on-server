@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Node.js on theumuoy&#39;s Garden</title>
+    <link>https://1aomn.com/tags/node.js/</link>
+    <description>Recent content in Node.js on theumuoy&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 08 Oct 2020 20:17:56 +0800</lastBuildDate><atom:link href="https://1aomn.com/tags/node.js/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Node.js探索——启动与模块加载</title>
+      <link>https://1aomn.com/articles/explore-nodejs-module-and-bootstrap/</link>
+      <pubDate>Thu, 08 Oct 2020 20:17:56 +0800</pubDate>
+      
+      <guid>https://1aomn.com/articles/explore-nodejs-module-and-bootstrap/</guid>
+      <description>版本：14.13.1
+NOde.js的实际入口是src\node_main.cc，这里以Windows为例。
+// node_main.cc int wmain(int argc, wchar_t* wargv[]) { // Windows Server 2012 (not R2) is supported until 10/10/2023, so we allow it  // to run in the experimental support tier.  // ...  argv[argc] = nullptr; return node::Start(argc, argv); } Windows下调用wmain类unix下调用main，调用Start启动Node.js
+// src/node.cc int Start(int argc, char** argv) { // 初始化  InitializationResult result = InitializeOncePerProcess(argc, argv); // ... } 开始初始化，调用InitializeOncePerProcess。
+在V8初始化之前，会执行一步初始化操作
+// node.cc { result.exit_code = InitializeNodeWithArgs(&amp;amp;(result.</description>
+    </item>
+    
+  </channel>
+</rss>

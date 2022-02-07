@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on theumuoy&#39;s Garden</title>
+    <link>https://1aomn.com/tags/</link>
+    <description>Recent content in Tags on theumuoy&#39;s Garden</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Thu, 08 Oct 2020 20:17:56 +0800</lastBuildDate><atom:link href="https://1aomn.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Node.js</title>
+      <link>https://1aomn.com/tags/node.js/</link>
+      <pubDate>Thu, 08 Oct 2020 20:17:56 +0800</pubDate>
+      
+      <guid>https://1aomn.com/tags/node.js/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
