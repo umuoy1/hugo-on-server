@@ -1,0 +1,30 @@
+[
+  {
+    "name": "Node.js",
+    "description": "Node.js 是一个基于 Chrome V8 引擎的 JavaScript 运行环境。",
+    "link": "https://bear.app/",
+    "icon": "https://s3.bmp.ovh/imgs/2022/02/5195d851b1d9710e.jpg",
+    "tag": "Webdev"
+  },
+  {
+    "name": "FUJIFILM X-T30Ⅱ & Viltrox AF 23/1.4",
+    "description": "FUJI No.1",
+    "link": "https://www.fujifilm.com.cn/cn/zh-hans",
+    "icon": "",
+    "tag": "Photography"
+  },
+  {
+    "name": "Git Bash",
+    "description": "Git for Windows provides a BASH emulation used to run Git from the command line.",
+    "link": "https://git-scm.com/",
+    "icon": "https://gitforwindows.org/img/gwindows_logo.png",
+    "tag": "Productivity"
+  },
+  {
+    "name": "GitHub",
+    "description": "Code hosting for all projects",
+    "link": "https://github.com/",
+    "icon": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Octicons-mark-github.svg/2048px-Octicons-mark-github.svg.png",
+    "tag": "Webdev"
+  }
+]
