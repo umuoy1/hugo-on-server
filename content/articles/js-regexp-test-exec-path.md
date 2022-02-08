@@ -9,7 +9,7 @@ toc: false
 tags: []
 ---
 
-`COMMIT ID:`[c97337ff5ece3c4838fedebddd762984d90ba6f4](https://github.com/v8/v8/commit/c97337ff5ece3c4838fedebddd762984d90ba6f4)
+`COMMIT ID:`[c97337ff5ece3c4838fedebddd762984d90ba6f4](https://github.com/v8/v8/tree/c97337ff5ece3c4838fedebddd762984d90ba6f4)
 
 ## regexp.prototype.test
 
